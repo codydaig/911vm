@@ -1,0 +1,1 @@
+exports.helloWorld = require('./controllers/helloWorld.js');
