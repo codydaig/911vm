@@ -4,6 +4,7 @@ const path = require('path');
 const morgan = require('morgan');
 const connect = require('./utils/db');
 const config = require('./../config/config');
+const personRouter = require('./resources/person/peson.router');
 
 const app = express();
 
@@ -13,6 +14,8 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 require('./routes.js')(app);
+
+app.use('/api/person', personRouter);
 
 const start = async () => {
   try {
