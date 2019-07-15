@@ -34,6 +34,7 @@
     "neode": "^0.2.16",
     "react": "^15.6.1",
     "react-dom": "^15.4.2",
+    "uuid": "^3.3.2",
     "webpack": "2.6.1"
   },
   "devDependencies": {
