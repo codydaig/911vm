@@ -41,8 +41,8 @@ const schema = {
     required: true,
   },
   created_at: {
-    type: 'datetime',
-    default: () => new Date,
+    type: 'number',
+    default: () => (new Date).getTime(),
   },
   has_certification: {
     type: 'relationship',
@@ -50,11 +50,11 @@ const schema = {
     direction: 'out',
     properties: {
       created_at: {
-        type: 'date',
-        default: () => new Date,
+        type: 'number',
+        default: () => (new Date).getTime(),
       }, 
       expirated_at: {
-        type: 'date',
+        type: 'number',
         required: true,
       }
     }
@@ -65,11 +65,11 @@ const schema = {
     direction: 'out',
     properties: {
       created_at: {
-        type: 'date',
-        default: () => new Date,
+        type: 'number',
+        default: () => (new Date).getTime(),
       },
       signed_at: {
-        type: 'date',
+        type: 'number',
         required: true,
       },
       person_id: {

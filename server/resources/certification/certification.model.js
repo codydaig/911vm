@@ -9,8 +9,8 @@ const schema = {
     required: true,
   },    
   created_at: {
-    type: 'datetime',
-    default: () => new Date,
+    type: 'number',
+    default: () => (new Date).getTime(),
   }
 }
   
