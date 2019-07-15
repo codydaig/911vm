@@ -1,8 +1,8 @@
 const schema = {
-  person_id: {
+  id: {
     primary: true,
     type: 'uuid',
-    required: true, // Creates an Exists Constraint in Enterprise mode
+    required: true,
   },
   first_name: {
     type: 'name',
@@ -12,7 +12,7 @@ const schema = {
     type: 'name',
     required: true,
   },
-  email: {
+  email_address: {
     type: 'email',
     required: true,
   },
@@ -40,6 +40,44 @@ const schema = {
     type: 'boolean',
     required: true,
   },
+  created_at: {
+    type: 'datetime',
+    default: () => new Date,
+  },
+  has_certification: {
+    type: 'relationship',
+    relationship: 'HAS_CERTIFICATION',
+    direction: 'out',
+    properties: {
+      created_at: {
+        type: 'date',
+        default: () => new Date,
+      }, 
+      expirated_at: {
+        type: 'date',
+        required: true,
+      }
+    }
+  },
+  signs_certification: {
+    type: 'relationship',
+    relationship: 'SIGNS_CERTIFICATION',
+    direction: 'out',
+    properties: {
+      created_at: {
+        type: 'date',
+        default: () => new Date,
+      },
+      signed_at: {
+        type: 'date',
+        required: true,
+      },
+      person_id: {
+        type: 'uuid',
+        required: true,        
+      }
+    }
+  }  
 }
 
 module.exports = schema;
