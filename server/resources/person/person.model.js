@@ -15,6 +15,7 @@ const schema = {
   email_address: {
     type: 'email',
     required: true,
+    unique: true,
   },
   phone_number: {
     type: 'string',

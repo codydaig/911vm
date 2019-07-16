@@ -5,8 +5,9 @@ const router = Router();
 
 router.route('/').get(Controllers.get);
 router.route('/').post(Controllers.create);
-router.route('/certifications').get(Controllers.getWithCerts);
+router.route('/certification').get(Controllers.getWithCerts);
 router.route('/:id/certification').post(Controllers.addCertification);
+router.route('/:id/certification').get(Controllers.show);
 router.route('/:person_id/certification/:id').get(Controllers.getSignedCerts);
 router.route('/:person_id/certification/:id').post(Controllers.signCertification);
 

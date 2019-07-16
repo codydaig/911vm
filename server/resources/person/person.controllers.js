@@ -16,6 +16,25 @@ const get = (req, res) => {
   })   
 }
 
+const show = (req, res) => {  
+  const query = "match (p:Person {id: {person_id}})-[r:HAS_CERTIFICATION]->(c:Certification) return {person: p, cert: collect({name:c.name, id:c.id, expirationDate:r})}"
+  neode.cypher(query, {person_id: req.params.id})
+  .then((collection) => {
+    const resdata = collection.records.map((item) => {
+      const fields = item['_fields'][0];
+      const certs = fields['cert'].map((cert) => {
+        return {name: cert['name'], id: cert['id'], expirated_at: cert['expirationDate']['properties']['expirated_at']}
+      });    
+      return {person: fields['person']['properties'], certifications: certs}
+    });
+    res.status(202).json({data: resdata});
+  })
+  .catch((err) => {
+    console.log('err')
+    res.status(404).json(err);
+  })
+}
+
 const getWithCerts = (req, res) => {
   const query = "match (p:Person)-[r:HAS_CERTIFICATION]->(c:Certification) return {person: p, cert: collect({name:c.name, id:c.id, expirationDate:r})}"
   neode.cypher(query, {})
@@ -92,17 +111,20 @@ const signCertification = (req, res) => {
   const signPersonID = req.body.person_id;
   const personId = req.params.person_id;
   const signAt = (new Date(req.body.sign_at)).getTime();
-
+  // const query = "match (p:Person {id:{person_id}})-[r:HAS_CERTIFICATION]->(c:Certification) return c"
+  const query = "match (p:Person {id:{person_id}})-[r:HAS_CERTIFICATION]->(c:Certification) return {person: p, cert: collect({name:c.name, id:c.id, expirationDate:r})}"
   Promise.all([
     neode.first('Person', 'id', signPersonID),
-    neode.first('Certification', 'id', certId),
+    neode.cypher(query, {person_id: personId})
   ])
   .then(([person, certification]) => {
-    return person.relateTo(certification, 'signs_certification', {signed_at: signAt, person_id: personId})
-  })
-  .then(() => {
+    // return person.relateTo(certification, 'signs_certification', {signed_at: signAt, person_id: personId})
+    console.log(certification)
     res.status(202).json({message: "Relationship created"})
   })
+  // .then(() => {
+  //   res.status(202).json({message: "Relationship created"})
+  // })
   .catch((err) => {
     console.log(err)
     res.status(404).json(err);
@@ -112,14 +134,14 @@ const signCertification = (req, res) => {
 const getSignedCerts = (req, res) => {
   const personId = req.params.person_id;
   const certId = req.params.id;
-  const query = 'MATCH (p:Person)-[r:SIGNS_CERTIFICATION {person_id: {person_id}}]->(c:Certification {id:{certification_id}}) return {signed_person: p, signed_at: r.signed_at}'
+  const query = 'MATCH (p:Person)-[r:SIGNS_CERTIFICATION {person_id: {person_id}}]->(c:Certification {id:{certification_id}}) return p'
   neode.cypher(query, {person_id: personId, certification_id: certId})
-  .then((collection) => {
+  .then((collection) => {    
     const resdata = collection.records.map((item) => {
       const fields = item['_fields'][0];  
       return {person: fields['signed_person']['properties'], signed_at: fields['signed_at']}
     });
-    res.status(202).json({data: resdata});
+    res.status(202).json({data: collection});
   })
   .catch((err) => {
     console.log('err')
@@ -129,8 +151,9 @@ const getSignedCerts = (req, res) => {
 
 module.exports = {
   get: get,
-  getWithCerts: getWithCerts,  
+  getWithCerts: getWithCerts,
   create: create,
+  show: show,
   addCertification: addCertification,
   signCertification: signCertification,  
   getSignedCerts: getSignedCerts,
