@@ -1,5 +1,5 @@
 const Router = require('express').Router;
-const Controllers = require('./certification.controllers');
+const Controllers = require('./test.controllers');
 
 const router = Router();
 

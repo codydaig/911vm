@@ -2,7 +2,7 @@ const neode = require('../index');
 const uuidv4 = require('uuid/v4');
 
 const get = (req, res) => {
-  const query = 'match (c:Certification) return c';
+  const query = 'match (c:Test) return c';
   neode.cypher(query, {})
   .then((collection) => {    
     const resdata = collection.records.map((item) => {
@@ -22,10 +22,9 @@ const create = (req, res) => {
     'id': uuidv4()
   }
 
-  neode.create('Certification', data)
+  neode.create('Test', data)
   .then((certification) => {
     res.status(200).json({data: {
-      id: certification.get('id'),
       name: certification.get('name'),
       createdAt: certification.get('created_at'),
     }});

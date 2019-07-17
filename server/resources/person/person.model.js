@@ -72,10 +72,6 @@ const schema = {
       signed_at: {
         type: 'number',
         required: true,
-      },
-      person_id: {
-        type: 'uuid',
-        required: true,        
       }
     }
   }  
