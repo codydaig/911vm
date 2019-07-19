@@ -41,6 +41,10 @@ const schema = {
     type: 'boolean',
     required: true,
   },
+  is_active: {
+    type: 'boolean',
+    default: true,
+  },
   created_at: {
     type: 'number',
     default: () => (new Date).getTime(),
@@ -49,22 +53,28 @@ const schema = {
     type: 'relationship',
     relationship: 'HAS_CERTIFICATION',
     direction: 'out',
+    'cascade': 'detach',
     properties: {
+      expired_at: {
+        type: 'number',
+        required: true
+      },
       created_at: {
         type: 'number',
         default: () => (new Date).getTime(),
-      }, 
-      expirated_at: {
-        type: 'number',
-        required: true,
-      }
+      },
     }
   },
   signs_certification: {
     type: 'relationship',
     relationship: 'SIGNS_CERTIFICATION',
     direction: 'out',
+    'cascade': 'detach',
     properties: {
+      person_id: {
+        type: 'string',
+        required: true,
+      }, 
       created_at: {
         type: 'number',
         default: () => (new Date).getTime(),
