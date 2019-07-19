@@ -45,6 +45,10 @@ const schema = {
     type: 'boolean',
     default: true,
   },
+  joined_at: {
+    type: 'number',
+    required: false,
+  },
   created_at: {
     type: 'number',
     default: () => (new Date).getTime(),
