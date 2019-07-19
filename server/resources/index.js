@@ -1,10 +1,10 @@
 const Neode = require('neode');
 const Person = require('./person/person.model');
-const Test = require('./test/test.model');
+const Certification = require('./certification/certification.model');
 
 const neode = new Neode.fromEnv().with({
   Person: Person,
-  Test: Test
+  Certification: Certification
 });
 
 module.exports = neode;
