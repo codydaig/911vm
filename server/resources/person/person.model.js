@@ -35,11 +35,11 @@ const schema = {
   },
   is_admin: {
     type: 'boolean',
-    required: true,
+    default: false,
   },
   is_volunteer: {
     type: 'boolean',
-    required: true,
+    default: false,
   },
   is_active: {
     type: 'boolean',
