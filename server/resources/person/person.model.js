@@ -26,11 +26,11 @@ const schema = {
     empty: true,
   },
   start_date: {
-    type: 'date',
+    type: 'number',
     empty: true,
   },
   end_date: {
-    type: 'date',
+    type: 'number',
     empty: true,
   },
   is_admin: {
@@ -44,10 +44,6 @@ const schema = {
   is_active: {
     type: 'boolean',
     default: true,
-  },
-  joined_at: {
-    type: 'number',
-    required: false,
   },
   created_at: {
     type: 'number',
