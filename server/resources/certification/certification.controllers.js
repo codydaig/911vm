@@ -1,5 +1,4 @@
 const neode = require('../index');
-const uuidv4 = require('uuid/v4');
 
 const get = (req, res) => {
   const query = 'match (c:Certification) return c';
@@ -18,8 +17,7 @@ const get = (req, res) => {
 
 const create = (req, res) => {
   let data = {
-    name: req.body.name,
-    'id': uuidv4()
+    name: req.body.name
   }
 
   neode.create('Certification', data)
