@@ -1,8 +1,11 @@
+const uuidv4 = require('uuid/v4');
+
 const schema = {
   id: {
     primary: true,
     type: 'uuid',
     required: true,
+    default: () => uuidv4(),
   },
   name: {
     type: 'string',
