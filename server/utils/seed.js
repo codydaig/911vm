@@ -57,7 +57,7 @@ const certificationSignQuery = (items) => {
 }
 
 const personQueries = personQuery(volunteers);
-const certificationTypeQuries = certificationTypeQuery(certificationTypes.data);
+const certificationTypeQuries = certificationTypeQuery(certificationTypes);
 const volunteerCertificationQueries = volunteerCertificationQuery(certificationExiprations);
 const certificationSignQueries = certificationSignQuery(certificationSigns)
 
@@ -75,7 +75,7 @@ neode.batch(personQueries)
   return neode.batch(certificationSignQueries);
 })
 .then(() => {
-  console.log('successed import volunteer certs signature');
+  // console.log('successed import volunteer certs signature');
   neode.close()
 })
 .catch((err) => {
