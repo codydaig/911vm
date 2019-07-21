@@ -81,7 +81,16 @@ const update = (req, res) => {
     return person.update(data);
   })
   .then((updated) => {
-    res.status(202).json({data: update})
+    res.status(200).json({data: {
+      id: updated.get('id'),
+      first_name: updated.get('first_name'),
+      last_name: updated.get('last_name'),
+      email_address: updated.get('email_address'),
+      phone_number: updated.get('phone_number'),
+      is_admin: updated.get('is_admin'),
+      is_volunteer: updated.get('is_volunteer'),
+      created_at: updated.get('created_at'),
+    }});
   })
   .catch((err) => {
     res.status(404).json({error_message: err.message});
@@ -148,6 +157,7 @@ module.exports = {
   get: get,  
   create: create,
   show: show,
+  update: update,
   getWithCerts: getWithCerts,
   addCertification: addCertification,
 }

@@ -7,6 +7,7 @@ router.route('/').get(Controllers.get);
 router.route('/').post(Controllers.create);
 router.route('/certification').get(Controllers.getWithCerts);
 router.route('/:id').get(Controllers.show);
+router.route('/:id').put(Controllers.update);
 router.route('/:id/certification').post(Controllers.addCertification);
 // router.route('/:person_id/certification/:id').get(Controllers.getSignedCerts);
 // router.route('/:person_id/certification/:id').post(Controllers.signCertification);
