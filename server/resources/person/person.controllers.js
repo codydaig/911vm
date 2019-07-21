@@ -10,8 +10,7 @@ const get = (req, res) => {
     res.status(202).json({data: resdata});
   })
   .catch((err) => {
-    console.log('err')
-    res.status(404).json(err);
+    res.status(404).json({error_message: err.message});
   })   
 }
 
@@ -29,7 +28,7 @@ const show = (req, res) => {
     res.status(202).json({data: data})
   })
   .catch((err) => {
-    res.status(404).json(err);
+    res.status(404).json({error_message: err.message});
   });
 }
 
@@ -58,8 +57,7 @@ const create = (req, res) => {
     }});
   })
   .catch((err) => {
-    console.error(err);
-    res.status(404).json(err);
+    res.status(404).json({error_message: err.message});
   })
 }
 
@@ -79,7 +77,7 @@ const addCertification = (req, res) => {
     res.status(202).json({message: "Relationship created"})
   })
   .catch((err) => {
-    res.status(404).json(err);
+    res.status(404).json({error_message: err.message});
   })
 }
 
@@ -97,7 +95,7 @@ const getWithCerts = (req, res) => {
     res.status(202).json({data: data})
   })
   .catch((err) => {
-    res.status(404).json(err);
+    res.status(404).json({error_message: err.message});
   })
 }
 

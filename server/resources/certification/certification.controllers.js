@@ -11,7 +11,7 @@ const get = (req, res) => {
   })
   .catch((err) => {
     console.log('err')
-    res.status(404).json(err);
+    res.status(404).json({error_message: err.message});
   })    
 }
 
@@ -29,7 +29,7 @@ const create = (req, res) => {
   })
   .catch((err) => {
     console.error(err);
-    res.status(404).json(err);
+    res.status(404).json({error_message: err.message});
   })
 }
 
@@ -45,7 +45,7 @@ const signs = (req, res) => {
     res.status(202).json({message: "Relationship created"});
   })
   .catch((err) => {
-    res.status(404).json(err);
+    res.status(404).json({error_message: err.message});
   })
 }
 
