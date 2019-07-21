@@ -35,8 +35,8 @@ const create = (req, res) => {
 
 const signs = (req, res) => {
   const certificationId = req.params.id;
-  const personId = req.body.personId;
-  const signOffPersonId = req.body.signOffPersonId;
+  const personId = req.body.person_id;
+  const signOffPersonId = req.body.sign_off_person_id;
   const signOffDate = (new Date()).getTime();
 
   const query = "match (p1:Person {id:{signOffPersonId}}), ((p:Person {id:{personId}})-[:HAS_CERTIFICATION]->(c:Certification {id:{certificationId}})) create (p1)-[:SIGNS_CERTIFICATION {person_id:{personId}, signed_at:{signOffDate}}]->(c)"

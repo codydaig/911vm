@@ -52,28 +52,36 @@ const show = (req, res) => {
 }
 
 const create = (req, res) => {
-  let data = {
-    first_name: req.body.firstName,
-    last_name: req.body.lastName,
-    email_address: req.body.emailAddress,
-    phone_number: req.body.phoneNumber,
-    'class': req.body['class'],
-    "is_admin": req.body.isAdmin,
-    "is_volunteer": req.body.isVolunteer
-  }
+  let data = req.body;
 
   neode.create('Person', data)
   .then((person) => {
     res.status(200).json({data: {
       id: person.get('id'),
-      firstName: person.get('first_name'),
-      lastName: person.get('last_name'),
-      emailAddress: person.get('email_address'),
-      phoneNumber: person.get('phone_number'),
-      isAdmin: person.get('is_admin'),
-      isVolunteer: person.get('is_volunteer'),
-      createdAt: person.get('created_at'),
+      first_name: person.get('first_name'),
+      last_name: person.get('last_name'),
+      email_address: person.get('email_address'),
+      phone_number: person.get('phone_number'),
+      is_admin: person.get('is_admin'),
+      is_volunteer: person.get('is_volunteer'),
+      created_at: person.get('created_at'),
     }});
+  })
+  .catch((err) => {
+    res.status(404).json({error_message: err.message});
+  })
+}
+
+const update = (req, res) => {
+  const id = req.params.id;
+  const data = req.body;
+
+  neode.first('Person', 'id', id)
+  .then((person) => {
+    return person.update(data);
+  })
+  .then((updated) => {
+    res.status(202).json({data: update})
   })
   .catch((err) => {
     res.status(404).json({error_message: err.message});
@@ -82,7 +90,7 @@ const create = (req, res) => {
 
 const addCertification = (req, res) => {
   const personId = req.params.id;
-  const certificationId = req.body.certificationId;
+  const certificationId = req.body.certification_id;
   const expiredAt = (new Date(req.body.expired_at)).getTime();
   
   Promise.all([
