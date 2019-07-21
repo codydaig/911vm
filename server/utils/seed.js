@@ -4,7 +4,8 @@ const neode = require('./../resources/index');
 
 const volunteers = JSON.parse(fs.readFileSync(__dirname+"/./../libs/data_dump/volunteers.json"));
 const certificationTypes = JSON.parse(fs.readFileSync(__dirname+"/./../libs/data_dump/certificationTypes.json"));
-const certifications = JSON.parse(fs.readFileSync(__dirname+"/./../libs/data_dump/certifications.json"));
+const certificationExiprations = JSON.parse(fs.readFileSync(__dirname+"/./../libs/data_dump/certificationExiprations.json"));
+const certificationSigns = JSON.parse(fs.readFileSync(__dirname+"/./../libs/data_dump/certificationSigns.json"));
 
 const personQuery = (items) => {
   return items.map((item) => {
@@ -49,9 +50,16 @@ const volunteerCertificationQuery = (items) => {
   return queries;
 }
 
+const certificationSignQuery = (items) => {
+  return items.map((item) => {
+    return {'query': 'MATCH (p1:Person {email_address:{sign_by_email_address}}), ((p:Person {email_address:{email_address}})-[:HAS_CERTIFICATION]->(c:Certification {name:{certification_name}})) create (p1)-[:SIGNS_CERTIFICATION {person_id: p.id, signed_at:{signed_at}}]->(c)', params: {email_address: item.email_address, sign_by_email_address: item.sign_by_email_address, certification_name: item.certification_name, signed_at: new Date(item['signed_at']).getTime()}}
+  })
+}
+
 const personQueries = personQuery(volunteers);
 const certificationTypeQuries = certificationTypeQuery(certificationTypes.data);
-const volunteerCertificationQueries = volunteerCertificationQuery(certifications);
+const volunteerCertificationQueries = volunteerCertificationQuery(certificationExiprations);
+const certificationSignQueries = certificationSignQuery(certificationSigns)
 
 neode.batch(personQueries)
 .then(() => {
@@ -60,10 +68,14 @@ neode.batch(personQueries)
 })
 .then(() => {
   console.log('successed import certs');
-  return neode.batch(volunteerCertificationQueries)
+  return neode.batch(volunteerCertificationQueries);
 })
 .then(() => {
   console.log('successed import volunteer certs');
+  return neode.batch(certificationSignQueries);
+})
+.then(() => {
+  console.log('successed import volunteer certs signature');
   neode.close()
 })
 .catch((err) => {
