@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js",
-    "build": "webpack -d --watch"
+    "build": "webpack -d --watch",
+    "dev": "webpack -d --watch && nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -25,9 +26,9 @@
     "babel-plugin-react": "1.0.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "6.24.1",
     "body-parser": "^1.19.0",
+    "clipboard": "^2.0.4",
     "express": "^4.17.1",
     "neo4j-driver": "^1.7.5",
     "react": "^15.6.1",
@@ -35,6 +36,10 @@
     "webpack": "2.6.1"
   },
   "devDependencies": {
-    "html-webpack-plugin": "^3.2.0"
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^3.1.0",
+    "html-webpack-plugin": "^3.2.0",
+    "nodemon": "^1.19.1",
+    "style-loader": "^0.23.1"
   }
 }
