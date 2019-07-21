@@ -82,12 +82,12 @@ const create = (req, res) => {
 
 const addCertification = (req, res) => {
   const personId = req.params.id;
-  const certificationName = req.body.certificationName;
+  const certificationId = req.body.certificationId;
   const expiredAt = (new Date(req.body.expired_at)).getTime();
   
   Promise.all([
     neode.first('Person', 'id', personId),
-    neode.first('Certification', 'name', certificationName),
+    neode.first('Certification', 'id', certificationId),
   ])
   .then(([person, certification]) => {
     return person.relateTo(certification, 'has_certification', {expired_at: expiredAt})
