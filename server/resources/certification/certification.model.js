@@ -9,7 +9,7 @@ const schema = {
   },
   name: {
     type: 'string',
-    unique: true,
+    unique: 'true',
   },
   is_active: {
     type: 'boolean',
