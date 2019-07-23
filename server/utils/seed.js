@@ -52,19 +52,22 @@ const volunteerCertificationQuery = (items) => {
 
 const certificationSignQuery = (items) => {
   return items.map((item) => {
-    return {'query': 'MATCH (p1:Person {email_address:{sign_by_email_address}}), ((p:Person {email_address:{email_address}})-[:HAS_CERTIFICATION]->(c:Certification {name:{certification_name}})) create (p1)-[:SIGNS_CERTIFICATION {person_id: p.id, signed_at:{signed_at}}]->(c)', params: {email_address: item.email_address, sign_by_email_address: item.sign_by_email_address, certification_name: item.certification_name, signed_at: new Date(item['signed_at']).getTime()}}
+    return {'query': `
+    MATCH (p1:Person {email_address:{sign_by_email_address}}), 
+    ((p2:Person {email_address:{email_address}})-[:HAS_CERTIFICATION]->(c:Certification {name:{certification_name}})) 
+    CREATE (p1)-[:SIGNS_CERTIFICATION {person_id: p2.id, signed_at:{signed_at}}]->(c)`, params: {email_address: item.email_address, sign_by_email_address: item.sign_by_email_address, certification_name: item.certification_name, signed_at: new Date(item['signed_at']).getTime()}}
   })
 }
 
 const personQueries = personQuery(volunteers);
-const certificationTypeQuries = certificationTypeQuery(certificationTypes);
+const certificationTypeQueries = certificationTypeQuery(certificationTypes);
 const volunteerCertificationQueries = volunteerCertificationQuery(certificationExiprations);
 const certificationSignQueries = certificationSignQuery(certificationSigns)
 
 neode.batch(personQueries)
 .then(() => {
   console.log('successed import volunteers');
-  return neode.batch(certificationTypeQuries);
+  return neode.batch(certificationTypeQueries);
 })
 .then(() => {
   console.log('successed import certs');
@@ -75,7 +78,7 @@ neode.batch(personQueries)
   return neode.batch(certificationSignQueries);
 })
 .then(() => {
-  // console.log('successed import volunteer certs signature');
+  console.log('successed import volunteer certs signature');
   neode.close()
 })
 .catch((err) => {
