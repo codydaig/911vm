@@ -119,13 +119,33 @@ const addCertification = (req, res) => {
   })
 }
 
+// Get volunteer certifications
+const getCertifications = (req, res) => {
+  const id = req.params.id;
+  const query = `MATCH (p:Person {id: {id}})-[r:HAS_CERTIFICATION]->(c:Certification) WITH {id: c.id, name: c.name, expired_at: r.expired_at} AS certifications RETURN {
+    certification: certifications
+  }`;
+
+  neode.cypher(query, {id: id})
+  .then((collection) => {
+    const data = collection.records.map((item) => {
+      return item['_fields'][0]['certification'];
+    })    
+    res.status(202).json({data: data})
+  })
+  .catch((err) => {
+    res.status(404).json({error_message: err.message});
+  })
+}
+
 module.exports = {
   get: get,  
   create: create,
   show: show,
   update: update,
   remove: remove,  
-  addCertification: addCertification,  
+  addCertification: addCertification,
+  getCertifications: getCertifications
 }
 
 
