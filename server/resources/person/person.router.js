@@ -5,7 +5,6 @@ const router = Router();
 
 router.route('/').get(Controllers.get);
 router.route('/').post(Controllers.create);
-router.route('/certification').get(Controllers.getWithCerts);
 router.route('/:id').get(Controllers.show);
 router.route('/:id').put(Controllers.update);
 router.route('/:id').delete(Controllers.remove);
