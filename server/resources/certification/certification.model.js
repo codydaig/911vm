@@ -15,6 +15,10 @@ const schema = {
     type: 'boolean',
     default: true,
   },
+  will_expire: {
+    type: 'boolean',
+    default: true,
+  },
   created_at: {
     type: 'number',
     default: () => (new Date).getTime(),
