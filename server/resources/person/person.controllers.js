@@ -97,6 +97,20 @@ const update = (req, res) => {
   })
 }
 
+const remove = (req, res) => {
+  const personId = req.params.id;
+  neode.first('Person', 'id', personId)
+  .then((person) => {
+    return person.delete();
+  })
+  .then(() => {
+    res.status(202).json({data: `Successfully deleted ${personId}`});
+  })
+  .catch((err) => {
+    res.status(404).json({error_message: err.message});
+  })
+}
+
 const addCertification = (req, res) => {
   const personId = req.params.id;
   const certificationId = req.body.certification_id;
@@ -158,6 +172,7 @@ module.exports = {
   create: create,
   show: show,
   update: update,
+  remove: remove,
   getWithCerts: getWithCerts,
-  addCertification: addCertification,
+  addCertification: addCertification,  
 }
