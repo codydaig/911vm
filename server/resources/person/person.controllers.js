@@ -1,5 +1,6 @@
 const neode = require('../index');
 
+// GET all volunteers
 const get = (req, res) => {
   const query = 'match (p:Person) return p';
   neode.cypher(query, {})
@@ -14,6 +15,7 @@ const get = (req, res) => {
   })   
 }
 
+// GET a volunteer data
 const show = (req, res) => {
   const id = req.params.id;
   neode.first('Person', 'id', id)
@@ -34,10 +36,9 @@ const show = (req, res) => {
   })
 }
 
-
+// Add a new volunteer
 const create = (req, res) => {
   let data = req.body;
-
   neode.create('Person', data)
   .then((person) => {
     res.status(200).json({data: {
@@ -56,6 +57,7 @@ const create = (req, res) => {
   })
 }
 
+// Update volunteer
 const update = (req, res) => {
   const id = req.params.id;
   const data = req.body;
@@ -81,6 +83,7 @@ const update = (req, res) => {
   })
 }
 
+// Delete volunteer
 const remove = (req, res) => {
   const personId = req.params.id;
   neode.first('Person', 'id', personId)
@@ -95,6 +98,7 @@ const remove = (req, res) => {
   })
 }
 
+// ADD Certification to volunteer
 const addCertification = (req, res) => {
   const personId = req.params.id;
   const certificationId = req.body.certification_id;
@@ -126,7 +130,7 @@ module.exports = {
 
 
 
-
+// HOW TO GET ALL Volunteer certifications, with sign offs
 // const show = (req, res) => {
 //   const id = req.params.id;
 //   const query = `match (p1:Person {id: {id}}) 
@@ -164,7 +168,7 @@ module.exports = {
 //   });
 // }
 
-
+// HOW TO GET ALL Volunteers certifications, with sign offs
 // const getWithCerts = (req, res) => {
 //   const query = `match (p1:Person) 
 //   OPTIONAL MATCH (p1)-[r1:HAS_CERTIFICATION]->(c1:Certification)
