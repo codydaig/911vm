@@ -16,40 +16,60 @@ const get = (req, res) => {
 
 const show = (req, res) => {
   const id = req.params.id;
-  const query = `match (p1:Person {id: {id}}) 
-  OPTIONAL MATCH (p1)-[r1:HAS_CERTIFICATION]->(c1:Certification)
-  WITH p1, collect({name: c1.name, id: c1.id, expired_at: r1.expired_at}) as certifications
-  OPTIONAL MATCH (c1)-[r3:SIGNS_CERTIFICATION {person_id: p1.id}]-(p2:Person) 
-  return {
-    person: p1, 
-    certification: certifications, 
-    sign_off: collect({
-      certification_name: c1.name, 
-      certification_id: c1.id, 
-      first_name: p2.first_name, 
-      last_name: p2.last_name,
-      id: p2.id,
-      phone_number: p2.phone_number,
-      email_address: p2.email_address,
-      class: p2.class      
-    })
-  }`
-  
-  neode.cypher(query, {id: id})
-  .then((collection) => {
-    const data = collection.records.map((item) => {
-      return {
-        person: item['_fields'][0]['person']['properties'],
-        certification: item['_fields'][0]['certification'],
-        sign_off: item['_fields'][0]['sign_off'],
-      }
-    })
-    res.status(202).json({data: data})
+  neode.first('Person', 'id', id)
+  .then((person) => {
+    res.status(200).json({data: {
+      id: person.get('id'),
+      first_name: person.get('first_name'),
+      last_name: person.get('last_name'),
+      email_address: person.get('email_address'),
+      phone_number: person.get('phone_number'),
+      is_admin: person.get('is_admin'),
+      is_volunteer: person.get('is_volunteer'),
+      created_at: person.get('created_at'),
+    }});
   })
   .catch((err) => {
     res.status(404).json({error_message: err.message});
-  });
+  })
 }
+
+// const show = (req, res) => {
+//   const id = req.params.id;
+//   const query = `match (p1:Person {id: {id}}) 
+//   OPTIONAL MATCH (p1)-[r1:HAS_CERTIFICATION]->(c1:Certification)
+//   WITH p1, collect({name: c1.name, id: c1.id, expired_at: r1.expired_at}) as certifications
+//   OPTIONAL MATCH (c1)-[r3:SIGNS_CERTIFICATION {person_id: p1.id}]-(p2:Person) 
+//   return {
+//     person: p1, 
+//     certification: certifications, 
+//     sign_off: collect({
+//       certification_name: c1.name, 
+//       certification_id: c1.id, 
+//       first_name: p2.first_name, 
+//       last_name: p2.last_name,
+//       id: p2.id,
+//       phone_number: p2.phone_number,
+//       email_address: p2.email_address,
+//       class: p2.class      
+//     })
+//   }`
+  
+//   neode.cypher(query, {id: id})
+//   .then((collection) => {
+//     const data = collection.records.map((item) => {
+//       return {
+//         person: item['_fields'][0]['person']['properties'],
+//         certification: item['_fields'][0]['certification'],
+//         sign_off: item['_fields'][0]['sign_off'],
+//       }
+//     })
+//     res.status(202).json({data: data})
+//   })
+//   .catch((err) => {
+//     res.status(404).json({error_message: err.message});
+//   });
+// }
 
 const create = (req, res) => {
   let data = req.body;
