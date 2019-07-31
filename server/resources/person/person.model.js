@@ -59,8 +59,7 @@ const schema = {
     'cascade': 'detach',
     properties: {
       expired_at: {
-        type: 'number',
-        required: true
+        type: 'number'
       },
       created_at: {
         type: 'number',
