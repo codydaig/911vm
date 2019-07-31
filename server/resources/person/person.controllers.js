@@ -112,7 +112,7 @@ const addCertification = (req, res) => {
     return person.relateTo(certification, 'has_certification', {expired_at: expiredAt})
   })
   .then(() => {
-    res.status(202).json({message: "Relationship created"})
+    res.status(202).json({data: "Relationship created"})
   })
   .catch((err) => {
     res.status(404).json({error_message: err.message});
