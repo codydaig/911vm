@@ -54,8 +54,11 @@ const certificationSignQuery = (items) => {
   return items.map((item) => {
     return {'query': `
     MATCH (p1:Person {email_address:{sign_by_email_address}}), 
-    ((p2:Person {email_address:{email_address}})-[:HAS_CERTIFICATION]->(c:Certification {name:{certification_name}})) 
-    CREATE (p1)-[:SIGNS_CERTIFICATION {person_id: p2.id, signed_at:{signed_at}}]->(c)`, params: {email_address: item.email_address, sign_by_email_address: item.sign_by_email_address, certification_name: item.certification_name, signed_at: new Date(item['signed_at']).getTime()}}
+    ((p2:Person {email_address:{email_address}})-[r:HAS_CERTIFICATION]->(c:Certification {name:{certification_name}})) 
+    SET r.signed_person_id = p1.id, 
+    r.signed_person_first_name = p1.first_name, 
+    r.signed_person_last_name = p1.last_name,
+    r.signed_at = {signed_at}`, params: {email_address: item.email_address, sign_by_email_address: item.sign_by_email_address, certification_name: item.certification_name, signed_at: new Date(item['signed_at']).getTime()}}
   })
 }
 
