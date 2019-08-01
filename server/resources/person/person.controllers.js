@@ -128,13 +128,13 @@ const getCertifications = (req, res) => {
       certification: {
         name: c.name,
         id: c.id,
-        expired_at: r1.expired_at
-      },
-      sign_off: {
-        first_name: r1.signed_person_first_name, 
-        last_name: r1.signed_person_last_name,
-        id: r1.signed_person_id,
-        signed_at: r1.signed_at
+        expired_at: r1.expired_at,
+        sign_off: {
+          first_name: r1.signed_person_first_name, 
+          last_name: r1.signed_person_last_name,
+          id: r1.signed_person_id,
+          signed_at: r1.signed_at
+        }        
       }
     }
   }`;
