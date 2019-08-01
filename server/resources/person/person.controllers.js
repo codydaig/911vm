@@ -120,28 +120,10 @@ const addCertification = (req, res) => {
 }
 
 // Get a volunteer's certifications
+
 const getCertifications = (req, res) => {
   const id = req.params.id;
-  const query = `MATCH (p:Person {id: {id}})-[r:HAS_CERTIFICATION]->(c:Certification) WITH {id: c.id, name: c.name, expired_at: r.expired_at} AS certifications RETURN {
-    certification: certifications
-  }`;
-
-  neode.cypher(query, {id: id})
-  .then((collection) => {
-    const data = collection.records.map((item) => {
-      return item['_fields'][0]['certification'];
-    })    
-    res.status(202).json({data: data})
-  })
-  .catch((err) => {
-    res.status(404).json({error_message: err.message});
-  })
-}
-
-// Get a volunteer's certification with sign offs
-const getCertificationSignOffs = (req, res) => {
-  const id = req.params.id;
-  const query = `MATCH (p1:Person {id: {id}})-[r1:HAS_CERTIFICATION]->(c:Certification)-[r2:SIGNS_CERTIFICATION {person_id: p1.id}]-(p2:Person) RETURN{
+  const query = `MATCH (p1:Person {id: {id}})-[r1:HAS_CERTIFICATION]->(c:Certification) RETURN {
     data: {
       certification: {
         name: c.name,
@@ -149,12 +131,10 @@ const getCertificationSignOffs = (req, res) => {
         expired_at: r1.expired_at
       },
       sign_off: {
-        first_name: p2.first_name, 
-        last_name: p2.last_name,
-        id: p2.id,
-        phone_number: p2.phone_number,
-        email_address: p2.email_address,
-        class: p2.class
+        first_name: r1.signed_person_first_name, 
+        last_name: r1.signed_person_last_name,
+        id: r1.signed_person_id,
+        signed_at: r1.signed_at
       }
     }
   }`;
@@ -179,8 +159,7 @@ module.exports = {
   update: update,
   remove: remove,  
   addCertification: addCertification,
-  getCertifications: getCertifications,
-  getCertificationSignOffs: getCertificationSignOffs
+  getCertifications: getCertifications
 }
 
 
