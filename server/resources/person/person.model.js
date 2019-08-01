@@ -63,34 +63,26 @@ const schema = {
     'cascade': 'detach',
     properties: {
       expired_at: {
-        type: 'number'
+        type: 'number',        
       },
-      created_at: {
-        type: 'number',
-        default: () => (new Date).getTime(),
-      },
-    }
-  },
-  signs_certification: {
-    type: 'relationship',
-    relationship: 'SIGNS_CERTIFICATION',
-    direction: 'out',
-    'cascade': 'detach',
-    properties: {
-      person_id: {
+      signed_person_id: {
         type: 'string',
-        required: true,
-      }, 
-      created_at: {
-        type: 'number',
-        default: () => (new Date).getTime(),
+      },
+      signed_person_first_name: {
+        type: 'name',
+      },
+      signed_person_last_name: {
+        type: 'name',
       },
       signed_at: {
         type: 'number',
-        required: true,
-      }
+      },
+      created_at: {
+        type: 'number',
+        default: () => (new Date).getTime(),
+      },
     }
-  }  
+  }   
 }
 
 module.exports = schema;
