@@ -292,58 +292,57 @@ Status code: 202
 
 ```
 {
-  data: {
-    id: 'certification_id',
-    name: 'certification_name',
-    expired_at: milliseconds
-  }
-}
-```
-
-Status code: 404
-
-`{error_message: 'error message'}`
-
-
-### Get a volunteer's certification with sign offs
-
-`GET /api/person/:id/signoff`
-
-Response
-
-Status code: 202
-
-```
-{
     "data": [
         {
             "sign_off": {
-                "email_address": "cody.daig@leu-rescue.org",
-                "last_name": "Daig",
-                "phone_number": "720-340-2319",
-                "id": "ddb25135-32e7-42bc-9368-31a20017a2a8",
-                "first_name": "Cody",
-                "class": "Probationary"
+                "signed_at": null,
+                "last_name": null,
+                "id": null,
+                "first_name": null
             },
             "certification": {
-                "name": "CPR",
-                "id": "734ad2c0-9b92-4182-be0e-d90aae18b5f8",
+                "name": "EMT Basic",
+                "id": "6cdd2fea-9c55-4dcc-bbf3-5b20072bb4e1",
+                "expired_at": 1579766400000
+            }
+        },
+        {
+            "sign_off": {
+                "signed_at": null,
+                "last_name": null,
+                "id": null,
+                "first_name": null
+            },
+            "certification": {
+                "name": "CPR Instructor",
+                "id": "15430721-54a7-4fe0-9c9d-4b978534743f",
                 "expired_at": 1561878000000
             }
         },
         {
             "sign_off": {
-                "email_address": "leslie.coburn@leu-rescue.org",
-                "last_name": "Leslie",
-                "phone_number": "720-226-1457",
-                "id": "910fb13e-5c3f-4459-995f-18dfc53eb5c0",
-                "first_name": "Coburn",
-                "class": "Trainee"
+                "signed_at": null,
+                "last_name": null,
+                "id": null,
+                "first_name": null
             },
             "certification": {
-                "name": "EMT Basic",
-                "id": "76998731-bff5-4160-87d9-72ea38ebe06e",
-                "expired_at": 1579852800000
+                "name": "EMR Instructor",
+                "id": "2cce4915-8b90-48e0-8f77-bc9aa1a98dd3",
+                "expired_at": 1533020400000
+            }
+        },
+        {
+            "sign_off": {
+                "signed_at": 1525158000000,
+                "last_name": "Eikenberg",
+                "id": "64db2d75-8a8b-4409-8b49-3d9271c84f0d",
+                "first_name": "Katie"
+            },
+            "certification": {
+                "name": "CPR",
+                "id": "5012a32e-dd57-4b08-8bad-93c285932f86",
+                "expired_at": 1561878000000
             }
         }
     ]
