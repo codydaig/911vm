@@ -292,60 +292,60 @@ Status code: 202
 
 ```
 {
-    "data": [
-        {
-            "sign_off": {
-                "signed_at": null,
-                "last_name": null,
-                "id": null,
-                "first_name": null
-            },
-            "certification": {
-                "name": "EMT Basic",
-                "id": "6cdd2fea-9c55-4dcc-bbf3-5b20072bb4e1",
-                "expired_at": 1579766400000
-            }
-        },
-        {
-            "sign_off": {
-                "signed_at": null,
-                "last_name": null,
-                "id": null,
-                "first_name": null
-            },
-            "certification": {
-                "name": "CPR Instructor",
-                "id": "15430721-54a7-4fe0-9c9d-4b978534743f",
-                "expired_at": 1561878000000
-            }
-        },
-        {
-            "sign_off": {
-                "signed_at": null,
-                "last_name": null,
-                "id": null,
-                "first_name": null
-            },
-            "certification": {
-                "name": "EMR Instructor",
-                "id": "2cce4915-8b90-48e0-8f77-bc9aa1a98dd3",
-                "expired_at": 1533020400000
-            }
-        },
-        {
-            "sign_off": {
-                "signed_at": 1525158000000,
-                "last_name": "Eikenberg",
-                "id": "64db2d75-8a8b-4409-8b49-3d9271c84f0d",
-                "first_name": "Katie"
-            },
-            "certification": {
-                "name": "CPR",
-                "id": "5012a32e-dd57-4b08-8bad-93c285932f86",
-                "expired_at": 1561878000000
-            }
+  "data": [
+    {
+      "certification": {
+        "name": "EMT Basic",
+        "id": "6cdd2fea-9c55-4dcc-bbf3-5b20072bb4e1",
+        "expired_at": 1579766400000,
+        "sign_off": {
+          "signed_at": null,
+          "last_name": null,
+          "id": null,
+          "first_name": null
         }
-    ]
+      }
+    },
+    {
+      "certification": {
+        "name": "CPR Instructor",
+        "id": "15430721-54a7-4fe0-9c9d-4b978534743f",
+        "expired_at": 1561878000000,
+        "sign_off": {
+          "signed_at": null,
+          "last_name": null,
+          "id": null,
+          "first_name": null
+        }
+      }
+    },
+    {
+      "certification": {
+        "name": "EMR Instructor",
+        "id": "2cce4915-8b90-48e0-8f77-bc9aa1a98dd3",
+        "expired_at": 1533020400000,
+        "sign_off": {
+          "signed_at": null,
+          "last_name": null,
+          "id": null,
+          "first_name": null
+        }
+      }
+    },
+    {
+      "certification": {
+        "name": "CPR",
+        "id": "5012a32e-dd57-4b08-8bad-93c285932f86",
+        "expired_at": 1561878000000,
+        "sign_off": {
+          "signed_at": 1525158000000,
+          "last_name": "Eikenberg",
+          "id": "64db2d75-8a8b-4409-8b49-3d9271c84f0d",
+          "first_name": "Katie"
+        }
+      }
+    }
+  ]
 }
 ```
 
