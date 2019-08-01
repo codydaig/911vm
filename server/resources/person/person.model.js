@@ -7,6 +7,10 @@ const schema = {
     required: true,
     default: () => uuidv4(),
   },
+  raido_id: {
+    type: 'string',
+    empty: true,
+  },
   first_name: {
     type: 'name',
     required: true,
