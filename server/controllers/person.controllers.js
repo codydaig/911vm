@@ -1,4 +1,5 @@
-const neode = require('../models/index');
+const neode = require('../db/index');
+const Person = require('../models/person.model');
 
 // GET all volunteers
 const get = (req, res) => {
@@ -17,19 +18,9 @@ const get = (req, res) => {
 
 // GET a volunteer data
 const show = (req, res) => {
-  const id = req.params.id;
-  neode.first('Person', 'id', id)
-  .then((person) => {
-    res.status(200).json({data: {
-      id: person.get('id'),
-      first_name: person.get('first_name'),
-      last_name: person.get('last_name'),
-      email_address: person.get('email_address'),
-      phone_number: person.get('phone_number'),
-      is_admin: person.get('is_admin'),
-      is_volunteer: person.get('is_volunteer'),
-      created_at: person.get('created_at'),
-    }});
+  Person.getOne(req.params.id)
+  .then(person => {
+    res.status(200).json({data: person});
   })
   .catch((err) => {
     res.status(404).json({error_message: err.message});

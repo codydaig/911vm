@@ -1,4 +1,4 @@
-const neode = require('../models/index');
+const neode = require('../db/index');
 
 const get = (req, res) => {
   const query = 'match (c:Certification) return c';
