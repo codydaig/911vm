@@ -4,8 +4,8 @@ const path = require('path');
 const morgan = require('morgan');
 const connect = require('./utils/db');
 const config = require('./../config/config');
-const personRouter = require('./resources/person/person.router');
-const certificationRouter = require('./resources/certification/certification.router');
+// const personRouter = require('./resources/person/person.router');
+// const certificationRouter = require('./resources/certification/certification.router');
 
 const app = express();
 
@@ -16,8 +16,8 @@ app.use(morgan('dev'));
 
 require('./routes.js')(app);
 
-app.use('/api/person', personRouter);
-app.use('/api/certification', certificationRouter);
+// app.use('/api/person', personRouter);
+// app.use('/api/certification', certificationRouter);
 
 const start = async () => {
   try {

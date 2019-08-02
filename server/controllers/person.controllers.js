@@ -1,4 +1,4 @@
-const neode = require('../index');
+const neode = require('../models/index');
 
 // GET all volunteers
 const get = (req, res) => {
