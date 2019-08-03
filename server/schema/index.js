@@ -1,6 +1,6 @@
 const Neode = require('neode');
-const Person = require('./person.model');
-const Certification = require('./certification.model');
+const Person = require('./person.schema');
+const Certification = require('./certification.schema');
 
 const neode = new Neode.fromEnv().with({
   Person: Person,
