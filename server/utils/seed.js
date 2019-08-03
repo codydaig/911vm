@@ -1,6 +1,6 @@
 const fs = require("fs");
 const uuidv4 = require('uuid/v4');
-const neode = require('./../resources/index');
+const neode = require('./../schema/index');
 
 const volunteers = JSON.parse(fs.readFileSync(__dirname+"/./../libs/data_dump/volunteers.json"));
 const certificationTypes = JSON.parse(fs.readFileSync(__dirname+"/./../libs/data_dump/certificationTypes.json"));
