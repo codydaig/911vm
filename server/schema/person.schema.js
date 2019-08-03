@@ -7,7 +7,7 @@ const schema = {
     required: true,
     default: () => uuidv4(),
   },
-  raido_id: {
+  radio_id: {
     type: 'string',
     empty: true,
   },
