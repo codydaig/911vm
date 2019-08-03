@@ -1,4 +1,4 @@
-const neode = require('./../resources/index');
+const neode = require('./../schema/index');
 
 neode.cypher('MATCH (n) DETACH DELETE n',{})
 .then(() => {
