@@ -1,4 +1,17 @@
 # Neo4j Installation
+There are two version of Neo4j, either which will work.  Both have dependence on Java being installed.  If you install the desktop edition from the neo4j website, it will take care of the Java installation for you.
+
+## Desktop Edition
+1. Download the Neo4j Desktop Edition [download](https://neo4j.com/download/)
+
+2. Open the application and follow prompts to create a user account and password for the Neo4j server.
+
+3. Start the Neo4j server from the desktop application.
+
+Here is the link to the Neo4j product page and overview. [link](https://neo4j.com/product/#neo4j-desktop)
+
+
+## Community Edition
 1. Download the [Community Server Edition](https://neo4j.com/download-center/#community)
 2. Open up your terminal/shell
 3. Extract the contents of the archive, using: `tar -xf <filecode>`.  For example, `tar -xf neo4j-community-3.5.8-unix.tar.gz`
@@ -40,7 +53,7 @@ Once you create a new password for the 'neo4j' user upon visiting the Neo4j Brow
 
 Response
 
-Status code: 202
+Status code: 200
 
 ```
 {
@@ -73,7 +86,7 @@ Request
 
 Response
 
-Status code: 202
+Status code: 200
 ```
 {
   data: {
@@ -94,7 +107,7 @@ Status code: 404
 
 `GET /api/person`
 
-Status code: 202
+Status code: 200
 
 ```
 {
@@ -141,7 +154,7 @@ Request
 
 Response
 
-Status code: 202
+Status code: 200
 
 ```
 {
@@ -186,7 +199,7 @@ Request
 
 Response
 
-Status code: 202
+Status code: 200
 
 ```
 {
@@ -215,7 +228,7 @@ Status code: 404
 
 Response
 
-Status code: 202
+Status code: 200
 
 ```
 {
@@ -244,7 +257,7 @@ Status code: 404
 
 Response
 
-Status code: 202
+Status code: 200
 
 ```
 {
@@ -274,7 +287,7 @@ Request
 
 Response
 
-Status code: 202
+Status code: 200
 
 `{message: "Relationship created"}`
 
@@ -288,7 +301,7 @@ Status code: 404
 
 Response
 
-Status code: 202
+Status code: 200
 
 ```
 {
