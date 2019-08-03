@@ -281,7 +281,7 @@ Request
 ```
 {
   certification_id: string, // required
-  expired_at: dateString, // for example '2019-02-23'   
+  expriation_date: dateString, // for example '2019-02-23'   
 }
 ```
 
@@ -311,11 +311,9 @@ Status code: 200
         "name": "EMT Basic",
         "id": "6cdd2fea-9c55-4dcc-bbf3-5b20072bb4e1",
         "expired_at": 1579766400000,
-        "sign_off": {
-          "signed_at": null,
-          "last_name": null,
-          "id": null,
-          "first_name": null
+        "expriation_date": {
+          "signature_date": null,
+          "signature_person_id": null
         }
       }
     },
@@ -323,12 +321,10 @@ Status code: 200
       "certification": {
         "name": "CPR Instructor",
         "id": "15430721-54a7-4fe0-9c9d-4b978534743f",
-        "expired_at": 1561878000000,
+        "expriation_date": 1561878000000,
         "sign_off": {
-          "signed_at": null,
-          "last_name": null,
-          "id": null,
-          "first_name": null
+          "signature_date": null,
+          "signature_person_id": null
         }
       }
     },
@@ -336,12 +332,10 @@ Status code: 200
       "certification": {
         "name": "EMR Instructor",
         "id": "2cce4915-8b90-48e0-8f77-bc9aa1a98dd3",
-        "expired_at": 1533020400000,
+        "expriation_date": 1533020400000,
         "sign_off": {
-          "signed_at": null,
-          "last_name": null,
-          "id": null,
-          "first_name": null
+          "signature_date": null,
+          "signature_person_id": null
         }
       }
     },
@@ -349,12 +343,10 @@ Status code: 200
       "certification": {
         "name": "CPR",
         "id": "5012a32e-dd57-4b08-8bad-93c285932f86",
-        "expired_at": 1561878000000,
+        "expriation_date": 1561878000000,
         "sign_off": {
-          "signed_at": 1525158000000,
-          "last_name": "Eikenberg",
-          "id": "64db2d75-8a8b-4409-8b49-3d9271c84f0d",
-          "first_name": "Katie"
+          "signature_date": 1525158000000,
+          "signature_person_id": "64db2d75-8a8b-4409-8b49-3d9271c84f0d",
         }
       }
     }
