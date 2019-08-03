@@ -1,8 +1,8 @@
 // All the Server side routes live in this one file!
 
 const controllers = require('./controllers.js');
-const Certification = require('./controllers/certification.controllers.js/index.js');
-const Person = require('./controllers/person.controllers.js/index.js');
+const Certification = require('./controllers/certification.controllers.js');
+const Person = require('./controllers/person.controllers.js');
 
 module.exports = function(app) {
 
