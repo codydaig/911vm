@@ -16,10 +16,9 @@ const personQuery = (items) => {
       'phone_number': item['Phone'].length > 0 ? item['Phone'] : null,
       'class': item['Class'],
       'start_date': item['Date Joined'].length > 0 ? (new Date(item['Date Joined']).getTime()) : null,
-      'id': uuidv4(),
-      'created_at': (new Date).getTime(),
+      'id': uuidv4()
     }
-    return {'query': 'CREATE (p: Person {id: {id}, first_name: {first_name}, last_name: {last_name}, email_address: {email_address}, phone_number: {phone_number}, start_date: {start_date}, class: {class}, created_at: {created_at}}) RETURN p', 'params': params }
+    return {'query': 'CREATE (p: Person {id: {id}, first_name: {first_name}, last_name: {last_name}, email_address: {email_address}, phone_number: {phone_number}, start_date: {start_date}, class: {class}}) RETURN p', 'params': params }
   });
 }
 
@@ -42,7 +41,7 @@ const volunteerCertificationQuery = (items) => {
     const certifications = Object.keys(item);    
     certifications.forEach((cert) => {
       if(cert !== 'Name' && item[cert] !== '' && item[cert] !== 'n/a') {
-        queries.push({query: 'MATCH (p:Person {first_name: {first_name}, last_name: {last_name}}), (c:Certification {name:{cert}}) CREATE (p)-[:HAS_CERTIFICATION {expired_at: {expired_at}}]->(c)', params: {first_name: first_name, last_name: last_name, cert: cert, expired_at: new Date(item[cert]).getTime()}});
+        queries.push({query: 'MATCH (p:Person {first_name: {first_name}, last_name: {last_name}}), (c:Certification {name:{cert}}) CREATE (p)-[:HAS_CERTIFICATION {expriation_date: {expriation_date}}]->(c)', params: {first_name: first_name, last_name: last_name, cert: cert, expriation_date: new Date(item[cert]).getTime()}});
       }
     })
   });
@@ -56,9 +55,7 @@ const certificationSignQuery = (items) => {
     MATCH (p1:Person {email_address:{sign_by_email_address}}), 
     ((p2:Person {email_address:{email_address}})-[r:HAS_CERTIFICATION]->(c:Certification {name:{certification_name}})) 
     SET r.signed_person_id = p1.id, 
-    r.signed_person_first_name = p1.first_name, 
-    r.signed_person_last_name = p1.last_name,
-    r.signed_at = {signed_at}`, params: {email_address: item.email_address, sign_by_email_address: item.sign_by_email_address, certification_name: item.certification_name, signed_at: new Date(item['signed_at']).getTime()}}
+    r.signature_date = {signature_date}`, params: {email_address: item.email_address, sign_by_email_address: item.sign_by_email_address, certification_name: item.certification_name, signature_date: new Date(item['signed_at']).getTime()}}
   })
 }
 

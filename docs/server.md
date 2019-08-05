@@ -1,4 +1,17 @@
 # Neo4j Installation
+There are two version of Neo4j, either which will work.  Both have dependence on Java being installed.  If you install the desktop edition from the neo4j website, it will take care of the Java installation for you.
+
+## Desktop Edition
+1. Download the Neo4j Desktop Edition [download](https://neo4j.com/download/)
+
+2. Open the application and follow prompts to create a user account and password for the Neo4j server.
+
+3. Start the Neo4j server from the desktop application.
+
+Here is the link to the Neo4j product page and overview. [link](https://neo4j.com/product/#neo4j-desktop)
+
+
+## Community Edition
 1. Download the [Community Server Edition](https://neo4j.com/download-center/#community)
 2. Open up your terminal/shell
 3. Extract the contents of the archive, using: `tar -xf <filecode>`.  For example, `tar -xf neo4j-community-3.5.8-unix.tar.gz`
@@ -40,7 +53,7 @@ Once you create a new password for the 'neo4j' user upon visiting the Neo4j Brow
 
 Response
 
-Status code: 202
+Status code: 200
 
 ```
 {
@@ -73,7 +86,7 @@ Request
 
 Response
 
-Status code: 202
+Status code: 200
 ```
 {
   data: {
@@ -94,7 +107,7 @@ Status code: 404
 
 `GET /api/person`
 
-Status code: 202
+Status code: 200
 
 ```
 {
@@ -141,7 +154,7 @@ Request
 
 Response
 
-Status code: 202
+Status code: 200
 
 ```
 {
@@ -186,7 +199,7 @@ Request
 
 Response
 
-Status code: 202
+Status code: 200
 
 ```
 {
@@ -215,7 +228,7 @@ Status code: 404
 
 Response
 
-Status code: 202
+Status code: 200
 
 ```
 {
@@ -244,7 +257,7 @@ Status code: 404
 
 Response
 
-Status code: 202
+Status code: 200
 
 ```
 {
@@ -268,13 +281,13 @@ Request
 ```
 {
   certification_id: string, // required
-  expired_at: dateString, // for example '2019-02-23'   
+  expriation_date: dateString, // for example '2019-02-23'   
 }
 ```
 
 Response
 
-Status code: 202
+Status code: 200
 
 `{message: "Relationship created"}`
 
@@ -288,7 +301,7 @@ Status code: 404
 
 Response
 
-Status code: 202
+Status code: 200
 
 ```
 {
@@ -298,11 +311,9 @@ Status code: 202
         "name": "EMT Basic",
         "id": "6cdd2fea-9c55-4dcc-bbf3-5b20072bb4e1",
         "expired_at": 1579766400000,
-        "sign_off": {
-          "signed_at": null,
-          "last_name": null,
-          "id": null,
-          "first_name": null
+        "expriation_date": {
+          "signature_date": null,
+          "signature_person_id": null
         }
       }
     },
@@ -310,12 +321,10 @@ Status code: 202
       "certification": {
         "name": "CPR Instructor",
         "id": "15430721-54a7-4fe0-9c9d-4b978534743f",
-        "expired_at": 1561878000000,
+        "expriation_date": 1561878000000,
         "sign_off": {
-          "signed_at": null,
-          "last_name": null,
-          "id": null,
-          "first_name": null
+          "signature_date": null,
+          "signature_person_id": null
         }
       }
     },
@@ -323,12 +332,10 @@ Status code: 202
       "certification": {
         "name": "EMR Instructor",
         "id": "2cce4915-8b90-48e0-8f77-bc9aa1a98dd3",
-        "expired_at": 1533020400000,
+        "expriation_date": 1533020400000,
         "sign_off": {
-          "signed_at": null,
-          "last_name": null,
-          "id": null,
-          "first_name": null
+          "signature_date": null,
+          "signature_person_id": null
         }
       }
     },
@@ -336,12 +343,10 @@ Status code: 202
       "certification": {
         "name": "CPR",
         "id": "5012a32e-dd57-4b08-8bad-93c285932f86",
-        "expired_at": 1561878000000,
+        "expriation_date": 1561878000000,
         "sign_off": {
-          "signed_at": 1525158000000,
-          "last_name": "Eikenberg",
-          "id": "64db2d75-8a8b-4409-8b49-3d9271c84f0d",
-          "first_name": "Katie"
+          "signature_date": 1525158000000,
+          "signature_person_id": "64db2d75-8a8b-4409-8b49-3d9271c84f0d",
         }
       }
     }

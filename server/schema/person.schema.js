@@ -52,35 +52,27 @@ const schema = {
     type: 'boolean',
     default: true,
   },
-  created_at: {
-    type: 'number',
-    default: () => (new Date).getTime(),
-  },
   has_certification: {
     type: 'relationship',
     relationship: 'HAS_CERTIFICATION',
     direction: 'out',
     'cascade': 'detach',
     properties: {
-      expired_at: {
+      expriation_date: {
         type: 'number',        
       },
-      signed_person_id: {
+      signature_person_id: {
         type: 'string',
       },
-      signed_person_first_name: {
-        type: 'name',
-      },
-      signed_person_last_name: {
-        type: 'name',
-      },
-      signed_at: {
+      // signature_person_first_name: {
+      //   type: 'name',
+      // },
+      // signature_person_last_name: {
+      //   type: 'name',
+      // },
+      signature_date: {
         type: 'number',
-      },
-      created_at: {
-        type: 'number',
-        default: () => (new Date).getTime(),
-      },
+      }
     }
   }   
 }
