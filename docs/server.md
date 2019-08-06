@@ -24,7 +24,7 @@ Here is the link to the Neo4j product page and overview. [link](https://neo4j.co
 Once you create a new password for the 'neo4j' user upon visiting the Neo4j Browser the first time, you'll have full access to the Neo4j database.
 
 # Neo4j configuration
-1. Create a .env file
+1. Create a .env file at the parent most folder (same level as package.json)
 2. Setup the .env file
     ```
     // .env
