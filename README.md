@@ -10,3 +10,6 @@ Some pieces of note for getting started with development
 * The /public folder is accessible by the web server
 * The client/index.jsx is the starting point for webpack
 * `npm run build` starts the webpack build which also generates the index.html file
+
+## Setup backend
+[link](/docs/server.md)
