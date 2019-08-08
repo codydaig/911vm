@@ -3,6 +3,7 @@
 const controllers = require('./controllers.js');
 const Certification = require('./controllers/certification.controllers.js');
 const Person = require('./controllers/person.controllers.js');
+const Signature = require('./controllers/signature.controllers.js');
 
 module.exports = function(app) {
 
@@ -24,6 +25,12 @@ module.exports = function(app) {
   app.post('/api/person/:id/certification', Person.addCertification);
   app.get('/api/person/:id/certification', Person.getCertifications);
 
-
+  // Signature Routes
+  app.get('/api/signature', Signature.getAll); // get all signatures for all users ???
+  // app.post('/api/signature', Signature.create);  // create a single signature - params: volunteerId, adminId, certificationId, date
+  // app.get('/api/signature/:id', Signature.get);  // get a single signature record
+  // app.put('/api/signature/:id', Signature.update); // update a signature - params : volunteerId, adminId, certificationId, date
+  // app.delete('/api/signature/:id', Signature.remove);
+ 
 
 };
