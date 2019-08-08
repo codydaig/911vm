@@ -3,10 +3,6 @@ import moment from 'moment';
 import Certification from './Certification.jsx';
 
 // @Karin Hsu i have few endpoints you can play with.  GET /api/person,  GET /api/person/:id,  GET /api/person/:id/certification
-/* ' the end goal for your task is to make mock queries with the name or ID of a volunteer, 
-and populate the report card on the webpage with the queried return data.
-*/
-// export default function ReportCard({ personInfo, personData} ) {
 
 const EditingInfoCard = ({editing, personInfo, personData, unixConverter}) => {
   return (
@@ -117,64 +113,4 @@ export default class ReportCard extends React.Component {
       </div>
     )
   }
-  
-  
-  
-  
-  
-  
-  //         {/* {personData.data.map((person, i) => {
-  //           // console.log(person)
-  //           // console.log(person.certification.name)
-  //           return (
-  //             <div className="certifications" key={i}>
-  //               <p>Certification Name: {person.certification.name}</p>
-  //             {/*  expiration_date is mispelled. not sure if this is only in the mock data or if in DB */}
-  //               <p>Expires: {JSON.stringify(this.unixConverter(person.certification.expriation_date))}</p>
-  //               <p>Sign Off: {JSON.stringify(this.unixConverter(person.certification.sign_off.signature_date))}</p>
-  //             </div>
-  //           )
-  //         })}
-  //  */}
-
-  // return (
-  //   <div>
-  //       <div className="personal-info">
-  //         <h1>{personInfo.first_name} {personInfo.last_name}</h1>
-  //         <p>Email: {personInfo.email_address}</p>
-  //         <p>#: {personInfo.phone_number}</p>
-  //         <p>Admin: {personInfo.is_admin ? "Yes" : "No"}</p>
-  //         <p>Admin: 
-  //         {personInfo.is_admin ? "Yes" : "No"}
-  //         <select defaultValue={false} 
-  //         // onChange={this.handleChange} 
-  //         >
-  //             <option value="Orange">Orange</option>
-  //             <option value="Radish">Radish</option>
-  //             <option value="Cherry">Cherry</option>
-  //           </select>
-  //         </p>
-  //         <p>Volunteer: {personInfo.is_volunteer ? "Yes" : "No"}</p>
-  //       </div>
-      
-  //     <div className="certifications-container">
-  //       <h3>Certifications:</h3>
-  //       {/* {JSON.stringify(personData)} */}
-
-  //       {personData.data.map((person, i) => {
-  //         // console.log(person)
-  //         // console.log(person.certification.name)
-  //         return (
-  //           <div className="certifications" key={i}>
-  //             <p>Certification Name: {person.certification.name}</p>
-  //           {/*  expiration_date is mispelled. not sure if this is only in the mock data or if in DB */}
-  //             <p>Expires: {JSON.stringify(unixConverter(person.certification.expriation_date))}</p>
-  //             <p>Sign Off: {JSON.stringify(unixConverter(person.certification.sign_off.signature_date))}</p>
-  //             {/* {moment(1561878000000)} */}
-  //           </div>
-  //         )
-  //       })}
-  //     </div>
-  //   </div>
-  // )
 }

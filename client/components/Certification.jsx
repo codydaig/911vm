@@ -8,7 +8,6 @@ const DefaultCertificationCard = ({person, unixConverter}) => {
         <p>Name: {person.certification.name}</p>
         <p>Expires: {JSON.stringify(unixConverter(person.certification.expriation_date))}</p>
         <p>Sign Off: {JSON.stringify(unixConverter(person.certification.sign_off.signature_date))}</p>
-
       </div>
   )
 }
@@ -37,14 +36,8 @@ export default class Certification extends React.Component {
     }
   }
 
-  // handleClick() {
-  //   const editingValue = !this.state.editing;
-  //   this.setState({editing: editingValue})
-  // }
-
   render() {
     const { person, unixConverter, editing, handleChange } = this.props;
-    // const { editing } = this.state;
     return (
       <div>
       { 
