@@ -11,6 +11,9 @@ module.exports = function(app) {
   // Certification Routes
   app.post('/api/certification', Certification.create)
   app.get('/api/certification', Certification.get)
+  app.get('/api/certification/:id', Certification.show)
+  app.put('/api/certification/:id', Certification.update)
+  app.delete('/api/certification/:id', Certification.remove)
 
   // Person Routes
   app.get('/api/person', Person.get);
