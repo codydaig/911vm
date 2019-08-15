@@ -10,7 +10,7 @@ const Header = (props) => {
         height="32"
         alt=""
       />
-      911 VM
+      911 Volunteer Management
       <img
         src="//cdn.jsdelivr.net/emojione/assets/png/1f63a.png"
         width="32"

@@ -19,14 +19,16 @@ export default class OverviewResults extends React.Component {
   }
 
   render() {
+    console.log("or test: ", this.props)
     return (
       <div className="component-overview-results">
         {this.props.searchedData.map(data => (
           <OverviewResultsRow
-            key={data.title}
-            title={data.title}
-            email={data.email}
-            phone={data.phone}
+            key={data.id}
+            name={`${data.first_name} ${data.last_name}`}
+            email={data.email_address}
+            phone={data.phone_number}
+            class={data.class}
           />
         ))}
       </div>
