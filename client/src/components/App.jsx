@@ -11,16 +11,20 @@ class App extends React.Component {
     super(props);
     this.state = {
       filteredResult: [],
-      volunteerList: []
+      volunteerList: [],
+      selectedVolunteer: {}
     };
+
     this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.selectOneVolunteer = this.selectOneVolunteer.bind(this);
   }
 
   componentDidMount() {
-    this.getVolunteers();
+    this.getAllVolunteers();
   }
 
-  getVolunteers() {
+  // query all the volunteers, called when loading the page
+  getAllVolunteers() {
     axios.get(`http://localhost:3030/api/person`)
     .then(res => {
       this.setState({ 
@@ -30,6 +34,24 @@ class App extends React.Component {
     })
   }
 
+  // query volunteer information for each individual volunteer with their id
+  selectOneVolunteer(id) {
+    console.log("app test: ", id)
+    axios.get(`http://localhost:3030/api/person/${id}`)
+    .then(res => {
+      this.setState({ 
+        selectedVolunteer: res.data.data
+      }, () => {
+        const {selectedVolunteer} = this.state;
+        console.log("app test: ", selectedVolunteer)
+        alert(`Name: ${selectedVolunteer["first_name"]} ${selectedVolunteer["last_name"]}\n\
+Admin Status: ${selectedVolunteer["is_admin"]}\n\
+Volunteer Status: ${selectedVolunteer["is_volunteer"]}`)
+      });
+    })
+  }
+
+  // this function is called as user typing in new characters in the search bar
   handleSearchChange(event) {
     this.setState({
       filteredResult: FilterSearchResult(this.state.filteredResult, event.target.value)
@@ -41,7 +63,11 @@ class App extends React.Component {
       <div>
         <Header />
         <SearchInput textChange={this.handleSearchChange} />
-        <OverviewResults searchedData={this.state.filteredResult} />
+        <OverviewResults 
+          searchedData={this.state.filteredResult} 
+          selectedVolunteer={this.state.selectedVolunteer}
+          selectOneVolunteer = {this.selectOneVolunteer}
+        />
       </div>
     );
   }

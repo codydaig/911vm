@@ -39,17 +39,17 @@
     "joi": "^14.3.1",
     "neo4j-driver": "^1.7.5",
     "neode": "^0.2.16",
-    "react": "^15.6.1",
-    "react-dom": "^15.4.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "uuid": "^3.3.2",
     "webpack": "2.6.1"
   },
   "devDependencies": {
     "babel-preset-react": "^6.24.1",
-    "css-loader": "^3.1.0",
+    "css-loader": "^3.2.0",
     "html-webpack-plugin": "^3.2.0",
+    "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
-    "style-loader": "^0.23.1",
-    "morgan": "^1.9.1"
+    "style-loader": "^0.23.1"
   }
 }
