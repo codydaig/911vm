@@ -54,7 +54,7 @@ const certificationSignQuery = (items) => {
     return {'query': `
     MATCH (p1:Person {email_address:{sign_by_email_address}}), 
     ((p2:Person {email_address:{email_address}})-[r:HAS_CERTIFICATION]->(c:Certification {name:{certification_name}})) 
-    SET r.signed_person_id = p1.id, 
+    SET r.signature_person_id = p1.id, 
     r.signature_date = {signature_date}`, params: {email_address: item.email_address, sign_by_email_address: item.sign_by_email_address, certification_name: item.certification_name, signature_date: new Date(item['signed_at']).getTime()}}
   })
 }
