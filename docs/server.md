@@ -3,10 +3,9 @@ There are two version of Neo4j, either which will work.  Both have dependence on
 
 ## Desktop Edition
 1. Download the Neo4j Desktop Edition [download](https://neo4j.com/download/)
-
-2. Open the application and follow prompts to create a user account and password for the Neo4j server.
-
-3. Start the Neo4j server from the desktop application.
+1. Open the application and create a new project.
+1. Add A Graph to the project. The password you set is the NEO4J password that will go in the .env file in further steps.
+1. Start the Neo4j server from the desktop application.
 
 Here is the link to the Neo4j product page and overview. [link](https://neo4j.com/product/#neo4j-desktop)
 
