@@ -2,8 +2,7 @@ const FilterSearchResult = (volunteerList, searchText) => {
   
   return volunteerList
     .filter(volunteer => {
-      if ((volunteer["first_name"] && volunteer["first_name"].toLowerCase().includes(searchText.toLowerCase())) || 
-          (volunteer["last_name"] && volunteer["last_name"].toLowerCase().includes(searchText.toLowerCase()))) {
+      if ((volunteer["first_name"] && volunteer["last_name"]) && `${volunteer["first_name"]} ${volunteer["last_name"]}`.toLowerCase().includes(searchText.toLowerCase())) {
         return true;
       }
       if ((volunteer["email_address"] && volunteer["email_address"].toLowerCase().includes(searchText.toLowerCase())) ||

@@ -3,7 +3,7 @@ import "../../../../Styles/Header.css";
 
 const Header = (props) => {
   return (
-    <header className="component-header">
+    <header className = "component-header">
       <img
         src="//cdn.jsdelivr.net/emojione/assets/png/1f638.png"
         width="32"

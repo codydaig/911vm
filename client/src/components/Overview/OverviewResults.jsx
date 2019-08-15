@@ -22,8 +22,8 @@ export default function SimpleTable(props) {
   const classes = useStyles();
 
   return (
-    <Paper className={classes.root}>
-      <Table className={classes.table}>
+    <Paper className = {classes.root}>
+      <Table className = {classes.table}>
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
@@ -34,9 +34,9 @@ export default function SimpleTable(props) {
         </TableHead>
         <TableBody>
           {props.searchedData.map(row => (
-            <TableRow 
-              key={row.name} 
-              onClick = {() => {props.selectOneVolunteer(row.id)}}
+            <TableRow
+              key={row.id}
+              onClick={() => { props.selectOneVolunteer(row.id) }}
               hover
             >
               <TableCell component="th" scope="row">
