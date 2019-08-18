@@ -1,25 +1,49 @@
 import React from 'react';
 import ReportCard from './ReportCard.jsx';
-import personInfo from '../../911vmDataDump/chris.json'
-import personData from '../../911vmDataDump/chris_certs.json'
-/* 
-Gotcha. When they fix those issues, the end goal for your task is to make mock queries with the name or ID of a volunteer,
- and populate the report card on the webpage with the queried return data.
-*/
-
+// import personInfo from '../../911vmDataDump/chris.json'
+// import personData from '../../911vmDataDump/chris_certs.json'
+import axios from 'axios';
 
 class App extends React.Component {
-//assuming queries are made in app level/passed back to app level and response data passed down to <ReportCard> component via onclick function
-render() {
-  // const completePersonData = {...personInfo, ...personData};
-    return (
-      <div>
-        <h1>911 Volunteer Management</h1>
-        <p></p>
-      <ReportCard personInfo={personInfo.data} personData={personData}/>
-      </div>
-    )
+  constructor() {
+    super();
+    this.state = {
+      personInfo: [],
+      personData: [],
+      loaded: false
+    }
+  }
+
+  componentDidMount() {
+    axios.get('/api/person/ae503518-d157-4bfb-b5b0-6ad9af547d3e')
+      .then((response) => {
+        this.setState({personInfo: response.data.data})
+      })
+      .catch((error) => {
+        console.log("error", error)
+      })
+
+    axios.get('/api/person/ae503518-d157-4bfb-b5b0-6ad9af547d3e/certification')
+      .then((response) => {
+        this.setState({personData: response.data, loaded:true})
+      })
+      .catch((error) => {
+        console.log("error", error)
+      })
+  }
+
+  render() {
+    const { personInfo, personData, loaded } = this.state;
+    if (loaded) {
+      return (
+        <div>
+          <h1>911 Volunteer Management {JSON.stringify(personData)}</h1>
+          <p></p>
+            <ReportCard personInfo={personInfo} personData={personData}/>
+        </div>
+      )
+    }
+    return null;
   }
 }
-
 export default App;
