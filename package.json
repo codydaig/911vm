@@ -37,6 +37,7 @@
     "neo4j-driver": "^1.7.5",
     "neode": "^0.2.16",
     "react": "^15.6.1",
+    "react-date-picker": "^7.8.1",
     "react-dom": "^15.4.2",
     "uuid": "^3.3.2",
     "webpack": "2.6.1"

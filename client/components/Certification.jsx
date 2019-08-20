@@ -1,29 +1,35 @@
 import React from 'react';
 import { unix } from 'moment';
+// import DatePicker from 'react-date-picker';
+import axios from 'axios';
 
-{/*  expiration_date is mispelled. not sure if this is only in the mock data or if in DB */}
-const DefaultCertificationCard = ({person, unixConverter}) => {
+const DefaultCertificationCard = ({data, unixConverter}) => {
   return (
     <div>
-        <p>Name: {person.certification.name}</p>
-        <p>Expires: {JSON.stringify(unixConverter(person.certification.expriation_date))}</p>
-        <p>Sign Off: {JSON.stringify(unixConverter(person.certification.sign_off.signature_date))}</p>
+        <p>Name: {data.certification.name}</p>
+        <p>Expires: {JSON.stringify(unixConverter(data.certification.expriation_date))}</p>
+        <p>Sign Off: {JSON.stringify(unixConverter(data.certification.sign_off.signature_date))}</p>
       </div>
   )
 }
 
-const EditingCard = ({person, unixConverter, handleChange}) => {
+const EditingCard = ({data, unixConverter, handleChange, certificationTypes}) => {
+  console.log(certificationTypes)
   return (
     <div>
-      <p>Name: {person.certification.name}</p>
-      <form >
+      <p>Name:
+        <select defaultValue={data.certification.id} placeholder={data.certification.name} id="certification_name">
+          {certificationTypes.map((cert, i) => {
+            return <option value={cert.id} key={i}>{cert.name}</option>
+          })}
+        </select>
+      </p>
       <p>Expires: 
-        <input type="text" id="expires" placeholder={unixConverter(person.certification.expriation_date)}/>
+        <input type="text" id="expires" placeholder={unixConverter(data.certification.expriation_date) ? unixConverter(data.certification.expriation_date) : "undefined"}/>
       </p>
       <p>Sign Off: 
-        <input type="text" id="sign-off" placeholder={unixConverter(person.certification.sign_off.signature_date)} />
+        <input type="text" id="sign-off" placeholder={unixConverter(data.certification.sign_off.signature_date) ? unixConverter(data.certification.sign_off.signature_date) : "undefined"} />
       </p>
-      </form>
   </div>
   )
 }
@@ -33,19 +39,41 @@ export default class Certification extends React.Component {
     super(props);
     this.state = {
       query: '',
+      expriation_date: '', 
+      sign_off: '',
+      certificationTypes: [],
     }
   }
 
+  componentDidMount() {
+    axios.get('/api/certification')
+      .then(response => {
+        this.setState({
+          certificationTypes: response.data.data,
+        })
+      .catch(error => {
+        console.log("error", error);
+      });
+    });
+  }
+
   render() {
-    const { person, unixConverter, editing, handleChange } = this.props;
+    const { data, unixConverter, editing, handleChange } = this.props;
+    const { expriation_date, sign_off, certificationTypes } = this.state; 
     return (
       <div>
       { 
-        editing ? <EditingCard person={person} unixConverter={unixConverter} handleChange={handleChange}/> : <DefaultCertificationCard person={person} unixConverter={unixConverter}/>
+        editing ? 
+        <EditingCard 
+          data={data} 
+          unixConverter={unixConverter} 
+          handleChange={handleChange}
+          certificationTypes={certificationTypes}/> : 
+        <DefaultCertificationCard 
+          data={data} 
+          unixConverter={unixConverter}/>
       }
       </div>
     )
-
-
   }
 }
