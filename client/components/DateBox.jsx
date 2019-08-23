@@ -1,6 +1,5 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker.css";
 
 const DateBox = props => {
   return (
@@ -10,8 +9,9 @@ const DateBox = props => {
       </label>
       <DatePicker
         selected={props.selected}
-        onChange={props.handleDate}
-        name="startDate"
+        onChange={props.handle}
+        name={"start_date"}
+        value={props.selected}
         className="form-date"
         dateFormat='MM/dd/yyyy'
       />
