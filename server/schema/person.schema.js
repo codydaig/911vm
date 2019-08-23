@@ -64,17 +64,25 @@ const schema = {
       signature_person_id: {
         type: 'string',
       },
-      // signature_person_first_name: {
-      //   type: 'name',
-      // },
-      // signature_person_last_name: {
-      //   type: 'name',
-      // },
       signature_date: {
         type: 'number',
       }
     }
-  }   
+  },
+  has_certification_signature: {
+    type: 'relationship',
+    relationship: 'HAS_CERTIFICATION_SIGNATURE',
+    direction: 'out',
+    'cascade': 'detatch',
+    properties: {
+      signature_person_id: {
+        type: 'string'
+      },
+      signature_date: {
+        type: 'number'
+      }
+    }
+  }  
 }
 
 module.exports = schema;
