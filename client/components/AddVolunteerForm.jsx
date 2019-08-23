@@ -1,9 +1,9 @@
 import React from "react";
-import Input from "../elements/Input.jsx/index.js";
-import Select from "../elements/Select.jsx/index.js";
-import Checkbox from "../elements/Checkbox.jsx/index.js";
-import DateBox from "./DateBox.jsx/index.js.js";
-import SubmitButton from "../elements/SubmitButton.jsx/index.js";
+import Input from "../elements/Input.jsx";
+import Select from "../elements/Select.jsx";
+import Checkbox from "../elements/Checkbox.jsx";
+import DateBox from "./DateBox.jsx";
+import SubmitButton from "../elements/SubmitButton.jsx";
 import axios from "axios";
 
 class AddVolunteerForm extends React.Component {
