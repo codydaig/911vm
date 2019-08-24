@@ -1,3 +1,4 @@
+const moment = require('moment');
 const neode = require('../schema/index');
 
 let Persons = {};
@@ -101,8 +102,14 @@ Persons.findOneByIdGetCertifications = (id) => {
   return neode.cypher(query, {id: id})
   .then((collection) => {
     const data = collection.records.map((item) => {
+      if(item['_fields'][0]['data']['certification']['expriation_date']) {
+        item['_fields'][0]['data']['certification']['expriation_date'] = moment(item['_fields'][0]['data']['certification']['expriation_date']).format('YYYY-MM-DD')
+      }
+      if(item['_fields'][0]['data']['certification']['signature_date']) {
+        item['_fields'][0]['data']['certification']['signature_date'] = moment(item['_fields'][0]['data']['certification']['signature_date']).format('YYYY-MM-DD')
+      }      
       return item['_fields'][0]['data'];
-    })        
+    })
     return data;
   })
 }
