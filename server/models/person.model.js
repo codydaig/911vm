@@ -90,11 +90,10 @@ Persons.findOneByIdGetCertifications = (id) => {
       certification: {
         name: c.name,
         id: c.id,
-        expriation_date: r1.expriation_date,        
-        sign_off: {
-          id: r1.signature_person_id,
-          signature_date: r1.signature_date
-        }
+        expriation_date: r1.expriation_date,
+        signature_person_id: r1.signature_person_id,
+        signature_person_name: r1.signature_person_name,
+        signature_date: r1.signature_date
       }
     }
   }`;
