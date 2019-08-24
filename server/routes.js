@@ -24,7 +24,8 @@ module.exports = function(app) {
   app.delete('/api/person/:id', Person.remove);
   app.post('/api/person/:id/certification', Person.addCertification);
   app.get('/api/person/:id/certification', Person.getCertifications);
-
+  app.post('/api/person/certification', Person.addCertificationAndSignature)
+  
   // Signature Routes
   app.post('/api/signature', Signature.create); 
 

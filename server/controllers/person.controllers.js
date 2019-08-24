@@ -94,13 +94,14 @@ const getCertifications = (req, res) => {
 
 // Add a certification to a volunteer also sign off it
 const addCertificationAndSignature = (req, res) => {
+  
   const personId = req.body.person_id;
   const certificationId = req.body.certification_id;
   const signaturePersonId = req.body.signature_person_id
   const expiredAt = req.body.expired_at ? (new Date(req.body.expired_at)).getTime() : null;
   const signatureDate = req.body.signature_date ? (new Date(req.body.signature_date)).getTime() : null;
-
-  Persons.findOneByIdAndAddCertification(personId , certificationId, expiredAt, signaturePersonId, signatureDate)
+  
+  Persons.addCertificationAndSignature(personId , certificationId, expiredAt, signaturePersonId, signatureDate)
   .then((data) => {
     res.status(200).json({data: data})
   })
