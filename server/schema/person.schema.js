@@ -64,6 +64,9 @@ const schema = {
       signature_person_id: {
         type: 'string',
       },
+      signature_person_name: {
+        type: 'string',
+      },
       signature_date: {
         type: 'number',
       }
