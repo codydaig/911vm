@@ -3,6 +3,7 @@
 const controllers = require('./controllers.js');
 const Certification = require('./controllers/certification.controllers.js');
 const Person = require('./controllers/person.controllers.js');
+const Signature = require('./controllers/signature.controllers.js');
 
 module.exports = function(app) {
 
@@ -24,6 +25,8 @@ module.exports = function(app) {
   app.post('/api/person/:id/certification', Person.addCertification);
   app.get('/api/person/:id/certification', Person.getCertifications);
 
+  // Signature Routes
+  app.post('/api/signature', Signature.create); 
 
 
 };
