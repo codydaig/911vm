@@ -102,7 +102,7 @@ const addCertificationAndSignature = (req, res) => {
   const signatureDate = req.body.signature_date ? (new Date(req.body.signature_date)).getTime() : null;
   
   Persons.addCertificationAndSignature(personId , certificationId, expiredAt, signaturePersonId, signatureDate)
-  .then((data) => {
+  .then((data) => {    
     res.status(200).json({data: data})
   })
   .catch((err) => {
