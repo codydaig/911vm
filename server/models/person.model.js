@@ -15,17 +15,45 @@ Persons.getAll = () => {
 }
 
 Persons.findOneById = (id) => {
-  return neode.first('Person', 'id', id)
-  .then((person) => {
-     return {
-      id: person.get('id'),
-      first_name: person.get('first_name'),
-      last_name: person.get('last_name'),
-      email_address: person.get('email_address'),
-      phone_number: person.get('phone_number'),
-      is_admin: person.get('is_admin'),
-      is_volunteer: person.get('is_volunteer')
+  const query = `
+  MATCH (p1:Person {id: {id}}) 
+  OPTIONAL MATCH (p1:Person {id: {id}})-[r1:HAS_CERTIFICATION]->(c:Certification)
+  WITH p1, collect({
+    name: c.name,
+    id: c.id,
+    expriation_date: r1.expriation_date,
+    signature_person_id: r1.signature_person_id,
+    signature_person_name: r1.signature_person_name,
+    signature_date: r1.signature_date       
+  }) as certification
+  RETURN {
+    data: {
+      person: {
+        id: p1.id,
+        last_name: p1.last_name,
+        first_name: p1.first_name,
+        phone_number: p1.phone_number,
+        email_address: p1.email_address,
+        class: p1.class,
+        start_date: p1.start_date        
+      },
+      certifications: certification
     }
+  }`;
+
+  return neode.cypher(query, {id: id})
+  .then((collection) => {
+    const data = collection.records.map((item) => {
+      const person = item['_fields'][0]['data']['person'];
+      if(person['start_date'])  person['start_date'] = moment(cert['start_date']).format('YYYY-MM-DD')
+      const certifications = item['_fields'][0]['data']['certifications'];
+      certifications.forEach((cert) => {
+        if(cert['expriation_date']) cert['expriation_date'] = moment(cert['expriation_date']).format('YYYY-MM-DD')
+        if(cert['signature_date']) cert['signature_date'] = moment(cert['signature_date']).format('YYYY-MM-DD')
+      })
+      return item['_fields'][0]['data'];
+    })        
+    return data[0];
   })
 }
 
@@ -72,48 +100,7 @@ Persons.findOneByIdAndDelete = (id) => {
   }) 
 }
 
-Persons.findOneByIdAndAddCertification = (personId, certificationId, expriationDate) => {
-  return Promise.all([
-    neode.first('Person', 'id', personId),
-    neode.first('Certification', 'id', certificationId),
-  ])
-  .then(([person, certification]) => {
-    return person.relateTo(certification, 'has_certification', {expriation_date: expriationDate})
-  })
-  .then(() => {
-    return "Relationship created"
-  })
-}
-
-Persons.findOneByIdGetCertifications = (id) => {
-  const query = `MATCH (p1:Person {id: {id}})-[r1:HAS_CERTIFICATION]->(c:Certification) RETURN {
-    data: {
-      certification: {
-        name: c.name,
-        id: c.id,
-        expriation_date: r1.expriation_date,
-        signature_person_id: r1.signature_person_id,
-        signature_person_name: r1.signature_person_name,
-        signature_date: r1.signature_date
-      }
-    }
-  }`;
-
-  return neode.cypher(query, {id: id})
-  .then((collection) => {
-    const data = collection.records.map((item) => {
-      if(item['_fields'][0]['data']['certification']['expriation_date']) {
-        item['_fields'][0]['data']['certification']['expriation_date'] = moment(item['_fields'][0]['data']['certification']['expriation_date']).format('YYYY-MM-DD')
-      }
-      if(item['_fields'][0]['data']['certification']['signature_date']) {
-        item['_fields'][0]['data']['certification']['signature_date'] = moment(item['_fields'][0]['data']['certification']['signature_date']).format('YYYY-MM-DD')
-      }      
-      return item['_fields'][0]['data'];
-    })
-    return data;
-  })
-}
-
+// Add a certification to a volunteer as well as signed it off by admin
 Persons.addCertificationAndSignature = (personId, certificationId, expriationDate, signaturePersonId, signatureDate) => {  
   return Promise.all([
     neode.first('Person', 'id', personId),
@@ -139,6 +126,20 @@ Persons.addCertificationAndSignature = (personId, certificationId, expriationDat
   .then(() => {
     return "Relationship created"
   })  
+}
+
+// Add a certification to a volunteer
+Persons.findOneByIdAndAddCertification = (personId, certificationId, expriationDate) => {
+  return Promise.all([
+    neode.first('Person', 'id', personId),
+    neode.first('Certification', 'id', certificationId),
+  ])
+  .then(([person, certification]) => {
+    return person.relateTo(certification, 'has_certification', {expriation_date: expriationDate})
+  })
+  .then(() => {
+    return "Relationship created"
+  })
 }
 
 module.exports = Persons;
