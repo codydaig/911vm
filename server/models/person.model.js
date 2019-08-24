@@ -107,19 +107,27 @@ Persons.findOneByIdGetCertifications = (id) => {
   })
 }
 
-Persons.addCertificationAndSignature = (personId, certificationId, expriationDate, signaturePersonId, signatureDate) => {
+Persons.addCertificationAndSignature = (personId, certificationId, expriationDate, signaturePersonId, signatureDate) => {  
   return Promise.all([
     neode.first('Person', 'id', personId),
     neode.first('Certification', 'id', certificationId),
-    neode.first('Person', 'id', signaturePersonId)
+    neode.first('Person', 'id', signaturePersonId),
   ])
   .then(([person, certification, signaturePerson]) => {
-    return person.relateTo(certification, 'has_certification', {
+    let _data = {
       expriation_date: expriationDate,
-      signature_person_id: signaturePersonId.id,
-      signature_person_name: `${signaturePerson.first_name} ${signaturePerson.last_name}`,
+      signature_person_id: signaturePerson.get('id'),
+      signature_person_name: `${signaturePerson.get('first_name')} ${signaturePerson.get('last_name')}`,
       signature_date: signatureDate
+    }
+    let data = {}
+    
+    Object.keys(_data).forEach((key) => {
+      if(_data[key]) {
+        data[key] = _data[key]
+      }      
     })
+    return person.relateTo(certification, 'has_certification', data)
   })
   .then(() => {
     return "Relationship created"
