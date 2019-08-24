@@ -3,3 +3,6 @@ node_modules
 .env
 client/dist
 package-lock.json
+
+
+neo4j-community-3.5.8

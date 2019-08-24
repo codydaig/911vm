@@ -1,0 +1,11 @@
+{
+  "data": {
+    "id": "9838bf42-7b84-4060-a44a-d6791c7ef3ff",
+    "first_name": "Chris",
+    "last_name": "Glenn",
+    "email_address": "chris.glenn@leu-rescue.org",
+    "phone_number": "970-324-7865",
+    "is_admin": null,
+    "is_volunteer": null
+  }
+}

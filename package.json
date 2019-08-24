@@ -9,8 +9,7 @@
     "build": "webpack -d --watch",
     "dev": "webpack -d --watch && nodemon index.js",
     "seed": "node server/utils/seed.js",
-    "dropDB": "node server/utils/dropDB.js",
-    "lintingFE": "./node_modules/.bin/eslint './client/src/**'"
+    "dropDB": "node server/utils/dropDB.js"
   },
   "repository": {
     "type": "git",
@@ -35,9 +34,9 @@
     "babel-preset-stage-0": "6.24.1",
     "body-parser": "^1.19.0",
     "dotenv": "^8.0.0",
-    "eslint-plugin-react": "^7.14.3",
     "express": "^4.17.1",
     "joi": "^14.3.1",
+    "moment": "^2.24.0",
     "neo4j-driver": "^1.7.5",
     "neode": "^0.2.16",
     "react": "^16.9.0",
@@ -48,28 +47,10 @@
   "devDependencies": {
     "babel-preset-react": "^6.24.1",
     "css-loader": "^3.2.0",
-    "eslint": "^6.1.0",
     "html-webpack-plugin": "^3.2.0",
-    "husky": "^3.0.3",
-    "lint-staged": "^9.2.1",
     "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
     "prettier": "1.18.2",
     "style-loader": "^0.23.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,css,json,md}": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ]
   }
 }

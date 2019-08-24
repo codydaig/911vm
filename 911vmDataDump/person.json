@@ -1,0 +1,263 @@
+{
+  "data": [
+    {
+      "last_name": "Tolman",
+      "email_address": "ben.tolman@leu-rescue.org",
+      "id": "52ad585e-6667-4069-8ac1-3823359712c7",
+      "class": "Probationary",
+      "first_name": "Ben"
+    },
+    {
+      "email_address": "armando.trujillo@leu-rescue.org",
+      "last_name": "Trujillo",
+      "phone_number": "970-232-5919",
+      "id": "2b2bd6d7-c2ce-4910-b2a0-ea11e1f22c5e",
+      "first_name": "Armando",
+      "class": "Probationary",
+      "start_date": 1493622000000
+    },
+    {
+      "last_name": "Andersen",
+      "phone_number": "970-631-6390",
+      "email_address": "mike.andersen@leu-rescue.org",
+      "id": "692c85bb-46db-4b40-80f2-5b7cbd1e9f82",
+      "class": "Probationary",
+      "first_name": "Mike"
+    },
+    {
+      "email_address": "todd.baker@leu-rescue.org",
+      "last_name": "Baker",
+      "phone_number": "970-308-7353",
+      "id": "1d45588c-0182-4097-b5e7-8c8df2148d55",
+      "class": "Probationary",
+      "first_name": "Todd",
+      "start_date": 1485504000000
+    },
+    {
+      "last_name": "Leslie",
+      "phone_number": "720-226-1457",
+      "email_address": "leslie.coburn@leu-rescue.org",
+      "id": "f092cb02-67a8-4c40-bce6-b3553a3d635d",
+      "first_name": "Coburn",
+      "class": "Trainee"
+    },
+    {
+      "email_address": "cody.daig@leu-rescue.org",
+      "last_name": "Daig",
+      "phone_number": "720-340-2319",
+      "id": "94e5d199-0e74-47ce-8784-9ad35a658672",
+      "class": "Probationary",
+      "first_name": "Cody",
+      "start_date": 1475478000000
+    },
+    {
+      "last_name": "Dell",
+      "phone_number": "303-775-6459",
+      "email_address": "tom.dell@leu-rescue.org",
+      "id": "b8392ee3-1012-4454-bbdf-c881d2f7c31d",
+      "class": "Probationary",
+      "first_name": "Tom"
+    },
+    {
+      "email_address": "jarrod.eikenberg@leu-rescue.org",
+      "last_name": "Eikenberg",
+      "phone_number": "303-437-7892",
+      "id": "a502a8e8-e4fa-47b9-8cc6-2719d2897728",
+      "first_name": "Jarrod",
+      "class": "Probationary",
+      "start_date": 1480320000000
+    },
+    {
+      "email_address": "katie.eikenberg@leu-rescue.org",
+      "last_name": "Eikenberg",
+      "phone_number": "303-507-9009",
+      "id": "1c125768-4170-4af1-914d-b66f1ff6bf1f",
+      "first_name": "Katie",
+      "class": "Probationary",
+      "start_date": 1480320000000
+    },
+    {
+      "last_name": "Fladung",
+      "phone_number": "970-381-5075",
+      "email_address": "robert.fladung@leu-rescue.org",
+      "id": "999429b6-d368-4d2a-b24a-f77693c4b7ed",
+      "first_name": "Robert",
+      "class": "Probationary"
+    },
+    {
+      "email_address": "bryan.flansburg@leu-rescue.org",
+      "last_name": "Flansburg",
+      "phone_number": "303-775-8116",
+      "id": "52ee49f2-bcd2-4530-8025-0fc1b08db4b2",
+      "first_name": "Bryan",
+      "class": "Probationary",
+      "start_date": 1428562800000
+    },
+    {
+      "last_name": "Fringer",
+      "phone_number": "720-308-4176",
+      "email_address": "jim.fringer@leu-rescue.org",
+      "id": "db3af57f-f291-4ca9-b1bf-61451385c504",
+      "class": "Trainee",
+      "first_name": "Jim"
+    },
+    {
+      "email_address": "chris.glenn@leu-rescue.org",
+      "last_name": "Glenn",
+      "phone_number": "970-324-7865",
+      "id": "6f28c180-491f-484a-bbab-1dcb314d399b",
+      "first_name": "Chris",
+      "class": "Trainee",
+      "start_date": 1438585200000
+    },
+    {
+      "last_name": "Tart",
+      "phone_number": "303-250-1748",
+      "email_address": "steve.tart@leu-rescue.org",
+      "id": "be859de9-ad58-4d72-8d46-82aff311c4c0",
+      "class": "Probationary",
+      "first_name": "Steve"
+    },
+    {
+      "last_name": "Wells",
+      "phone_number": "303-775-1977",
+      "email_address": "kevin.wells@leu-rescue.org",
+      "id": "eadc278a-70e3-4279-9f8c-b4a988f3abc5",
+      "first_name": "Kevin",
+      "class": "Probationary"
+    },
+    {
+      "email_address": "geoff.grenzke@leu-rescue.org",
+      "last_name": "Grenzke",
+      "phone_number": "720-526-9713",
+      "id": "35f0f105-a2fb-4ad1-98cf-9ba19d52800a",
+      "first_name": "Geoff",
+      "class": "Probationary",
+      "start_date": 1495177200000
+    },
+    {
+      "last_name": "Heitstuman",
+      "phone_number": "303-888-4214",
+      "email_address": "steve.heitstuman@leu-rescue.org",
+      "id": "e1b5ef1a-c1ed-4605-a7cc-eb04bb6a56c0",
+      "first_name": "Steve",
+      "class": "Probationary"
+    },
+    {
+      "last_name": "Inks",
+      "phone_number": "303-709-2044",
+      "email_address": "josiah.inks@leu-rescue.org",
+      "id": "d4158477-8064-41f2-9428-331909f04c98",
+      "class": "Probationary",
+      "first_name": "Josiah"
+    },
+    {
+      "email_address": "jr.young@leu-rescue.org",
+      "last_name": "Young",
+      "phone_number": "720-552-1943",
+      "id": "e592e11c-1d90-4cb6-9b83-193f8543f4ed",
+      "class": "Probationary",
+      "first_name": "JR",
+      "start_date": 1516003200000
+    },
+    {
+      "last_name": "MacPhail",
+      "email_address": "marcel.macphail@leu-rescue.org",
+      "id": "7d3b3167-fca6-4d61-a98a-cfc560c39b7e",
+      "class": "Probationary",
+      "first_name": "Marcel"
+    },
+    {
+      "email_address": "pete.markusen@leu-rescue.org",
+      "last_name": "Markusen",
+      "phone_number": "720-837-0901",
+      "id": "fc3c28c3-04d8-41db-986c-2e71b9e7be8c",
+      "class": "Trainee",
+      "first_name": "Pete",
+      "start_date": 1508655600000
+    },
+    {
+      "email_address": "matthew.marre@leu-rescue.org",
+      "last_name": "Marre",
+      "phone_number": "720-354-0721",
+      "id": "0805a27c-f88c-4180-9101-900daec57557",
+      "first_name": "Matthew",
+      "class": "Probationary",
+      "start_date": 1438585200000
+    },
+    {
+      "email_address": "roger.mceachern@leu-rescue.org",
+      "last_name": "McEachern",
+      "phone_number": "970-379-5807",
+      "id": "1e7b4e9c-16d7-414c-90c8-4ca25481e99d",
+      "first_name": "Roger",
+      "class": "Probationary",
+      "start_date": 1499670000000
+    },
+    {
+      "email_address": "ryan.medhurst@leu-rescue.org",
+      "last_name": "Medhurst",
+      "phone_number": "970-302-8775",
+      "id": "a639c461-f775-4e94-af2e-4f9c05735820",
+      "class": "Trainee",
+      "first_name": "Ryan",
+      "start_date": 1476082800000
+    },
+    {
+      "last_name": "Munnerlyn",
+      "phone_number": "720-255-4623",
+      "email_address": "john.munnerlyn@leu-rescue.org",
+      "id": "67194384-3442-4552-8d86-951ceef0c641",
+      "class": "Probationary",
+      "first_name": "John"
+    },
+    {
+      "email_address": "reed.nelson@leu-rescue.org",
+      "last_name": "Nelson",
+      "phone_number": "720-340-0502",
+      "id": "587b8709-c6b5-4a41-b72c-d87d3498af13",
+      "class": "Probationary",
+      "first_name": "Reed",
+      "start_date": 1515398400000
+    },
+    {
+      "last_name": "Segreto",
+      "email_address": "jade.segreto@leu-rescue.org",
+      "id": "e421cf29-47f1-41e9-91b7-5a9abf0c09f0",
+      "class": "Probationary",
+      "first_name": "Jade"
+    },
+    {
+      "last_name": "Sheldon",
+      "phone_number": "970-584-4036",
+      "email_address": "matt.sheldon@leu-rescue.org",
+      "id": "ef39c55e-fd29-4d73-a6b8-92686397b8cc",
+      "class": "Probationary",
+      "first_name": "Matt"
+    },
+    {
+      "last_name": "Smith",
+      "email_address": "jameson.smith@leu-rescue.org",
+      "id": "f2048156-2d66-413c-b5e9-a617c2d8c6b9",
+      "class": "Probationary",
+      "first_name": "Jameson"
+    },
+    {
+      "email_address": "karla .solis@leu-rescue.org",
+      "last_name": "Solis",
+      "phone_number": "720-499-3373",
+      "id": "31c1692b-86d0-47d7-b777-a8993aa098f8",
+      "first_name": "Karla",
+      "class": "Probationary",
+      "start_date": 1444460400000
+    },
+    {
+      "last_name": "Solomon",
+      "phone_number": "303-827-4015",
+      "email_address": "juan.solomon@leu-rescue.org",
+      "id": "f1f0b1f7-a385-48be-8ffe-62be85cfa9c7",
+      "class": "Probationary",
+      "first_name": "Juan"
+    }
+  ]
+}
