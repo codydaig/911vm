@@ -107,18 +107,18 @@ Persons.findOneByIdGetCertifications = (id) => {
   })
 }
 
-Persons.addCertificationAndSignature = (personId, certificationId, expriationDate, sigeOffPersoinId, signOffDate) => {
+Persons.addCertificationAndSignature = (personId, certificationId, expriationDate, signaturePersonId, signatureDate) => {
   return Promise.all([
     neode.first('Person', 'id', personId),
     neode.first('Certification', 'id', certificationId),
-    neode.first('Person', 'id', sigeOffPersoinId)
+    neode.first('Person', 'id', signaturePersonId)
   ])
-  .then(([person, certification, signOffPerson]) => {
+  .then(([person, certification, signaturePerson]) => {
     return person.relateTo(certification, 'has_certification', {
       expriation_date: expriationDate,
-      signature_person_id: signOffPerson.id,
-      signature_person_name: `${signOffPerson.first_name} ${signOffPerson.last_name}`,
-      signature_date: signOffDate
+      signature_person_id: signaturePersonId.id,
+      signature_person_name: `${signaturePerson.first_name} ${signaturePerson.last_name}`,
+      signature_date: signatureDate
     })
   })
   .then(() => {
