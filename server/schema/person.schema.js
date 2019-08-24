@@ -71,7 +71,7 @@ const schema = {
         type: 'number',
       }
     }
-  }  
+  }
 }
 
 module.exports = schema;

@@ -90,11 +90,11 @@ Persons.findOneByIdGetCertifications = (id) => {
       certification: {
         name: c.name,
         id: c.id,
-        expriation_date: r1.expriation_date,
+        expriation_date: r1.expriation_date,        
         sign_off: {
           id: r1.signature_person_id,
           signature_date: r1.signature_date
-        }        
+        }
       }
     }
   }`;
@@ -106,6 +106,25 @@ Persons.findOneByIdGetCertifications = (id) => {
     })        
     return data;
   })
+}
+
+Persons.addCertificationAndSignature = (personId, certificationId, expriationDate, sigeOffPersoinId, signOffDate) => {
+  return Promise.all([
+    neode.first('Person', 'id', personId),
+    neode.first('Certification', 'id', certificationId),
+    neode.first('Person', 'id', sigeOffPersoinId)
+  ])
+  .then(([person, certification, signOffPerson]) => {
+    return person.relateTo(certification, 'has_certification', {
+      expriation_date: expriationDate,
+      signature_person_id: signOffPerson.id,
+      signature_person_name: `${signOffPerson.first_name} ${signOffPerson.last_name}`,
+      signature_date: signOffDate
+    })
+  })
+  .then(() => {
+    return "Relationship created"
+  })  
 }
 
 module.exports = Persons;
