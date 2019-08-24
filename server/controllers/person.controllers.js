@@ -79,19 +79,6 @@ const addCertification = (req, res) => {
   })   
 }
 
-// Get a volunteer's certifications
-const getCertifications = (req, res) => {
-  const id = req.params.id;
- 
-  Persons.findOneByIdGetCertifications(id)
-  .then((data) => {
-    res.status(200).json({data: data})
-  })
-  .catch((err) => {
-    res.status(404).json({error_message: err.message});
-  })   
-}
-
 // Add a certification to a volunteer also sign off it
 const addCertificationAndSignature = (req, res) => {
   
@@ -117,6 +104,5 @@ module.exports = {
   update: update,
   remove: remove,  
   addCertification: addCertification,
-  addCertificationAndSignature: addCertificationAndSignature,
-  getCertifications: getCertifications
+  addCertificationAndSignature: addCertificationAndSignature
 }
