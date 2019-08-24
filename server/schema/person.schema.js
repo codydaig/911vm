@@ -71,20 +71,6 @@ const schema = {
         type: 'number',
       }
     }
-  },
-  has_certification_signature: {
-    type: 'relationship',
-    relationship: 'HAS_CERTIFICATION_SIGNATURE',
-    direction: 'out',
-    'cascade': 'detatch',
-    properties: {
-      signature_person_id: {
-        type: 'string'
-      },
-      signature_date: {
-        type: 'number'
-      }
-    }
   }  
 }
 
