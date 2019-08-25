@@ -1,0 +1,65 @@
+:root {
+  --main-font: Helvetica;
+  --light-color: #999;
+  --dark-color: #222;
+  --primary-color: darkred;
+}
+html {
+  font-size: 16px;
+}
+.volunteerForm {
+  width: max-content;
+  height: max-content;
+  padding: 2em;
+  margin: 0 auto;
+  border: 1px solid #999999;
+  border-radius: 0.2em;
+}
+.form-group {
+  width: 100%;
+  margin: 1em 0;
+  box-sizing: border-box;
+}
+.form-label {
+  color: var(--dark-color);
+  font-family: var(--main-font);
+}
+.form-input {
+  height: 2em;
+  width: 100%;
+  margin: 0.2em 0;
+  padding: 0.2em;
+  box-sizing: border-box;
+  font-size: 1.25em;
+}
+.form-select {
+  height: 1.75em;
+  width: 100%;
+  margin: 0.2em 0;
+  font-size: 1em;
+}
+.react-datepicker-wrapper,
+.react-datepicker__input-container {
+  width: 100% !important;
+}
+.form-date {
+  display: block;
+  box-sizing: border-box;
+  height: 1.75em;
+  width: 100%;
+  margin: 0.2em 0;
+  font-size: 1em;
+}
+.form-checkbox {
+  margin: 0 1em 0 0;
+}
+.form-submit {
+  background-color: lightgray;
+  color: var(--dark-color);
+  padding: 1em 2em;
+  border: none;
+  text-decoration: none;
+  margin: 0;
+  width: 100%;
+  font-size: 1em;
+}
