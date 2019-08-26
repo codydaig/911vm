@@ -1,11 +1,11 @@
-import React from 'react';
-import ReportCard from './ReportCard.jsx';
-// import personInfo from '../../911vmDataDump/chris.json'
-// import certifications from '../../911vmDataDump/chris_certs.json'
 import axios from 'axios';
+import React from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+import ReportCard from './ReportCard.jsx';
 
 //placeholder id
-const id = 'ae503518-d157-4bfb-b5b0-6ad9af547d3e';
+const id = '168c8651-e8db-40ee-8d94-fffde18c0ed3';
 
 class App extends React.Component {
   constructor() {
@@ -15,7 +15,7 @@ class App extends React.Component {
       certifications: [],
       loaded: false
     }
-  }
+  } 
   
   componentDidMount() {
     axios.get(`/api/person/${id}`)
@@ -32,9 +32,13 @@ class App extends React.Component {
     // const { personInfo, certifications, loaded } = this.state;
     if (loaded) {
       return (
+        
         <div>
           <h1>911 Volunteer Management</h1>
-            <ReportCard personInfo={personInfo} />
+          <Router>
+            <Route path="/reportcard/:id" exact component={ReportCard} />
+          </Router>
+          {/* <ReportCard personInfo={personInfo} /> */}
         </div>
       )
     }
