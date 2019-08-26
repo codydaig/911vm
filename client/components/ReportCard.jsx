@@ -12,7 +12,7 @@ const EditingPersonalInfoCard = ({personInfo, onChange}) => {
     <div>
       <div className="personal-info">
         <h1>{personInfo.first_name} {personInfo.last_name}</h1>
-        <form >
+        <form>
           <p>Email:
             <input type="text" placeholder={personInfo.email_address} id="email_address" onChange={onChange}/>
           </p>
@@ -64,7 +64,7 @@ export default class ReportCard extends React.Component {
     }
     this.handleClick = this.handleClick.bind(this);
     this.unixConverter = this.unixConverter.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handlePersonalInfoChange = this.handlePersonalInfoChange.bind(this);
     this.handleSaveClick = this.handleSaveClick.bind(this);
     this.createCertification = this.createCertification.bind(this);
   }
@@ -97,8 +97,8 @@ export default class ReportCard extends React.Component {
     this.setState({editing: editingValue})
   }
 
-  handleSaveClick(event) {
-    event.preventDefault();
+  handleSaveClick(e, saveAlteredCertifications) {
+    e.preventDefault();
     // save to DB
     const {email_address, phone_number, is_admin, is_volunteer} = this.state;
     const isEditing = !this.state.editing;
@@ -120,8 +120,7 @@ export default class ReportCard extends React.Component {
     //   })
   }
   
-  handleChange(event) {
-    // sets new value in DB
+  handlePersonalInfoChange(event) {
     event.preventDefault();
     const id = event.target.id;
     let value; 
@@ -148,7 +147,7 @@ export default class ReportCard extends React.Component {
           editing ? 
           <EditingPersonalInfoCard 
             personInfo={personInfo} 
-            onChange={this.handleChange}/> 
+            onChange={this.handlePersonalInfoChange}/> 
           : 
           <DefaultPersonalInfoCard
             personInfo={personInfo}
@@ -161,7 +160,6 @@ export default class ReportCard extends React.Component {
           <h3>Certifications:</h3>
           { certifications.length !== 0 && 
             certifications.map((data, i) => {
-              console.log("DATA", data)
               return (
                 <div className="certifications" key={i}>
                   <Certification 
