@@ -27,7 +27,7 @@ class AddVolunteerForm extends React.Component {
         is_volunteer: false
       },
       classes: ["Probationary", "Trainee", "Apprentice", "General"],
-      initialVolunteer: {}
+      initialVolunteer: {} //intial form for reset
     };
   }
 
@@ -104,53 +104,53 @@ class AddVolunteerForm extends React.Component {
       <div className={showHideClassName}>
         <form className={"volunteerForm"} onSubmit={this.handleFormSubmit}>
           <Input
-            name={"first_name"}
-            label={"First name"}
+            name="first_name"
+            label="First name"
             handle={this.handleChange}
             value={this.state.newVolunteer.first_name}
           />
           <Input
-            name={"last_name"}
-            label={"Last name"}
+            name="last_name"
+            label="Last name"
             handle={this.handleChange}
             value={this.state.newVolunteer.last_name}
           />
           <Input
-            name={"email_address"}
-            label={"Email"}
+            name="email_address"
+            label="Email"
             handle={this.handleChange}
             value={this.state.newVolunteer.email_address}
           />
           <Input
-            name={"phone_number"}
-            label={"Phone number"}
+            name="phone_number"
+            label="Phone number"
             handle={this.handleChange}
             value={this.state.newVolunteer.phone_number}
           />
           <Select
-            name={"class"}
-            label={"Select class"}
+            name="class"
+            label="Select class"
             options={this.state.classes}
             handle={this.handleChange}
             selected={this.state.newVolunteer.class}
           />
           <Checkbox
-            name={"is_admin"}
-            title={"Administrator"}
-            option={"Administrator"}
+            name="is_admin"
+            title="Administrator"
+            option="Administrator"
             handle={this.handleChange}
             checked={this.state.newVolunteer.is_admin}
           />
           <Checkbox
-            name={"is_volunteer"}
-            title={"Volunteer"}
-            option={"Volunteer"}
+            name="is_volunteer"
+            title="Volunteer"
+            option="Volunteer"
             handle={this.handleChange}
             checked={this.state.newVolunteer.is_volunteer}
           />
           <DateBox
-            name={"start_date"}
-            label={"Start date"}
+            name="start_date"
+            label="Start date"
             handle={this.handleChange}
             selected={new Date(this.state.newVolunteer.start_date)}
           />
