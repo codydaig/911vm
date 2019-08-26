@@ -4,8 +4,6 @@ import Certification from './Certification.jsx';
 import axios from 'axios';
 
 // @Karin Hsu i have few endpoints you can play with.  GET /api/person,  GET /api/person/:id,  GET /api/person/:id/certification
-//placeholder id
-const id = '168c8651-e8db-40ee-8d94-fffde18c0ed3';
 
 const EditingPersonalInfoCard = ({personInfo, onChange}) => {
   return (
