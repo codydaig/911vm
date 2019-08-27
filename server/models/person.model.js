@@ -44,15 +44,18 @@ Persons.findOneById = (id) => {
   return neode.cypher(query, {id: id})
   .then((collection) => {
     const data = collection.records.map((item) => {
-      const person = item['_fields'][0]['data']['person'];
-      if(person['start_date'])  person['start_date'] = moment(cert['start_date']).format('YYYY-MM-DD')
-      const certifications = item['_fields'][0]['data']['certifications'];
+      const person = item['_fields'][0]['data']['person'];            
+      if(person['start_date']) {person['start_date'] = moment(person['start_date']).format('YYYY-MM-DD')}      
+      const certifications = item['_fields'][0]['data']['certifications'];            
       certifications.forEach((cert) => {
         if(cert['expriation_date']) cert['expriation_date'] = moment(cert['expriation_date']).format('YYYY-MM-DD')
         if(cert['signature_date']) cert['signature_date'] = moment(cert['signature_date']).format('YYYY-MM-DD')
       })
       return item['_fields'][0]['data'];
-    })        
+    })
+    if(data[0]['certifications'][0]['id'] === null) {
+      data[0]['certifications'] = []
+    }
     return data[0];
   })
 }
@@ -142,15 +145,20 @@ Persons.findOneByIdAndAddCertification = (personId, certificationId, expriationD
   })
 }
 
-// Add the signature to a Certification
-Persons.signsOffCertfication = (id, certificationId, signOffPersonId, signatureDate) => {
-  const query =  `MATCH (p2:Person {id:{id}})-[r:HAS_CERTIFICATION]->(c:Certification {id:{certificationId}})
+// Update signature on a certification
+Persons.updateCertifcation = (id, certificationId, expiredAt, signOffPersonId, signatureDate) => {
+  const query =  `
+  MATCH (p1:Person {id: {signOffPersonId}})
+  MATCH (p2:Person {id:{id}})-[r:HAS_CERTIFICATION]->(c:Certification {id:{certificationId}})
   SET r.signature_person_id = {signOffPersonId},
-  r.signature_date = {signatureDate}`
-
-  return neode.cypher(query, {id: id, certificationId: certificationId, signOffPersonId: signOffPersonId, signatureDate: signatureDate})
-  .then(() => {
-    return `Successfully signs off certification`
+  r.signature_person_name = p1.first_name + ' ' + p1.last_name,
+  r.signature_date = {signatureDate},
+  r.expriation_date = {expiredAt}
+  RETURN r`
+  
+  return neode.cypher(query, {id: id, certificationId: certificationId, expiredAt: expiredAt, signOffPersonId: signOffPersonId, signatureDate: signatureDate})
+  .then((res) => {
+    return res.records[0]['_fields'][0]['properties'];
   })  
 }
 

@@ -68,8 +68,8 @@ const remove = (req, res) => {
 const addCertification = (req, res) => {
   const personId = req.params.id;
   const certificationId = req.body.certification_id;
-  const expiredAt = (new Date(req.body.expired_at)).getTime();
-
+  const expiredAt = req.body.expired_at ? (new Date(req.body.expired_at)).getTime() : null;
+  
   Persons.findOneByIdAndAddCertification(personId , certificationId, expiredAt)
   .then((data) => {
     res.status(200).json({data: data})
@@ -97,10 +97,12 @@ const addCertificationAndSignature = (req, res) => {
   })
 }
 
-// Add a signature to a certification
-const signsOffCertification = (req, res) => {
+// Update signature on a certification
+const updateCertifcation = (req, res) => {
   const signatureDate = req.body.signature_date ? req.body.signature_date : (new Date()).valueOf();
-  Persons.signsOffCertfication(req.params.id, req.params.certification_id, req.body.signature_person_id, signatureDate)
+  const expiredAt = req.body.expired_at ? (new Date(req.body.expired_at)).getTime() : null;
+
+  Persons.updateCertifcation(req.params.id, req.params.certification_id, expiredAt, req.body.signature_person_id, signatureDate)
   .then((data) => {
     res.status(200).json({data: data})
   })
@@ -117,5 +119,5 @@ module.exports = {
   remove: remove,  
   addCertification: addCertification,
   addCertificationAndSignature: addCertificationAndSignature,
-  signsOffCertification: signsOffCertification
+  updateCertifcation: updateCertifcation
 }
