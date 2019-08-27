@@ -86,7 +86,7 @@ const addCertificationAndSignature = (req, res) => {
   const certificationId = req.body.certification_id;
   const signaturePersonId = req.body.signature_person_id
   const expiredAt = req.body.expired_at ? (new Date(req.body.expired_at)).getTime() : null;
-  const signatureDate = req.body.signature_date ? (new Date(req.body.signature_date)).getTime() : null;
+  const signatureDate = req.body.signature_date ? (new Date(req.body.signature_date)).getTime() : (new Date()).getTime();
   
   Persons.addCertificationAndSignature(personId , certificationId, expiredAt, signaturePersonId, signatureDate)
   .then((data) => {    
