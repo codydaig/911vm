@@ -231,17 +231,34 @@ Status code: 200
 
 ```
 {
-  data: {
-      id: 'id', 
-      first_name: 'first_name', 
-      last_name: 'last_name', 
-      email_address: 'email_address', 
-      phone_number: 'phone_number', 
-      class: 'class', 
-      start_date: 'start_date', 
-      end_date: 'end_date', 
-      is_admin: true, 
-      is_volunteer: true 
+  "data": {
+    "person": {
+      "email_address": "marcel.macphail@leu-rescue.org",
+      "last_name": "MacPhail",
+      "phone_number": null,
+      "id": "6d8c77cc-2e30-47e1-89cf-ba6bb8653103",
+      "first_name": "Marcel",
+      "class": "Probationary",
+      "start_date": null
+    },
+    "certifications": [
+      {
+        "signature_date": null,
+        "signature_person_id": null,
+        "name": "EMT Intermidiate",
+        "id": "0dcd97b6-c130-4dc5-ad79-1956c08105cd",
+        "expriation_date": null,
+        "signature_person_name": null
+      },
+      {
+        "signature_date": "2019-08-26",
+        "signature_person_id": "945bb267-4456-489c-a5fc-d12f1009aea3",
+        "name": "CPR Instructor",
+        "id": "e022b939-1376-4ecb-8109-bae77c0ef191",
+        "expriation_date": null,
+        "signature_person_name": "Cody Daig"
+      }
+    ]
   }
 }
 ```
@@ -294,9 +311,43 @@ Status code: 404
 
 `{error_message: 'error message'}`
 
-### Get a volunteer's certifications
 
-`GET /api/person/:id/certification`
+### Add a certification to a volunteer with a signature
+`POST /api/person/certification`
+Request
+
+```
+{
+	"person_id": string, // required
+	"certification_id": string // required,
+  "expriation_date": date string // YYYY-MM-DD not required
+	"signature_person_id": string // required
+	"signature_date": date string // YYYY-MM-DD not required
+}
+```
+
+Response
+
+Status code: 200
+
+`{message: "Relationship created"}`
+
+Status code: 404
+
+`{error_message: 'error message'}`
+
+### Update a signature data or certification expriation
+`PUT /api/person/:id/certification/:certification_id`
+
+Request
+
+```
+{
+  "expriation_date": date string // YYYY-MM-DD not required
+	"signature_person_id": string // required
+	"signature_date": date string // YYYY-MM-DD not required
+}
+```
 
 Response
 
@@ -304,52 +355,11 @@ Status code: 200
 
 ```
 {
-  "data": [
-    {
-      "certification": {
-        "name": "EMT Basic",
-        "id": "6cdd2fea-9c55-4dcc-bbf3-5b20072bb4e1",
-        "expired_at": 1579766400000,
-        "expriation_date": {
-          "signature_date": null,
-          "signature_person_id": null
-        }
-      }
-    },
-    {
-      "certification": {
-        "name": "CPR Instructor",
-        "id": "15430721-54a7-4fe0-9c9d-4b978534743f",
-        "expriation_date": 1561878000000,
-        "sign_off": {
-          "signature_date": null,
-          "signature_person_id": null
-        }
-      }
-    },
-    {
-      "certification": {
-        "name": "EMR Instructor",
-        "id": "2cce4915-8b90-48e0-8f77-bc9aa1a98dd3",
-        "expriation_date": 1533020400000,
-        "sign_off": {
-          "signature_date": null,
-          "signature_person_id": null
-        }
-      }
-    },
-    {
-      "certification": {
-        "name": "CPR",
-        "id": "5012a32e-dd57-4b08-8bad-93c285932f86",
-        "expriation_date": 1561878000000,
-        "sign_off": {
-          "signature_date": 1525158000000,
-          "signature_person_id": "64db2d75-8a8b-4409-8b49-3d9271c84f0d",
-        }
-      }
-    }
-  ]
+  "data": {
+    "signature_person_name": "Cody Daig",
+    "signature_person_id": "945bb267-4456-489c-a5fc-d12f1009aea3",
+    "signature_date": 1566883979108
+  }
 }
 ```
 
