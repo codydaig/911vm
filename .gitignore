@@ -2,5 +2,8 @@ node_modules
 .DS_Store
 .env
 
+public/bundle.js
+public/vendor.js
+public/index.html
 
 neo4j-community-3.5.8
