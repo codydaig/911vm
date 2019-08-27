@@ -68,7 +68,7 @@ const remove = (req, res) => {
 const addCertification = (req, res) => {
   const personId = req.params.id;
   const certificationId = req.body.certification_id;
-  const expiredAt = req.body.expired_at ? (new Date(req.body.expired_at)).getTime() : null;
+  const expiredAt = req.body.expriation_date ? (new Date(req.body.expriation_date)).getTime() : null;
   
   Persons.findOneByIdAndAddCertification(personId , certificationId, expiredAt)
   .then((data) => {
@@ -85,7 +85,7 @@ const addCertificationAndSignature = (req, res) => {
   const personId = req.body.person_id;
   const certificationId = req.body.certification_id;
   const signaturePersonId = req.body.signature_person_id
-  const expiredAt = req.body.expired_at ? (new Date(req.body.expired_at)).getTime() : null;
+  const expiredAt = req.body.expriation_date ? (new Date(req.body.expriation_date)).getTime() : null;
   const signatureDate = req.body.signature_date ? (new Date(req.body.signature_date)).getTime() : (new Date()).getTime();
   
   Persons.addCertificationAndSignature(personId , certificationId, expiredAt, signaturePersonId, signatureDate)
@@ -100,7 +100,7 @@ const addCertificationAndSignature = (req, res) => {
 // Update signature on a certification
 const updateCertifcation = (req, res) => {
   const signatureDate = req.body.signature_date ? req.body.signature_date : (new Date()).valueOf();
-  const expiredAt = req.body.expired_at ? (new Date(req.body.expired_at)).getTime() : null;
+  const expiredAt = req.body.expriation_date ? (new Date(req.body.expriation_date)).getTime() : null;
 
   Persons.updateCertifcation(req.params.id, req.params.certification_id, expiredAt, req.body.signature_person_id, signatureDate)
   .then((data) => {
