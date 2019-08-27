@@ -23,5 +23,5 @@ module.exports = function(app) {
   app.delete('/api/person/:id', Person.remove);
   app.post('/api/person/:id/certification', Person.addCertification);
   app.post('/api/person/certification', Person.addCertificationAndSignature)
-  
+  app.post('/api/person/:id/certification/:certification_id', Person.signsOffCertification);
 };

@@ -142,4 +142,16 @@ Persons.findOneByIdAndAddCertification = (personId, certificationId, expriationD
   })
 }
 
+// Add the signature to a Certification
+Persons.signsOffCertfication = (id, certificationId, signOffPersonId, signatureDate) => {
+  const query =  `MATCH (p2:Person {id:{id}})-[r:HAS_CERTIFICATION]->(c:Certification {id:{certificationId}})
+  SET r.signature_person_id = {signOffPersonId},
+  r.signature_date = {signatureDate}`
+
+  return neode.cypher(query, {id: id, certificationId: certificationId, signOffPersonId: signOffPersonId, signatureDate: signatureDate})
+  .then(() => {
+    return `Successfully signs off certification`
+  })  
+}
+
 module.exports = Persons;

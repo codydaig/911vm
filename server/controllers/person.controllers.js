@@ -97,6 +97,18 @@ const addCertificationAndSignature = (req, res) => {
   })
 }
 
+// Add a signature to a certification
+const signsOffCertification = (req, res) => {
+  const signatureDate = req.body.signature_date ? req.body.signature_date : (new Date()).valueOf();
+  Persons.signsOffCertfication(req.params.id, req.params.certification_id, req.body.signature_person_id, signatureDate)
+  .then((data) => {
+    res.status(200).json({data: data})
+  })
+  .catch((err) => {
+    res.status(404).json({error_message: err.message});
+  })    
+}
+
 module.exports = {
   get: get,  
   create: create,
@@ -104,5 +116,6 @@ module.exports = {
   update: update,
   remove: remove,  
   addCertification: addCertification,
-  addCertificationAndSignature: addCertificationAndSignature
+  addCertificationAndSignature: addCertificationAndSignature,
+  signsOffCertification: signsOffCertification
 }
