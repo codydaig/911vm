@@ -146,20 +146,27 @@ Persons.findOneByIdAndAddCertification = (personId, certificationId, expriationD
 }
 
 // Update signature on a certification
-Persons.updateCertifcation = (id, certificationId, expiredAt, signOffPersonId, signatureDate) => {
-  const query =  `
-  MATCH (p1:Person {id: {signOffPersonId}})
+Persons.updateCertifcation = (data) => {
+  //id, certificationId, expiredAt, signOffPersonId, signatureDate
+  const id = data.id;
+  const certificationId = data.certificationId;
+  const expiredAt = data.expiredAt;
+  const signaturePersonId = data.signaturePersonId;
+  const signatureDate = data.signatureDate;
+
+  const query =  `  
   MATCH (p2:Person {id:{id}})-[r:HAS_CERTIFICATION]->(c:Certification {id:{certificationId}})
-  SET r.signature_person_id = {signOffPersonId},
-  r.signature_person_name = p1.first_name + ' ' + p1.last_name,
-  r.signature_date = {signatureDate},
-  r.expriation_date = {expiredAt}
+  OPTIONAL MATCH (p1:Person {id: {signaturePersonId}}) 
+  SET r.signature_person_id = CASE WHEN {signaturePersonId} IS NOT NULL THEN {signaturePersonId} ELSE r.signature_person_id END,
+  r.signature_person_name = CASE WHEN {signaturePersonId} IS NOT NULL THEN p1.first_name + ' ' + p1.last_name ELSE r.signature_person_name END,
+  r.signature_date = CASE WHEN {signatureDate} IS NOT NULL THEN {signatureDate} ELSE r.signature_date END,
+  r.expriation_date = CASE WHEN {expiredAt} IS NOT NULL THEN {expiredAt} ELSE r.expriation_date END
   RETURN r`
   
-  return neode.cypher(query, {id: id, certificationId: certificationId, expiredAt: expiredAt, signOffPersonId: signOffPersonId, signatureDate: signatureDate})
+  return neode.cypher(query, {id: id, certificationId: certificationId, expiredAt: expiredAt, signaturePersonId: signaturePersonId, signatureDate: signatureDate})
   .then((res) => {
     return res.records[0]['_fields'][0]['properties'];
-  })  
+  })
 }
 
 module.exports = Persons;
