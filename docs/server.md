@@ -339,12 +339,14 @@ Status code: 404
 ### Update a signature data or certification expriation
 `PUT /api/person/:id/certification/:certification_id`
 
+There are 3 fields we can update, expriation_date, signature_person_id, and signature_date
+
 Request
 
 ```
 {
   "expriation_date": date string // YYYY-MM-DD not required
-	"signature_person_id": string // required
+	"signature_person_id": string // not required
 	"signature_date": date string // YYYY-MM-DD not required
 }
 ```
@@ -358,7 +360,8 @@ Status code: 200
   "data": {
     "signature_person_name": "Cody Daig",
     "signature_person_id": "945bb267-4456-489c-a5fc-d12f1009aea3",
-    "signature_date": 1566883979108
+    "signature_date": 1566883979108,
+    "expriation_date": 1575158400000
   }
 }
 ```
