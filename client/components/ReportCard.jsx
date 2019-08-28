@@ -1,67 +1,137 @@
-import React from 'react';
-import moment from 'moment';
-import Certification from './Certification.jsx';
-import axios from 'axios';
+import React from "react";
+import moment from "moment";
+import Certification from "./Certification.jsx";
+import axios from "axios";
 
 // @Karin Hsu i have few endpoints you can play with.  GET /api/person,  GET /api/person/:id,  GET /api/person/:id/certification
 //placeholder id
-const id = 'ae503518-d157-4bfb-b5b0-6ad9af547d3e';
+const id = "54ddf0c0-b342-4caa-b9dd-04870c55ffc9";
 
-const EditingPersonalInfoCard = ({personInfo, onChange}) => {
+const EditingPersonalInfoCard = ({ personInfo, onChange }) => {
   return (
     <div>
       <div className="personal-info">
-        <h1>{personInfo.first_name} {personInfo.last_name}</h1>
+        <div className="personal-info-header">
+          <h1>
+            {personInfo.first_name} {personInfo.last_name}
+          </h1>
+        </div>
         <form>
-          <p>Email:
-            <input type="text" placeholder={personInfo.email_address} id="email_address" onChange={onChange}/>
-          </p>
-          <p>#:
-            <input type="text" minLength="10" maxLength="10" placeholder={personInfo.phone_number} id="phone_number" onChange={onChange}/>
-          </p>
-          <p>Admin:
-            <select defaultValue={personInfo.is_admin ? "true" : "false"} id="is_admin" onChange={onChange}>
+          <div className="cell">
+            <h2>Email</h2>
+          </div>
+          <div className="cell">
+            <h2>Phone Number</h2>
+          </div>
+          <div className="cell">
+            <h2>Administrator</h2>
+          </div>
+          <div className="cell">
+            <h2>Volunteer</h2>
+          </div>
+
+          <div className="cell">
+            <p>
+              <input
+                type="text"
+                placeholder={personInfo.email_address}
+                id="email_address"
+                onChange={onChange}
+              />
+            </p>
+          </div>
+          <div className="cell">
+            <input
+              type="text"
+              minLength="10"
+              maxLength="10"
+              placeholder={personInfo.phone_number}
+              id="phone_number"
+              onChange={onChange}
+            />
+          </div>
+          <div className="cell">
+            <select
+              defaultValue={personInfo.is_admin ? "true" : "false"}
+              id="is_admin"
+              onChange={onChange}
+            >
               <option value="true">Yes</option>
               <option value="false">No</option>
             </select>
-          </p>
-          <p>Volunteer:
-            <select defaultValue={personInfo.is_volunteer ? "true" : "false"} id="is_volunteer" onChange={onChange}>
+          </div>
+          <div className="cell">
+            <select
+              defaultValue={personInfo.is_volunteer ? "true" : "false"}
+              id="is_volunteer"
+              onChange={onChange}
+            >
               <option value="true">Yes</option>
               <option value="false">No</option>
             </select>
-          </p>
+          </div>
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-const DefaultPersonalInfoCard = ({personInfo, email_address, phone_number, is_admin, is_volunteer}) => {
+const DefaultPersonalInfoCard = ({
+  personInfo,
+  email_address,
+  phone_number,
+  is_admin,
+  is_volunteer
+}) => {
   return (
-    <div>
-      <div className="personal-info">
-        <h1>{personInfo.first_name} {personInfo.last_name}</h1>
-        <p>Email: {email_address}</p>
-        <p>#: {phone_number}</p>
-        <p>Admin: {is_admin ? "Yes" : "No"}</p>
-        <p>Volunteer: {is_volunteer ? "Yes" : "No"}</p>
+    <div className="personal-info">
+      <div className="personal-info-header">
+        <h1>
+          {personInfo.first_name} {personInfo.last_name}
+        </h1>
+      </div>
+      <div className="cell">
+        <h2>Email</h2>
+      </div>
+      <div className="cell">
+        <h2>Phone Number</h2>
+      </div>
+      <div className="cell">
+        <h2>Administrator</h2>
+      </div>
+      <div className="cell">
+        <h2>Volunteer</h2>
+      </div>
+      <div className="cell">
+        <p>{personInfo.email_address}</p>
+      </div>
+      <div className="cell">
+        <p>{personInfo.phone_number}</p>
+      </div>
+      <div className="cell">
+        <p>{personInfo.is_admin ? "Yes" : "No"}</p>
+      </div>
+      <div className="cell">
+        <p>{personInfo.is_volunteer ? "Yes" : "No"}</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default class ReportCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       editing: false,
-      email_address: '',
-      phone_number: '',
-      is_admin: '',
-      is_volunteer: '',
+      email_address: "",
+      phone_number: "",
+      is_admin: "",
+      is_volunteer: "",
       certifications: [],
-    }
+      volunteerNames: [],
+      volunteerInfo: {},
+      currentVolunteer: {}
+    };
     this.handleClick = this.handleClick.bind(this);
     this.unixConverter = this.unixConverter.bind(this);
     this.handlePersonalInfoChange = this.handlePersonalInfoChange.bind(this);
@@ -70,20 +140,26 @@ export default class ReportCard extends React.Component {
   }
 
   componentDidMount() {
-    const { email_address, phone_number, is_admin, is_volunteer } = this.props.personInfo; 
-    axios.get(`/api/person/${id}/certification`)
-      .then((response) => {
+    const {
+      email_address,
+      phone_number,
+      is_admin,
+      is_volunteer
+    } = this.props.personInfo;
+    axios
+      .get(`/api/person/${id}/certification`)
+      .then(response => {
         this.setState({
           editing: false,
           email_address,
-          phone_number, 
+          phone_number,
           is_admin,
-          is_volunteer, 
-          certifications: response.data.data,
+          is_volunteer,
+          certifications: response.data.data
         });
       })
-      .catch((error) => {
-        console.log("error", error)
+      .catch(error => {
+        console.log("error", error);
       });
   }
 
@@ -91,25 +167,25 @@ export default class ReportCard extends React.Component {
     const time = moment(unix).format("MM/DD/YYYY");
     return time;
   }
-  
+
   handleClick() {
     const editingValue = !this.state.editing;
-    this.setState({editing: editingValue})
+    this.setState({ editing: editingValue });
   }
 
   handleSaveClick(e, saveAlteredCertifications) {
     e.preventDefault();
     // save to DB
-    const {email_address, phone_number, is_admin, is_volunteer} = this.state;
+    const { email_address, phone_number, is_admin, is_volunteer } = this.state;
     const isEditing = !this.state.editing;
     const updatedInfo = {
-      email_address, 
-      phone_number, 
+      email_address,
+      phone_number,
       is_admin,
       is_volunteer
     };
 
-    this.setState({editing: isEditing});
+    this.setState({ editing: isEditing });
     alert("saved to db" + JSON.stringify(updatedInfo));
     // axios.put(`/api/person/${id}`, updatedInfo)
     //   .then(response => {
@@ -119,7 +195,7 @@ export default class ReportCard extends React.Component {
     //     console.log("error", error)
     //   })
   }
-  
+
   handlePersonalInfoChange(event) {
     event.preventDefault();
     const id = event.target.id;
@@ -133,46 +209,64 @@ export default class ReportCard extends React.Component {
   }
 
   createCertification() {
-    const createdCert = {certification : {name: "tbd", id: "tbd", expriation_date: "tbd", sign_off: {signature_date: null, id: null}}};
-    this.setState({certifications: [...this.state.certifications, createdCert]})
+    const createdCert = {
+      certification: {
+        name: "tbd",
+        id: "tbd",
+        expriation_date: "tbd",
+        sign_off: { signature_date: null, id: null }
+      }
+    };
+    this.setState({
+      certifications: [...this.state.certifications, createdCert]
+    });
   }
-  
+
   render() {
     const { personInfo } = this.props;
-    const { editing, email_address, phone_number, is_admin, is_volunteer, certifications } = this.state;
-      
+    const {
+      editing,
+      email_address,
+      phone_number,
+      is_admin,
+      is_volunteer,
+      certifications
+    } = this.state;
+
     return (
-      <div> 
-        {
-          editing ? 
-          <EditingPersonalInfoCard 
-            personInfo={personInfo} 
-            onChange={this.handlePersonalInfoChange}/> 
-          : 
+      <div>
+        {editing ? (
+          <EditingPersonalInfoCard
+            personInfo={personInfo}
+            onChange={this.handlePersonalInfoChange}
+          />
+        ) : (
           <DefaultPersonalInfoCard
             personInfo={personInfo}
             email_address={email_address}
             phone_number={phone_number}
             is_admin={is_admin}
-            is_volunteer={is_volunteer}/>
-        }
+            is_volunteer={is_volunteer}
+          />
+        )}
         <div className="certifications-container">
-          <h3>Certifications:</h3>
-          { certifications.length !== 0 && 
+          <div className="certification-header">
+            <h3>Certifications:</h3>
+          </div>
+          {certifications.length !== 0 &&
             certifications.map((data, i) => {
               return (
-                <div className="certifications" key={i}>
-                  <Certification 
-                    data={data} 
-                    unixConverter={this.unixConverter} 
-                    editing={editing}/>
-                </div>
-              )
-            })
-          }
+                <Certification
+                  data={data}
+                  unixConverter={this.unixConverter}
+                  editing={editing}
+                  key={i}
+                />
+              );
+            })}
         </div>
 
-        { editing? 
+        {editing ? (
           <div>
             <button className="edit-certification" onClick={this.handleClick}>
               Editing
@@ -181,17 +275,20 @@ export default class ReportCard extends React.Component {
               Save
             </button>
           </div>
-        : 
+        ) : (
           <div>
             <button className="edit-certification" onClick={this.handleClick}>
               Edit
             </button>
-            <button className="create-certification" onClick={this.createCertification}>
+            <button
+              className="create-certification"
+              onClick={this.createCertification}
+            >
               Add Certification
             </button>
           </div>
-        }
+        )}
       </div>
-    )
+    );
   }
 }

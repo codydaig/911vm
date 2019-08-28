@@ -1,35 +1,65 @@
 import React from 'react';
 import { unix } from 'moment';
 // import DatePicker from 'react-date-picker';
+import DateBox from './DateBox.jsx';
 import axios from 'axios';
 
 const DefaultCertificationCard = ({data, unixConverter}) => {
   return (
-    <div>
-        <p>Name: {data.certification.name}</p>
-        <p>Expires: {JSON.stringify(unixConverter(data.certification.expriation_date))}</p>
-        <p>Sign Off: {JSON.stringify(unixConverter(data.certification.sign_off.signature_date))}</p>
+    <div className="certifications">
+      <div className="cell">
+        <h4>Name</h4>
       </div>
+      <div className="cell">
+        <h4>Expiration Date</h4>
+      </div>
+      <div className="cell">
+        <h4>Sign Off</h4>
+      </div>
+      <div className="cell">
+        <p>{data.certification.name}</p>
+      </div>
+      <div className="cell">
+        <p>{(unixConverter(data.certification.expriation_date))}</p>
+      </div>
+      <div className="cell">
+        <p>{(unixConverter(data.certification.sign_off.signature_date))}</p>
+      </div>
+    </div>
   )
 }
 
 const EditingCard = ({data, unixConverter, handleChange, certificationTypes, onChange}) => {
   return (
-    <div>
-      <p>Name:
+    <div className="certifications">
+      <div className="cell">
+        <h4>Name</h4>
+      </div>
+      <div className="cell">
+        <h4>Expiration Date</h4>
+      </div>
+      <div className="cell">
+        <h4>Sign Off</h4>
+      </div>
+      <div className="cell">
         <select defaultValue={data.certification.id} name="certification_name" onChange={onChange}>
           {certificationTypes.map((cert, i) => {
             console.log("cert", cert)
             return <option name={cert.name} data-id={cert.id} key={i}>{cert.name}</option>
           })}
         </select>
-      </p>
-      <p>Expires: 
-        <input type="text" name="expriation_date" placeholder={unixConverter(data.certification.expriation_date) ? unixConverter(data.certification.expriation_date) : "undefined"}/>
-      </p>
-      <p>Sign Off: 
+      </div>
+      <div className="cell"> 
+      <DateBox
+            name="start_date"
+            label="Start date"
+            // handle={this.handleChange}
+            selected={new Date()}
+          />
+      </div>
+      <div className="cell"> 
         <input type="text" name="sign_off" placeholder={unixConverter(data.certification.sign_off.signature_date) ? unixConverter(data.certification.sign_off.signature_date) : "undefined"} />
-      </p>
+      </div>
   </div>
   )
 }
@@ -82,7 +112,7 @@ export default class Certification extends React.Component {
     const { data, unixConverter, editing, handleChange } = this.props;
     const { expriation_date, sign_off, certificationTypes } = this.state; 
     return (
-      <div>
+      <div className="certifications">
       { 
         editing ? 
         <EditingCard 
