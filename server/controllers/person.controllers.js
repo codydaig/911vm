@@ -99,10 +99,18 @@ const addCertificationAndSignature = (req, res) => {
 
 // Update signature on a certification
 const updateCertifcation = (req, res) => {
-  const signatureDate = req.body.signature_date ? req.body.signature_date : (new Date()).valueOf();
+  const signatureDate = req.body.signature_date ? (new Date(req.body.signature_date)).getTime() : null;
   const expiredAt = req.body.expriation_date ? (new Date(req.body.expriation_date)).getTime() : null;
 
-  Persons.updateCertifcation(req.params.id, req.params.certification_id, expiredAt, req.body.signature_person_id, signatureDate)
+  const updateData = {
+    id: req.params.id,
+    certificationId: req.params.certification_id,
+    expiredAt: expiredAt,
+    signatureDate: signatureDate,
+    signaturePersonId: req.body.signature_person_id ? req.body.signature_person_id : null
+  }
+
+  Persons.updateCertifcation(updateData)
   .then((data) => {
     res.status(200).json({data: data})
   })
