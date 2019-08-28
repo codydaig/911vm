@@ -1,0 +1,73 @@
+body {
+  font-family: var(--main-font);
+}
+.personal-info {
+  width: 50em;
+
+  display: grid;
+  grid-template-columns: repeat 4 (1fr);
+
+  margin: 1em auto;
+}
+.personal-info > form {
+    width: 100%;
+
+    grid-column-start: 1;
+    grid-column-end: 5;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.personal-info-header {
+  width: 100%;
+
+  grid-column-start: 1;
+  grid-column-end: 5;
+
+  border: 1px solid #999999;
+
+  text-align: center;
+}
+.personal-info-header h1,
+.certification-header h3,
+.cell h2,
+.cell h4,
+.cell p {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0.4em 0;
+}
+
+.cell {
+  border: 1px solid #999999;
+}
+
+.certifications-container {
+  width: 50em;
+
+  display: grid;
+  grid-template-columns: repeat 3 (1fr);
+
+  border: 1px solid #999999;
+
+  margin: 1em auto;
+}
+.certification-header h3,
+.cell h4 {
+  width: max-content;
+  margin: 0 auto;
+  padding: 0.4em 0;
+}
+
+.certification-header,
+.certifications {
+  width: 100%;
+  grid-column-start: 1;
+  grid-column-end: 4;
+
+  text-align: center;
+}
+.certifications{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
