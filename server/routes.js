@@ -23,7 +23,4 @@ module.exports = function(app) {
   app.delete('/api/person/:id', Person.remove);
   app.post('/api/person/:id/certification', Person.addCertification);
   app.get('/api/person/:id/certification', Person.getCertifications);
-
-
-
 };
