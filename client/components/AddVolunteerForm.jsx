@@ -108,24 +108,36 @@ class AddVolunteerForm extends React.Component {
             label="First name"
             handle={this.handleChange}
             value={this.state.newVolunteer.first_name}
+            groupClass="form-group"
+            labelClass="form-label"
+            inputClass="form-select"
           />
           <Input
             name="last_name"
             label="Last name"
             handle={this.handleChange}
             value={this.state.newVolunteer.last_name}
+            groupClass="form-group"
+            labelClass="form-label"
+            inputClass="form-select"
           />
           <Input
             name="email_address"
             label="Email"
             handle={this.handleChange}
             value={this.state.newVolunteer.email_address}
+            groupClass="form-group"
+            labelClass="form-label"
+            inputClass="form-select"
           />
           <Input
             name="phone_number"
             label="Phone number"
             handle={this.handleChange}
             value={this.state.newVolunteer.phone_number}
+            groupClass="form-group"
+            labelClass="form-label"
+            inputClass="form-select"
           />
           <Select
             name="class"
@@ -133,6 +145,9 @@ class AddVolunteerForm extends React.Component {
             options={this.state.classes}
             handle={this.handleChange}
             selected={this.state.newVolunteer.class}
+            groupClass="form-group"
+            labelClass="form-label"
+            selectClass="form-select"
           />
           <Checkbox
             name="is_admin"
@@ -140,6 +155,9 @@ class AddVolunteerForm extends React.Component {
             option="Administrator"
             handle={this.handleChange}
             checked={this.state.newVolunteer.is_admin}
+            groupClass="form-group"
+            labelClass="form-label"
+            checkboxClass="form-select"
           />
           <Checkbox
             name="is_volunteer"
@@ -147,14 +165,23 @@ class AddVolunteerForm extends React.Component {
             option="Volunteer"
             handle={this.handleChange}
             checked={this.state.newVolunteer.is_volunteer}
+            groupClass="form-group"
+            labelClass="form-label"
+            checkboxClass="form-checkbox"
           />
           <DateBox
             name="start_date"
             label="Start date"
             handle={this.handleChange}
             selected={new Date(this.state.newVolunteer.start_date)}
+            groupClass="form-group"
+            labelClass="form-label"
           />
-          <SubmitButton onSubmit={this.handleFormSubmit} />
+          <SubmitButton
+            onSubmit={this.handleFormSubmit}
+            groupClass="form-group"
+            submitClass="form-submit"
+          />
           <button onClick={this.reset}>Cancel</button>
         </form>
       </div>

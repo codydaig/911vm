@@ -3,8 +3,8 @@ import DatePicker from "react-datepicker";
 
 const DateBox = props => {
   return (
-    <div className="form-group">
-      <label htmlFor="form-label" className="form-label">
+    <div className={props.groupClass}>
+      <label htmlFor={props.labelClass} className={props.labelClass}>
         {props.label}:
       </label>
       <DatePicker
