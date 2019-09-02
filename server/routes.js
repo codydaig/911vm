@@ -24,6 +24,4 @@ module.exports = function(app) {
   app.post('/api/person/:id/certification', Person.addCertification);
   app.get('/api/person/:id/certification', Person.getCertifications);
 
-
-
 };
