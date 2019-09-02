@@ -36,7 +36,7 @@ export default function SimpleTable(props) {
           {props.searchedData.map(row => (
             <TableRow
               key={row.id}
-              onClick={() => { props.selectOneVolunteer(row.id) }}
+              onClick={() => { props.selectOneVolunteer(row) }}
               hover
             >
               <TableCell component="th" scope="row">

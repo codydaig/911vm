@@ -1,9 +1,13 @@
 import React from "react";
-import "../../../../Styles/Header.css";
+import styled from 'styled-components';
+
+const HeaderText = styled.header`
+  text-align: center;
+`
 
 const Header = (props) => {
   return (
-    <header className = "component-header">
+    <HeaderText className = "component-header">
       <img
         src="//cdn.jsdelivr.net/emojione/assets/png/1f638.png"
         width="32"
@@ -17,7 +21,7 @@ const Header = (props) => {
         height="32"
         alt=""
       />
-    </header>
+    </HeaderText>
   );
 }
 

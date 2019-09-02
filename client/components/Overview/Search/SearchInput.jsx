@@ -1,7 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
+import styled from 'styled-components';
 
-import "../../../../Styles/SearchInput.css";
+const InputDiv = styled.div`
+  margin: 0 10px 10px 10px;
+  text-align: center;
+`;
+
+const InputField = styled.input`
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  box-sizing: border-box;
+  font-size: 18px;
+  padding: 10px 8px;
+`
 
 class SearchInput extends React.Component {
   constructor(props) {
@@ -19,11 +31,9 @@ class SearchInput extends React.Component {
 
   render() {
     return (
-      <div className = "component-search-input">
-        <div>
-          <input onChange={this.handleChange} />
-        </div>
-      </div>
+      <InputDiv>
+        <InputField onChange={this.handleChange} />
+      </InputDiv>
     );
   }
 }

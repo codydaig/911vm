@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const app = express();
 
 
-app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(morgan('dev'));
 
 app.use(bodyParser.json());

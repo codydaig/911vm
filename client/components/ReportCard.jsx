@@ -4,8 +4,6 @@ import Certification from './Certification.jsx';
 import axios from 'axios';
 
 // @Karin Hsu i have few endpoints you can play with.  GET /api/person,  GET /api/person/:id,  GET /api/person/:id/certification
-//placeholder id
-const id = 'ae503518-d157-4bfb-b5b0-6ad9af547d3e';
 
 const EditingPersonalInfoCard = ({personInfo, onChange}) => {
   return (
@@ -19,33 +17,19 @@ const EditingPersonalInfoCard = ({personInfo, onChange}) => {
           <p>#:
             <input type="text" minLength="10" maxLength="10" placeholder={personInfo.phone_number} id="phone_number" onChange={onChange}/>
           </p>
-          <p>Admin:
-            <select defaultValue={personInfo.is_admin ? "true" : "false"} id="is_admin" onChange={onChange}>
-              <option value="true">Yes</option>
-              <option value="false">No</option>
-            </select>
-          </p>
-          <p>Volunteer:
-            <select defaultValue={personInfo.is_volunteer ? "true" : "false"} id="is_volunteer" onChange={onChange}>
-              <option value="true">Yes</option>
-              <option value="false">No</option>
-            </select>
-          </p>
         </form>
       </div>
     </div>
   )
 }
 
-const DefaultPersonalInfoCard = ({personInfo, email_address, phone_number, is_admin, is_volunteer}) => {
+const DefaultPersonalInfoCard = ({personInfo}) => {
   return (
     <div>
       <div className="personal-info">
         <h1>{personInfo.first_name} {personInfo.last_name}</h1>
-        <p>Email: {email_address}</p>
-        <p>#: {phone_number}</p>
-        <p>Admin: {is_admin ? "Yes" : "No"}</p>
-        <p>Volunteer: {is_volunteer ? "Yes" : "No"}</p>
+        <p>Email: {personInfo.email_address}</p>
+        <p>#: {personInfo.phone_number}</p>
       </div>
     </div>
   )
@@ -58,8 +42,6 @@ export default class ReportCard extends React.Component {
       editing: false,
       email_address: '',
       phone_number: '',
-      is_admin: '',
-      is_volunteer: '',
       certifications: [],
     }
     this.handleClick = this.handleClick.bind(this);
@@ -70,15 +52,13 @@ export default class ReportCard extends React.Component {
   }
 
   componentDidMount() {
-    const { email_address, phone_number, is_admin, is_volunteer } = this.props.personInfo; 
-    axios.get(`/api/person/${id}/certification`)
+    axios.get(`/api/person/${this.props.personInfo.id}/certification`)
       .then((response) => {
+        console.log("certification test", response)
         this.setState({
           editing: false,
           email_address,
-          phone_number, 
-          is_admin,
-          is_volunteer, 
+          phone_number,
           certifications: response.data.data,
         });
       })
@@ -100,13 +80,11 @@ export default class ReportCard extends React.Component {
   handleSaveClick(e, saveAlteredCertifications) {
     e.preventDefault();
     // save to DB
-    const {email_address, phone_number, is_admin, is_volunteer} = this.state;
+    const {email_address, phone_number} = this.state;
     const isEditing = !this.state.editing;
     const updatedInfo = {
       email_address, 
-      phone_number, 
-      is_admin,
-      is_volunteer
+      phone_number
     };
 
     this.setState({editing: isEditing});
@@ -139,7 +117,7 @@ export default class ReportCard extends React.Component {
   
   render() {
     const { personInfo } = this.props;
-    const { editing, email_address, phone_number, is_admin, is_volunteer, certifications } = this.state;
+    const { editing, email_address, phone_number, certifications } = this.state;
       
     return (
       <div> 
@@ -148,13 +126,12 @@ export default class ReportCard extends React.Component {
           <EditingPersonalInfoCard 
             personInfo={personInfo} 
             onChange={this.handlePersonalInfoChange}/> 
-          : 
+          :
           <DefaultPersonalInfoCard
             personInfo={personInfo}
-            email_address={email_address}
-            phone_number={phone_number}
-            is_admin={is_admin}
-            is_volunteer={is_volunteer}/>
+            // email_address={email_address}
+            // phone_number={phone_number}
+          />
         }
         <div className="certifications-container">
           <h3>Certifications:</h3>
@@ -171,7 +148,6 @@ export default class ReportCard extends React.Component {
             })
           }
         </div>
-
         { editing? 
           <div>
             <button className="edit-certification" onClick={this.handleClick}>
@@ -191,6 +167,7 @@ export default class ReportCard extends React.Component {
             </button>
           </div>
         }
+        <button onClick = {this.props.backToOverview}>Back</button>
       </div>
     )
   }

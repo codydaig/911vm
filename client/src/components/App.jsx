@@ -34,7 +34,7 @@ class App extends React.Component {
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
   }
 
@@ -52,7 +52,7 @@ Volunteer Status: ${selectedVolunteer["is_volunteer"]}`)
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
   }
 

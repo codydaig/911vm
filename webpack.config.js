@@ -1,46 +1,30 @@
-var path = require('path');
-var SRC_DIR = path.join(__dirname, '/client/src');
-var DIST_DIR = path.join(__dirname, '/client/dist');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+
+const SRC_DIR = path.join(__dirname, '/client');
+const DIST_DIR = path.join(__dirname, '/public');
 
 module.exports = {
   entry: `${SRC_DIR}/index.jsx`,
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: '911 Volunteer Management'
+    })
+  ],
   output: {
-    path: DIST_DIR,
-    filename: "bundle.js"
+    filename: 'bundle.js',
+    path: DIST_DIR
   },
-  module: {
-    loaders: [
+  module : {
+    loaders : [
       {
-        test: /\.jsx?/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
+        test : /\.jsx?/,
+        include : SRC_DIR,
+        loader : 'babel-loader',      
         query: {
           presets: ['react', 'es2015','stage-0']
         }
-      },
-      {
-        test: /\.css$/,
-        use: [
-          "style-loader",
-          "css-loader"
-        ]
-      },
-      {
-        test: /\.(gif|png|jpe?g|svg)$/i,
-        use: [
-          'file-loader',
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              bypassOnDebug: true, // webpack@1.x
-              disable: true, // webpack@2.x and newer
-            },
-          },
-        ],
       }
     ]
-  },
-  resolve: {
-    extensions: ['.js', 'jsx']
   }
 };
