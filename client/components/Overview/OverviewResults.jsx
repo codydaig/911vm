@@ -7,6 +7,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+import ReportCard from '../ReportCard.jsx';
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -20,7 +22,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function SimpleTable(props) {
   const classes = useStyles();
-
   return (
     <Paper className = {classes.root}>
       <Table className = {classes.table}>

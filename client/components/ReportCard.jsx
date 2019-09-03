@@ -38,11 +38,14 @@ const DefaultPersonalInfoCard = ({personInfo}) => {
 export default class ReportCard extends React.Component {
   constructor(props) {
     super(props);
+    console.log("report card test 1: ", props)
+    const { email_address, phone_number} = props;
     this.state = {
       editing: false,
-      email_address: '',
-      phone_number: '',
-      certifications: [],
+      class: props.class,
+      email_address,
+      phone_number,
+      certifications: []
     }
     this.handleClick = this.handleClick.bind(this);
     this.unixConverter = this.unixConverter.bind(this);
@@ -57,9 +60,7 @@ export default class ReportCard extends React.Component {
         console.log("certification test", response)
         this.setState({
           editing: false,
-          email_address,
-          phone_number,
-          certifications: response.data.data,
+          certifications: response.data.data
         });
       })
       .catch((error) => {
