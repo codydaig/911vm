@@ -40,6 +40,7 @@ class ReportCardView extends React.Component {
           personNames.push(name);
           personInfo[name] = el;
         });
+        personNames.sort();
         this.setState({ personInfo : personInfo });
         this.setState({ personNames : personNames });
         this.setState({ currentPerson : personNames[0] });
@@ -57,7 +58,7 @@ class ReportCardView extends React.Component {
     const currentCertifications = this.state.certifications;
 
     axios
-      .get('/api/person/' + id + '/certification')
+      .get(`/api/person/${id}/certification`)
       .then(response => {
         const certifications = [];
         response.data.data.forEach(el => {
@@ -80,7 +81,6 @@ class ReportCardView extends React.Component {
     if (name === "volunteer") {
       this.setState(this.setState({ currentPerson: value }));
       this.getCertifications(this.state.currentPerson);
-      console.log(this.state.certifications)
     //if sign off is being selected
     } else if (name === "sign-off") {
       this.setState(this.setState({ signOff: value }));
@@ -91,7 +91,6 @@ class ReportCardView extends React.Component {
     const { personInfo, loaded } = this.state;
     // const { personInfo, certifications, loaded } = this.state;
     if (loaded) {
-        console.log(this.state.personNames)
       return (
         <div>
           <Select
@@ -100,9 +99,9 @@ class ReportCardView extends React.Component {
             options={this.state.personNames}
             handle={this.handleChange}
             selected={this.state.currentPerson}
-            mainClass=""
-            labelClass=""
-            selectClass=""
+            groupClass="rc-group"
+            labelClass="rc-label"
+            selectClass="rc-select"
           />
           <Select
             name="sign-off"
@@ -110,9 +109,9 @@ class ReportCardView extends React.Component {
             options={this.state.personNames}
             handle={this.handleChange}
             selected={this.state.signOff}
-            mainClass=""
-            labelClass=""
-            selectClass=""
+            groupClass="rc-group"
+            labelClass="rc-label"
+            selectClass="rc-select"
           />
           <ReportCard personInfo={this.state.personInfo[this.state.currentPerson]} />
         </div>
