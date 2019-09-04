@@ -18,16 +18,16 @@ const EditingPersonalInfoCard = ({ personInfo, onChange }) => {
         </div>
         <form>
           <div className="cell">
-            <h2>Email</h2>
+            <h3>Email</h3>
           </div>
           <div className="cell">
-            <h2>Phone Number</h2>
+            <h3>Phone Number</h3>
           </div>
           <div className="cell">
-            <h2>Administrator</h2>
+            <h3>Administrator</h3>
           </div>
           <div className="cell">
-            <h2>Volunteer</h2>
+            <h3>Volunteer</h3>
           </div>
 
           <div className="cell">
@@ -91,16 +91,16 @@ const DefaultPersonalInfoCard = ({
         </h1>
       </div>
       <div className="cell">
-        <h2>Email</h2>
+        <h3>Email</h3>
       </div>
       <div className="cell">
-        <h2>Phone Number</h2>
+        <h3>Phone Number</h3>
       </div>
       <div className="cell">
-        <h2>Administrator</h2>
+        <h3>Administrator</h3>
       </div>
       <div className="cell">
-        <h2>Volunteer</h2>
+        <h3>Volunteer</h3>
       </div>
       <div className="cell">
         <p>{personInfo.email_address}</p>
@@ -224,6 +224,7 @@ export default class ReportCard extends React.Component {
 
   render() {
     const { personInfo } = this.props;
+    console.log(this.state.certifications)
     const {
       editing,
       email_address,
@@ -251,7 +252,7 @@ export default class ReportCard extends React.Component {
         )}
         <div className="certifications-container">
           <div className="certification-header">
-            <h3>Certifications:</h3>
+            <h2>Certifications</h2>
           </div>
           {certifications.length !== 0 &&
             certifications.map((data, i) => {
