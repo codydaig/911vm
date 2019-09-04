@@ -176,11 +176,13 @@ class AddVolunteerForm extends React.Component {
             selected={new Date(this.state.newVolunteer.start_date)}
             groupClass="form-group"
             labelClass="form-label"
+            dateClass="form-date"
           />
           <SubmitButton
             onSubmit={this.handleFormSubmit}
             groupClass="form-group"
             submitClass="form-submit"
+            buttonText="Submit"
           />
           <button onClick={this.reset}>Cancel</button>
         </form>

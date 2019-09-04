@@ -1,11 +1,14 @@
 import React from "react";
 
 const Input = props => {
+  const label = props.label ? (
+    <label htmlFor={name} className={props.labelClass}>
+      {props.label}:
+    </label>
+  ) : null;
   return (
     <div className={props.groupClass}>
-      <label htmlFor={name} className={props.labelClass}>
-        {props.label}:
-      </label>
+      {label}
       <input
         className={props.labelClass}
         name={props.name}
