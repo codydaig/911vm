@@ -288,7 +288,7 @@ Status code: 404
 `{error_message: 'error message'}`
 
 ## Person Certification
-### Add a certification to a volunteer
+### Add a certification to a volunteer with a signature
 
 `POST /api/person/:id/certification`
 
@@ -296,33 +296,10 @@ Request
 
 ```
 {
-  certification_id: string, // required
-  expriation_date: dateString, // for example '2019-02-23'   
-}
-```
-
-Response
-
-Status code: 200
-
-`{message: "Relationship created"}`
-
-Status code: 404
-
-`{error_message: 'error message'}`
-
-
-### Add a certification to a volunteer with a signature
-`POST /api/person/certification`
-Request
-
-```
-{
-	"person_id": string, // required
-	"certification_id": string // required,
+  "certification_id": string // required,
   "expriation_date": date string // YYYY-MM-DD not required
-	"signature_person_id": string // required
-	"signature_date": date string // YYYY-MM-DD not required
+  "signature_person_id": string // required
+  "signature_date": date string // YYYY-MM-DD not required
 }
 ```
 
@@ -335,6 +312,7 @@ Status code: 200
 Status code: 404
 
 `{error_message: 'error message'}`
+
 
 ### Update a signature data or certification expriation
 `PUT /api/person/:id/certification/:certification_id`
