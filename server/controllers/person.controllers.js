@@ -64,25 +64,9 @@ const remove = (req, res) => {
   })   
 }
 
-// ADD Certification to volunteer
-const addCertification = (req, res) => {
-  const personId = req.params.id;
-  const certificationId = req.body.certification_id;
-  const expiredAt = req.body.expriation_date ? (new Date(req.body.expriation_date)).getTime() : null;
-  
-  Persons.findOneByIdAndAddCertification(personId , certificationId, expiredAt)
-  .then((data) => {
-    res.status(200).json({data: data})
-  })
-  .catch((err) => {
-    res.status(404).json({error_message: err.message});
-  })   
-}
-
-// Add a certification to a volunteer also sign off it
+// ADD Certification to volunteer and sign off it
 const addCertificationAndSignature = (req, res) => {
-  
-  const personId = req.body.person_id;
+  const personId = req.params.id;
   const certificationId = req.body.certification_id;
   const signaturePersonId = req.body.signature_person_id
   const expiredAt = req.body.expriation_date ? (new Date(req.body.expriation_date)).getTime() : null;
@@ -94,7 +78,7 @@ const addCertificationAndSignature = (req, res) => {
   })
   .catch((err) => {
     res.status(404).json({error_message: err.message});
-  })
+  })  
 }
 
 // Update signature on a certification
@@ -125,7 +109,6 @@ module.exports = {
   show: show,
   update: update,
   remove: remove,  
-  addCertification: addCertification,
   addCertificationAndSignature: addCertificationAndSignature,
   updateCertifcation: updateCertifcation
 }
