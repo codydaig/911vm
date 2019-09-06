@@ -1,87 +1,106 @@
-import React from 'react';
-import { unix } from 'moment';
+import React from "react";
+import { unix } from "moment";
 // import DatePicker from 'react-date-picker';
-import DateBox from './DateBox.jsx';
-import axios from 'axios';
+import DateBox from "./DateBox.jsx";
+import axios from "axios";
 
-const DefaultCertificationCard = ({data, unixConverter}) => {
+const DefaultCertificationCard = ({ data, unixConverter }) => {
   return (
     <div className="certifications">
       <div className="cell">
-        <h4>Name</h4>
+        <h3>Name</h3>
       </div>
       <div className="cell">
-        <h4>Expiration Date</h4>
+        <h3>Expiration Date</h3>
       </div>
       <div className="cell">
-        <h4>Sign Off</h4>
+        <h3>Sign Off</h3>
       </div>
       <div className="cell">
         <p>{data.certification.name}</p>
       </div>
       <div className="cell">
-        <p>{(unixConverter(data.certification.expriation_date))}</p>
+        <p>{unixConverter(data.certification.expriation_date)}</p>
       </div>
       <div className="cell">
-        <p>{(unixConverter(data.certification.sign_off.signature_date))}</p>
+        <p>{unixConverter(data.certification.sign_off.signature_date)}</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-const EditingCard = ({data, unixConverter, handleChange, certificationTypes, onChange}) => {
+const EditingCard = ({
+  data,
+  unixConverter,
+  handleChange,
+  certificationTypes,
+  onChange
+}) => {
   return (
     <div className="certifications">
       <div className="cell">
-        <h4>Name</h4>
+        <h3>Name</h3>
       </div>
       <div className="cell">
-        <h4>Expiration Date</h4>
+        <h3>Expiration Date</h3>
       </div>
       <div className="cell">
-        <h4>Sign Off</h4>
+        <h3>Sign Off</h3>
       </div>
       <div className="cell">
-        <select defaultValue={data.certification.id} name="certification_name" onChange={onChange}>
+        <select
+          defaultValue={data.certification.id}
+          name="certification_name"
+          onChange={onChange}
+        >
           {certificationTypes.map((cert, i) => {
-            console.log("cert", cert)
-            return <option name={cert.name} data-id={cert.id} key={i}>{cert.name}</option>
+            console.log("cert", cert);
+            return (
+              <option name={cert.name} data-id={cert.id} key={i}>
+                {cert.name}
+              </option>
+            );
           })}
         </select>
       </div>
-      <div className="cell"> 
-      <DateBox
-            name="start_date"
-            label="Start date"
-            // handle={this.handleChange}
-            selected={new Date()}
-          />
+      <div className="cell">
+        <DateBox
+          name="exp_date"
+          // handle={this.handleChange}
+          selected={new Date()}
+        />
       </div>
-      <div className="cell"> 
-        <input type="text" name="sign_off" placeholder={unixConverter(data.certification.sign_off.signature_date) ? unixConverter(data.certification.sign_off.signature_date) : "undefined"} />
+      <div className="cell">
+        <DateBox
+          name="exp_date"
+          // handle={this.handleChange}
+          selected={new Date()}
+        />
       </div>
-  </div>
-  )
-}
+    </div>
+  );
+};
 
 export default class Certification extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      id: '',
-      expriation_date: '', 
-      sign_off: '',
-      certificationTypes: [],
-    }
-    this.handleCertificationInfoChange = this.handleCertificationInfoChange.bind(this);
+      name: "",
+      id: "",
+      expriation_date: "",
+      sign_off: "",
+      certificationTypes: []
+    };
+    this.handleCertificationInfoChange = this.handleCertificationInfoChange.bind(
+      this
+    );
   }
 
   componentDidMount() {
-    axios.get('/api/certification')
+    axios.get("/api/certification")
       .then(response => {
         this.setState({
-          certificationTypes: response.data.data,
+          certificationTypes: response.data.data
         })
       .catch(error => {
         console.log("error", error);
@@ -101,31 +120,29 @@ export default class Certification extends React.Component {
     //   value = e.target.value
     // }
 
-    console.log("ID", e.target.getAttribute('id'))
-    this.setState({[name]: value, id: e.target.id})
-    console.log("CHANGED STATE", this.state)
+    console.log("ID", e.target.getAttribute("id"));
+    this.setState({ [name]: value, id: e.target.id });
+    console.log("CHANGED STATE", this.state);
     // this.setState({[name]: e.target.value})
-
   }
 
   render() {
     const { data, unixConverter, editing, handleChange } = this.props;
-    const { expriation_date, sign_off, certificationTypes } = this.state; 
+    const { expriation_date, sign_off, certificationTypes } = this.state;
     return (
       <div className="certifications">
-      { 
-        editing ? 
-        <EditingCard 
-          data={data} 
-          unixConverter={unixConverter} 
-          handleChange={handleChange}
-          certificationTypes={certificationTypes}
-          onChange={this.handleCertificationInfoChange}/> : 
-        <DefaultCertificationCard 
-          data={data} 
-          unixConverter={unixConverter}/>
-      }
+        {editing ? (
+          <EditingCard
+            data={data}
+            unixConverter={unixConverter}
+            handleChange={handleChange}
+            certificationTypes={certificationTypes}
+            onChange={this.handleCertificationInfoChange}
+          />
+        ) : (
+          <DefaultCertificationCard data={data} unixConverter={unixConverter} />
+        )}
       </div>
-    )
+    );
   }
 }
