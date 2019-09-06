@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+
+// TODO move this to .ENV
 const config = {
     secrets: {
     // jwt: process.env.JWT_SECRET,
