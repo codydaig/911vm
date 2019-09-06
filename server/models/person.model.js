@@ -1,6 +1,8 @@
 const moment = require('moment');
 const neode = require('../schema/index');
 const auth = require('../utils/auth');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 let Persons = {};
 
@@ -14,7 +16,12 @@ const {emailAddress, firstName, lastName, password} = params;
 // get salt and and combine with hash
 // save salt/hash to DB as password
 // return an authentication token
-const data = {email_address: emailAddress, first_name: firstName, last_name: lastName, password: password};
+
+// hash password
+const salt = bcrypt.genSaltSync(saltRounds);
+const hash = bcrypt.hashSync(password, salt);
+
+const data = {email_address: emailAddress, first_name: firstName, last_name: lastName, password: hash};
 
 return neode.create('Person', data)
   .then((person) => {
