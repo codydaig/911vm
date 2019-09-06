@@ -53,10 +53,11 @@ export default class Certification extends React.Component {
         this.setState({
           certificationTypes: response.data.data,
         })
+      })
       .catch(error => {
         console.log("error", error);
       });
-    });
+    
   }
 
   handleCertificationInfoChange(e) {

@@ -25,8 +25,4 @@ module.exports = function(app) {
   app.post('/api/person/:id/certification', Person.addCertification);
   app.get('/api/person/:id/certification', Person.getCertifications);
 
-  // Signature Routes
-  app.post('/api/signature', Signature.create); 
-
-
 };
