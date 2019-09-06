@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 const DateBox = props => {
   const label = props.label ? (
     <label htmlFor={name} className={props.labelClass}>
-      {props.label}:
+      {props.label}:&nbsp;
     </label>
   ) : null;
   return (
