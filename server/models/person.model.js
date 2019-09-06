@@ -1,7 +1,40 @@
 const moment = require('moment');
 const neode = require('../schema/index');
+const auth = require('../utils/auth');
 
 let Persons = {};
+
+Persons.signUp = (params) => {
+const {emailAddress, firstName, lastName, password} = params;
+// check if all params exist
+// check if user already exists
+//   error
+// check valid email and valid password inputs (TODO later)
+// hash the password
+// get salt and and combine with hash
+// save salt/hash to DB as password
+// return an authentication token
+const data = {email_address: emailAddress, first_name: firstName, last_name: lastName, password: password};
+
+return neode.create('Person', data)
+  .then((person) => {
+    return {
+      id: person.get('id'),
+      first_name: person.get('first_name'),
+      last_name: person.get('last_name'),
+      email_address: person.get('email_address'),
+      phone_number: person.get('phone_number'),
+      is_admin: person.get('is_admin'),
+      is_volunteer: person.get('is_volunteer')
+    }
+  })
+  .then((user) => {
+    const token = auth.newToken(user);
+    user.token = token;
+    return user;
+  })
+
+}
 
 Persons.getAll = () => {
   const query = 'match (p:Person) return p';

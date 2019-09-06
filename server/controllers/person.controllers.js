@@ -1,6 +1,17 @@
 const models = require('./../models');
 const Persons = models.Persons;
 
+const signUp = (req, res) => {
+  const data = req.body;
+  Persons.signUp(data)
+  .then((data) => {
+    res.status(201).json({data: data})
+  })
+  .catch((err) => {
+    res.status(400).json({error_message: err.message})
+  });
+}
+
 // GET all volunteers
 const get = (req, res) => {  
   Persons.getAll()
@@ -110,5 +121,6 @@ module.exports = {
   update: update,
   remove: remove,  
   addCertificationAndSignature: addCertificationAndSignature,
-  updateCertifcation: updateCertifcation
+  updateCertifcation: updateCertifcation,
+  signUp: signUp
 }
