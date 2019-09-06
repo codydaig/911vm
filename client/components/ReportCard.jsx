@@ -4,8 +4,6 @@ import Certification from './Certification.jsx';
 import axios from 'axios';
 
 // @Karin Hsu i have few endpoints you can play with.  GET /api/person,  GET /api/person/:id,  GET /api/person/:id/certification
-//placeholder id
-const id = 'ae503518-d157-4bfb-b5b0-6ad9af547d3e';
 
 const EditingPersonalInfoCard = ({personInfo, onChange}) => {
   return (
@@ -61,6 +59,8 @@ export default class ReportCard extends React.Component {
       is_admin: '',
       is_volunteer: '',
       certifications: [],
+      loaded: false,
+      id: props.match.params.id // get the ID from the
     }
     this.handleClick = this.handleClick.bind(this);
     this.unixConverter = this.unixConverter.bind(this);
@@ -70,16 +70,22 @@ export default class ReportCard extends React.Component {
   }
 
   componentDidMount() {
-    const { email_address, phone_number, is_admin, is_volunteer } = this.props.personInfo; 
-    axios.get(`/api/person/${id}/certification`)
+    axios.get(`/api/person/${this.state.id}`)
       .then((response) => {
         this.setState({
-          editing: false,
-          email_address,
-          phone_number, 
-          is_admin,
-          is_volunteer, 
+          personInfo: response.data.data,
+          email_address: response.data.data.email_address,
+          phone_number: response.data.data.phone_number,
+          is_admin: response.data.data.is_admin,
+          is_volunteer: response.data.data.is_volunteer
+        })
+        return axios.get(`/api/person/${this.state.id}/certification`)
+      }) 
+      .then((response) => {
+        this.setState({
+          editing: false, 
           certifications: response.data.data,
+          loaded: true
         });
       })
       .catch((error) => {
@@ -138,8 +144,12 @@ export default class ReportCard extends React.Component {
   }
   
   render() {
-    const { personInfo } = this.props;
-    const { editing, email_address, phone_number, is_admin, is_volunteer, certifications } = this.state;
+    // const { personInfo } = this.props;
+    const { editing, email_address, phone_number, is_admin, is_volunteer, certifications, personInfo } = this.state;
+
+    if(!this.state.loaded) {
+      return ( <div>Loading.....</div>)
+    }
       
     return (
       <div> 
