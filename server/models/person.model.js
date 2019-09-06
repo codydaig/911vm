@@ -8,7 +8,7 @@ let Persons = {};
 
 Persons.signUp = (params) => {
 const {emailAddress, firstName, lastName, password} = params;
-// check if all params exist
+
 // check if user already exists
 //   error
 // check valid email and valid password inputs (TODO later)
