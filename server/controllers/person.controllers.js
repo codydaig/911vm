@@ -64,33 +64,43 @@ const remove = (req, res) => {
   })   
 }
 
-// ADD Certification to volunteer
-const addCertification = (req, res) => {
+// ADD Certification to volunteer and sign off it
+const addCertificationAndSignature = (req, res) => {
   const personId = req.params.id;
   const certificationId = req.body.certification_id;
-  const expiredAt = (new Date(req.body.expired_at)).getTime();
-
-  Persons.findOneByIdAndAddCertification(personId , certificationId, expiredAt)
-  .then((data) => {
+  const signaturePersonId = req.body.signature_person_id
+  const expiredAt = req.body.expriation_date ? (new Date(req.body.expriation_date)).getTime() : null;
+  const signatureDate = req.body.signature_date ? (new Date(req.body.signature_date)).getTime() : (new Date()).getTime();
+  
+  Persons.addCertificationAndSignature(personId , certificationId, expiredAt, signaturePersonId, signatureDate)
+  .then((data) => {    
     res.status(200).json({data: data})
   })
   .catch((err) => {
     res.status(404).json({error_message: err.message});
-  })   
+  })  
 }
 
-// Get a volunteer's certifications
+// Update signature on a certification
+const updateCertifcation = (req, res) => {
+  const signatureDate = req.body.signature_date ? (new Date(req.body.signature_date)).getTime() : null;
+  const expiredAt = req.body.expriation_date ? (new Date(req.body.expriation_date)).getTime() : null;
 
-const getCertifications = (req, res) => {
-  const id = req.params.id;
- 
-  Persons.findOneByIdGetCertifications(id)
+  const updateData = {
+    id: req.params.id,
+    certificationId: req.params.certification_id,
+    expiredAt: expiredAt,
+    signatureDate: signatureDate,
+    signaturePersonId: req.body.signature_person_id ? req.body.signature_person_id : null
+  }
+
+  Persons.updateCertifcation(updateData)
   .then((data) => {
     res.status(200).json({data: data})
   })
   .catch((err) => {
     res.status(404).json({error_message: err.message});
-  })   
+  })    
 }
 
 module.exports = {
@@ -99,6 +109,6 @@ module.exports = {
   show: show,
   update: update,
   remove: remove,  
-  addCertification: addCertification,
-  getCertifications: getCertifications
+  addCertificationAndSignature: addCertificationAndSignature,
+  updateCertifcation: updateCertifcation
 }
