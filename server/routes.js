@@ -8,6 +8,9 @@ module.exports = function(app) {
 
   app.get('/helloworld', controllers.helloWorld);
 
+  // Authentication
+  app.post('/signup', Person.signUp)
+
   // Certification Routes
   app.post('/api/certification', Certification.create)
   app.get('/api/certification', Certification.get)

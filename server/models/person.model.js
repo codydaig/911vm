@@ -1,7 +1,53 @@
 const moment = require('moment');
 const neode = require('../schema/index');
+const auth = require('../utils/auth');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 let Persons = {};
+
+Persons.signUp = (params) => {
+  const {emailAddress, firstName, lastName, password} = params;
+
+  // check if user already exists
+  //   error
+  // check valid email and valid password inputs (TODO later)
+  // hash the password
+  // get salt and and combine with hash
+  // save salt/hash to DB as password
+  // return an authentication token
+
+  return neode.first('Person', {email_address: emailAddress})
+  .then ( (user) => {
+    if ( user ) {
+    throw new Error('User already exists')
+    } else {
+      //hash password
+      const salt = bcrypt.genSaltSync(saltRounds);
+      const hash = bcrypt.hashSync(password, salt);
+      
+      const data = {email_address: emailAddress, first_name: firstName, last_name: lastName, password: hash};
+      
+      return neode.create('Person', data)
+        .then((person) => {
+          return {
+            id: person.get('id'),
+            first_name: person.get('first_name'),
+            last_name: person.get('last_name'),
+            email_address: person.get('email_address'),
+            phone_number: person.get('phone_number'),
+            is_admin: person.get('is_admin'),
+            is_volunteer: person.get('is_volunteer')
+          }
+        })
+        .then((user) => {
+          const token = auth.newToken(user);
+          user.token = token;
+          return user;
+        }) 
+    } 
+  })
+}
 
 Persons.getAll = () => {
   const query = 'match (p:Person) return p';
