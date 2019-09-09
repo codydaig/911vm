@@ -10,6 +10,7 @@ module.exports = function(app) {
 
   // Authentication
   app.post('/signup', Person.signUp)
+  app.post('/login', Person.login)
 
   // Certification Routes
   app.post('/api/certification', Certification.create)
