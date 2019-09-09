@@ -16,6 +16,21 @@ const signUp = (req, res) => {
   }
 }
 
+const login = (req, res) => {
+  const data = req.body;
+  if(!data.emailAddress || !data.password) {
+    res.status(400).json({error_message: 'Missing parameter'})
+  } else {
+    Persons.login(data)
+    .then((data) => {
+      res.status(201).json({data: data})
+    })
+    .catch((err) => {
+      res.status(400).json({error_message: err.message})
+    });
+  }
+}
+
 // GET all volunteers
 const get = (req, res) => {  
   Persons.getAll()
@@ -126,5 +141,6 @@ module.exports = {
   remove: remove,  
   addCertificationAndSignature: addCertificationAndSignature,
   updateCertifcation: updateCertifcation,
-  signUp: signUp
+  signUp: signUp,
+  login: login
 }
