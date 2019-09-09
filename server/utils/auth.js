@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 // TODO move this to .ENV
 const config = {
     secrets: {
-    // jwt: process.env.JWT_SECRET,
-    jwt: '911vmSecretPleaseChange',
+    jwt: process.env.JWT_SECRET || '911vmSecretPleaseChange',
     jwtExp: '2d'
   }
 }
@@ -16,6 +16,11 @@ const newToken = user => {
   })
 }
 
+const checkPassword = (passwordHash, password) => {
+  return bcrypt.compareSync(password, passwordHash);
+}
+
 module.exports = {
-  newToken
+  newToken,
+  checkPassword
 }
