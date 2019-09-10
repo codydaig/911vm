@@ -1,5 +1,48 @@
 const models = require('./../models');
 const Persons = models.Persons;
+const auth = require('./../utils/auth.js');
+
+const protect = (req, res, next) => {
+  const bearer = req.headers.authorization;
+
+  if ( !bearer || !bearer.startsWith('Bearer ') ) {
+    return res.status(401).json({error_message: 'Request is not permitted.'})
+  }
+
+  const token = bearer.split('Bearer ')[1].trim();
+
+  if ( !token ) {
+    return res.status(401).json({error_message: 'Request is not permitted.'})
+  }
+
+  auth.verifyToken(token)
+  .then(( payload ) => {
+    console.log('payload: ', payload)
+    return Persons.findOneById(payload.id)
+  })
+  .then(( user ) => {
+    next()
+  })
+  .catch((e) => {
+    return res.status(401).json({error_message: 'Request is not permitted. Invalid token.'})
+  })
+  
+  // let payload
+  // try {
+  //   payload = await auth.verifyToken(token)
+  // } catch (e) {
+  //   return res.status(401).end()
+  // }
+
+  // const user = await Persons.findOneById(payload.id)
+
+  // if (!user) {
+  //   return res.status(401).end()
+  // }
+
+  // req.user = user
+  
+}
 
 const signUp = (req, res) => {
   const data = req.body;
@@ -142,5 +185,6 @@ module.exports = {
   addCertificationAndSignature: addCertificationAndSignature,
   updateCertifcation: updateCertifcation,
   signUp: signUp,
-  login: login
+  login: login,
+  protect: protect,
 }

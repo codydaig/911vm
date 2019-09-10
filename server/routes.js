@@ -12,6 +12,9 @@ module.exports = function(app) {
   app.post('/signup', Person.signUp)
   app.post('/login', Person.login)
 
+  // Middleware to check JWT on all following transactions
+  app.use('/api', Person.protect);
+
   // Certification Routes
   app.post('/api/certification', Certification.create)
   app.get('/api/certification', Certification.get)

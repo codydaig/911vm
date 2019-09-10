@@ -20,7 +20,17 @@ const checkPassword = (passwordHash, password) => {
   return bcrypt.compareSync(password, passwordHash);
 }
 
+const verifyToken = token => {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, config.secrets.jwt, (err, payload) => {
+      if (err) return reject(err)
+      resolve(payload)
+    })
+  })
+}
+
 module.exports = {
   newToken,
-  checkPassword
+  checkPassword,
+  verifyToken,
 }
