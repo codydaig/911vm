@@ -21,27 +21,12 @@ const protect = (req, res, next) => {
     return Persons.findOneById(payload.id)
   })
   .then(( user ) => {
+    req.user = user
     next()
   })
   .catch((e) => {
     return res.status(401).json({error_message: 'Request is not permitted. Invalid token.'})
   })
-  
-  // let payload
-  // try {
-  //   payload = await auth.verifyToken(token)
-  // } catch (e) {
-  //   return res.status(401).end()
-  // }
-
-  // const user = await Persons.findOneById(payload.id)
-
-  // if (!user) {
-  //   return res.status(401).end()
-  // }
-
-  // req.user = user
-  
 }
 
 const signUp = (req, res) => {
