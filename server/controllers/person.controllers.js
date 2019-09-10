@@ -17,7 +17,6 @@ const protect = (req, res, next) => {
 
   auth.verifyToken(token)
   .then(( payload ) => {
-    console.log('payload: ', payload)
     return Persons.findOneById(payload.id)
   })
   .then(( user ) => {

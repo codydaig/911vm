@@ -5,7 +5,7 @@ const Certification = require('./controllers/certification.controllers.js');
 const Person = require('./controllers/person.controllers.js');
 
 const logRequest = (req, res, next) => {
-  console.log('logRequest user...', req.user)
+  console.log('protect api user:', req.user)
   next()
 }
 
@@ -17,10 +17,10 @@ module.exports = function(app) {
   app.post('/signup', Person.signUp)
   app.post('/login', Person.login)
 
-  // Middleware to check JWT on all following transactions
+  // Middleware to check JWT on all api transactions
   app.use('/api', Person.protect);
 
-  // Note: Logs the user data attached to request upon successful JWT check
+  // TEMP - Logs the user (person) attached to request upon successful JWT check
   // app.use('/api', logRequest);
 
   // Certification Routes
