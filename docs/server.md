@@ -131,6 +131,75 @@ Status code: 404
 
 `{error_message: 'error message'}`
 
+
+## Person (volunteer)
+### List all volunteers with their certifications
+
+`GET /api/person/certifications`
+
+Status code: 200
+
+```
+{
+  data: [
+    {
+      person: {
+        email_address: "steve.tart@leu-rescue.org",
+        last_name: "Tart",
+        phone_number: "303-250-1748",
+        id: "15fdb868-aa46-4864-94b8-c89635a98ecd",
+        first_name: "Steve",
+        class: "Probationary",
+        start_date: null
+      },
+      certifications: [
+        {
+          signature_date: null,
+          signature_person_id: null,
+          name: "CPR",
+          id: "d365ed24-5ab2-4532-8830-3b79b362dc3a",
+          expriation_date: "2019-03-31",
+          signature_person_name: null
+        }
+      ]
+    }, 
+    {
+      person: {
+        email_address: "ryan.medhurst@leu-rescue.org",
+        last_name: "Medhurst",
+        phone_number: "970-302-8775",
+        id: "2b924af0-1d90-491f-bd13-7caa69c1f1ed",
+        first_name: "Ryan",
+        class: "Trainee",
+        start_date: "2016-10-10"
+      },
+      certifications: [
+        {
+          signature_date: null,
+          signature_person_id: null,
+          name: "CPR",
+          id: "d365ed24-5ab2-4532-8830-3b79b362dc3a",
+          expriation_date: "2019-06-30",
+          signature_person_name: null
+        },
+        {
+          signature_date: null,
+          signature_person_id: null,
+          name: "EMT Basic",
+          id: "328ce4b0-8e38-449e-a187-7959794cb264",
+          expriation_date: "2020-12-15",
+          signature_person_name: null
+        }
+      ]
+    }    
+  ]
+}
+```
+
+Status code: 404
+
+`{error_message: 'error message'}`
+
 ### Create new volunteer
 
 `POST /api/person`
