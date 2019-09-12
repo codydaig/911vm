@@ -1,5 +1,32 @@
 const models = require('./../models');
 const Persons = models.Persons;
+const auth = require('./../utils/auth.js');
+
+const protect = (req, res, next) => {
+  const bearer = req.headers.authorization;
+
+  if ( !bearer || !bearer.startsWith('Bearer ') ) {
+    return res.status(401).json({error_message: 'Request is not permitted.'})
+  }
+
+  const token = bearer.split('Bearer ')[1].trim();
+
+  if ( !token ) {
+    return res.status(401).json({error_message: 'Request is not permitted.'})
+  }
+
+  auth.verifyToken(token)
+  .then(( payload ) => {
+    return Persons.findOneById(payload.id)
+  })
+  .then(( user ) => {
+    req.user = user
+    next()
+  })
+  .catch((e) => {
+    return res.status(401).json({error_message: 'Request is not permitted. Invalid token.'})
+  })
+}
 
 const signUp = (req, res) => {
   const data = req.body;
@@ -7,6 +34,21 @@ const signUp = (req, res) => {
     res.status(400).json({error_message: 'Missing parameter'})
   } else {
     Persons.signUp(data)
+    .then((data) => {
+      res.status(201).json({data: data})
+    })
+    .catch((err) => {
+      res.status(400).json({error_message: err.message})
+    });
+  }
+}
+
+const login = (req, res) => {
+  const data = req.body;
+  if(!data.emailAddress || !data.password) {
+    res.status(400).json({error_message: 'Missing parameter'})
+  } else {
+    Persons.login(data)
     .then((data) => {
       res.status(201).json({data: data})
     })
@@ -137,6 +179,8 @@ module.exports = {
   remove: remove,  
   addCertificationAndSignature: addCertificationAndSignature,
   updateCertifcation: updateCertifcation,
+  getWithCerts: getWithCerts,
   signUp: signUp,
-  getWithCerts: getWithCerts
+  login: login,
+  protect: protect,
 }
