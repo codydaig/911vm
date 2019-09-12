@@ -49,6 +49,40 @@ Persons.signUp = (params) => {
   })
 }
 
+Persons.login = (params) => {
+  const emailAddress = params.emailAddress;
+  const password = params.password;
+
+  return neode.first('Person', {email_address: emailAddress})
+  .then ( (person) => {
+    if ( person ) {
+      const passwordHash = person.get('password');
+      const isPasswordMatch = auth.checkPassword(passwordHash, password);
+      if(isPasswordMatch) {
+        const user = {
+          id: person.get('id'),
+          first_name: person.get('first_name'),
+          last_name: person.get('last_name'),
+          email_address: person.get('email_address'),
+          phone_number: person.get('phone_number'),
+          is_admin: person.get('is_admin'),
+          is_volunteer: person.get('is_volunteer')
+        }
+        return user;
+      } else {
+        throw new Error('Password does not match');
+      }
+    } else {
+      throw new Error('User does not exist.');
+    } 
+  })
+  .then((user) => {
+    const token = auth.newToken(user);
+    user.token = token;
+    return user;
+  })   
+}
+
 Persons.getAll = () => {
   const query = 'match (p:Person) return p';
   return neode.cypher(query, {})
