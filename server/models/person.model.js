@@ -94,6 +94,53 @@ Persons.getAll = () => {
   }) 
 }
 
+Persons.getAllWithCertifications = () => {
+  const query = `
+  MATCH (p:Person)-[r:HAS_CERTIFICATION]->(c:Certification)
+  WITH p, collect({
+    name: c.name,
+    id: c.id,
+    expriation_date: r.expriation_date,
+    signature_person_id: r.signature_person_id,
+    signature_person_name: r.signature_person_name,
+    signature_date: r.signature_date     
+  }) as certification
+  RETURN {
+    data: {
+      person: {
+        id: p.id,
+        last_name: p.last_name,
+        first_name: p.first_name,
+        phone_number: p.phone_number,
+        email_address: p.email_address,
+        class: p.class,
+        start_date: p.start_date        
+      },
+      certifications: certification
+    }
+  }
+  `;
+
+  return neode.cypher(query, {})
+  .then((collection) => {
+    const data = collection.records.map((item) => {
+      const person = item['_fields'][0]['data']['person'];            
+      if(person['start_date']) {person['start_date'] = moment(person['start_date']).format('YYYY-MM-DD')}      
+      const certifications = item['_fields'][0]['data']['certifications'];            
+      certifications.forEach((cert) => {
+        if(cert['expriation_date']) cert['expriation_date'] = moment(cert['expriation_date']).format('YYYY-MM-DD')
+        if(cert['signature_date']) cert['signature_date'] = moment(cert['signature_date']).format('YYYY-MM-DD')
+      })
+      return item['_fields'][0]['data'];
+    })
+    if(data[0]['certifications'][0]['id'] === null) {
+      data[0]['certifications'] = []
+    }
+    return data;
+  })  
+}
+
+
 Persons.findOneById = (id) => {
   const query = `
   MATCH (p1:Person {id: {id}}) 

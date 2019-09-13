@@ -69,6 +69,17 @@ const get = (req, res) => {
   });
 }
 
+// GET all volunteers with their certification
+const getWithCerts = (req, res) => {  
+  Persons.getAllWithCertifications()
+  .then((data) => {
+    res.status(200).json({data: data});
+  })
+  .catch((err) => {
+    res.status(404).json({error_message: err.message});
+  });
+}
+
 // GET a volunteer data
 const show = (req, res) => { 
   const id = req.params.id;
@@ -168,6 +179,7 @@ module.exports = {
   remove: remove,  
   addCertificationAndSignature: addCertificationAndSignature,
   updateCertifcation: updateCertifcation,
+  getWithCerts: getWithCerts,
   signUp: signUp,
   login: login,
   protect: protect,

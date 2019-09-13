@@ -24,6 +24,7 @@ module.exports = function(app) {
 
   // Person Routes
   app.get('/api/person', Person.get);
+  app.get('/api/person/certifications', Person.getWithCerts);
   app.post('/api/person', Person.create);
   app.get('/api/person/:id', Person.show);
   app.put('/api/person/:id', Person.update);
