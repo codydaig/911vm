@@ -14,4 +14,11 @@ apis.getVolunteer = (id) => {
 	return axios.get(url);
 }
 
+apis.searchVolunteers = (keyword) => {
+  const url = `${base}/api/person/search`
+  return axios.post(url, {
+    'keyword': keyword
+  })
+}
+
 export default apis;
