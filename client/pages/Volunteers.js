@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom'
 import apis from './../apis'
 
+// TODO move this one to components
 const VolunteerTable = (props) => {
   return (
     props.items.map((item) => {
