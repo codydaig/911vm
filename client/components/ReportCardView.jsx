@@ -1,31 +1,43 @@
 import React from "react";
 import ReportCard from "./ReportCard.jsx";
+import CertificationView from "./certification/CertificationView.jsx";
 import Select from "../elements/Select.jsx";
 import axios from "axios";
 
 //placeholder id
-const id = "54ddf0c0-b342-4caa-b9dd-04870c55ffc9";
+const routeId = "729c140b-2026-41e7-be84-c4b4828bb569";
 
 class ReportCardView extends React.Component {
   constructor() {
     super();
 
     this.getVolunteers = this.getVolunteers.bind(this);
-    this.getCertifications = this.getCertifications.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.getCertifications = this.getCertifications.bind(this);
 
     this.state = {
-      personInfo: {},
-      personNames: [],
-      certifications: {},
-      currentPerson: "",
+      personInfo: {}, //volunteer info
+      personNames: [], //volunteer names for select elements
+      certifications: {}, //certification info
+      currentPerson: "", //currently selected person
+      currentId: "",
       signOff: "",
       loaded: false
     };
   }
 
   componentDidMount() {
+    // if (this.props.match.params.id !== undefined) {
+    //   this.setState({currentId:this.props.match.params.id})
+    // }
+    // else {
+    this.setState({ currentId: routeId });
+    //}
     this.getVolunteers();
+
+    if (this.state.certifications[routeId] === undefined) {
+      this.getCertifications(routeId);
+    }
   }
 
   getVolunteers() {
@@ -39,34 +51,44 @@ class ReportCardView extends React.Component {
           const name = el.first_name + " " + el.last_name;
           personNames.push(name);
           personInfo[name] = el;
+
+          if (el.id === this.state.currentId) {
+            this.setState({ currentPerson: name });
+          }
         });
+
         personNames.sort();
-        this.setState({ personInfo : personInfo });
-        this.setState({ personNames : personNames });
-        this.setState({ currentPerson : personNames[0] });
-        this.setState({ signOff : personNames[0] });
-        this.getCertifications(this.state.currentPerson);
+
+        this.setState({ personInfo: personInfo });
+        this.setState({ personNames: personNames });
+
+        if (this.state.currentPerson === "") {
+          this.setState({ currentPerson: personNames[0] });
+          this.setState({ currentId: personInfo[personNames[0]].id });
+        }
+        this.setState({ signOff: personNames[0]});
       })
       .catch(error => {
         console.log("error", error);
       });
   }
 
-  getCertifications(currentPerson) {
-    console.log(this.state.personInfo[currentPerson].id)
-    const id = this.state.personInfo[currentPerson].id;
-    const currentCertifications = this.state.certifications;
 
+  getCertifications(id) {
+    const currentCertifications = this.state.certifications; 
+   
     axios
       .get(`/api/person/${id}/certification`)
       .then(response => {
         const certifications = [];
+
         response.data.data.forEach(el => {
           const certification = el.certification;
           certifications.push(certification);
         });
-        currentCertifications[currentPerson] = certifications
-        this.setState({ certifications : currentCertifications, loaded : true });
+        currentCertifications[id] = certifications;
+
+        this.setState({ certifications: currentCertifications, loaded: true });
       })
       .catch(error => {
         console.log("error", error);
@@ -74,22 +96,30 @@ class ReportCardView extends React.Component {
   }
 
   handleChange(e) {
-    const name = e.target.name;
-    const value = e.target.value;
-    
+    e.preventDefault();
+
+    const type = e.target.name;
+    const name = e.target.value;
+    const id = this.state.personInfo[name].id;
+
     //if volunteer is being selected
-    if (name === "volunteer") {
-      this.setState(this.setState({ currentPerson: value }));
-      this.getCertifications(this.state.currentPerson);
+    if (type === "volunteer") {
+      this.setState({ currentPerson: name });
+      this.setState({ currentId: id });
+
+      if (!this.state.certifications[id]) {
+        this.setState({loaded : false})
+        this.getCertifications(id);
+      }
     //if sign off is being selected
-    } else if (name === "sign-off") {
-      this.setState(this.setState({ signOff: value }));
+    } else if (type === "sign-off") {
+      this.setState({ signOff: name });
     }
   }
 
   render() {
-    const { personInfo, loaded } = this.state;
-    // const { personInfo, certifications, loaded } = this.state;
+    const { personInfo, certifications, currentPerson, currentId, loaded } = this.state;
+
     if (loaded) {
       return (
         <div>
@@ -113,12 +143,12 @@ class ReportCardView extends React.Component {
             labelClass="rc-label"
             selectClass="rc-select"
           />
-          <ReportCard personInfo={this.state.personInfo[this.state.currentPerson]} />
+          <ReportCard personInfo={personInfo[currentPerson]} />
+          <CertificationView certification={certifications[currentId]}/>
         </div>
       );
-    }
-    else {
-        return null;
+    } else {
+      return null;
     }
   }
 }

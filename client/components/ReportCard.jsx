@@ -1,6 +1,5 @@
 import React from "react";
 import moment from "moment";
-import Certification from "./Certification.jsx";
 import axios from "axios";
 
 // @Karin Hsu i have few endpoints you can play with.  GET /api/person,  GET /api/person/:id,  GET /api/person/:id/certification
@@ -28,6 +27,12 @@ const EditingPersonalInfoCard = ({ personInfo, onChange }) => {
           </div>
           <div className="cell">
             <h3>Volunteer</h3>
+          </div>
+          <div className="cell">
+          <button>Edit</button>
+          </div>
+          <div className="cell">
+          <button>Cancel</button>
           </div>
 
           <div className="cell">
@@ -139,38 +144,9 @@ export default class ReportCard extends React.Component {
     this.createCertification = this.createCertification.bind(this);
   }
 
-  componentDidMount() {
-    const {
-      email_address,
-      phone_number,
-      is_admin,
-      is_volunteer
-    } = this.props.personInfo;
-    axios
-      .get(`/api/person/${id}/certification`)
-      .then(response => {
-        this.setState({
-          editing: false,
-          email_address,
-          phone_number,
-          is_admin,
-          is_volunteer,
-          certifications: response.data.data
-        });
-      })
-      .catch(error => {
-        console.log("error", error);
-      });
-  }
-
   unixConverter(unix) {
     const time = moment(unix).format("MM/DD/YYYY");
     return time;
-  }
-
-  handleClick() {
-    const editingValue = !this.state.editing;
-    this.setState({ editing: editingValue });
   }
 
   handleSaveClick(e, saveAlteredCertifications) {
@@ -224,7 +200,7 @@ export default class ReportCard extends React.Component {
 
   render() {
     const { personInfo } = this.props;
-    console.log(this.state.certifications)
+
     const {
       editing,
       email_address,
@@ -249,45 +225,6 @@ export default class ReportCard extends React.Component {
             is_admin={is_admin}
             is_volunteer={is_volunteer}
           />
-        )}
-        <div className="certifications-container">
-          <div className="certification-header">
-            <h2>Certifications</h2>
-          </div>
-          {certifications.length !== 0 &&
-            certifications.map((data, i) => {
-              return (
-                <Certification
-                  data={data}
-                  unixConverter={this.unixConverter}
-                  editing={editing}
-                  key={i}
-                />
-              );
-            })}
-        </div>
-
-        {editing ? (
-          <div>
-            <button className="edit-certification" onClick={this.handleClick}>
-              Editing
-            </button>
-            <button className="save-btn" onClick={this.handleSaveClick}>
-              Save
-            </button>
-          </div>
-        ) : (
-          <div>
-            <button className="edit-certification" onClick={this.handleClick}>
-              Edit
-            </button>
-            <button
-              className="create-certification"
-              onClick={this.createCertification}
-            >
-              Add Certification
-            </button>
-          </div>
         )}
       </div>
     );

@@ -4,7 +4,8 @@ body {
 .personal-info-header h1,
 .certification-header h2,
 .cell h3,
-.cell p {
+.cell p,
+.cell button {
   width: max-content;
   margin: 0 auto;
   padding: 0.4em 0;
@@ -85,7 +86,7 @@ body {
   width: 50em;
 
   display: grid;
-  grid-template-columns: repeat 3 (1fr);
+  grid-template-columns: repeat 4 (1fr);
 
   border: 1px solid #999999;
   border-radius: .2em;
@@ -98,7 +99,7 @@ body {
 .certifications {
   width: 100%;
   grid-column-start: 1;
-  grid-column-end: 4;
+  grid-column-end: 5;
 
   text-align: center;
 }
@@ -119,6 +120,6 @@ body {
 }
 .certifications{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
