@@ -5,7 +5,7 @@ const SearchInput = (props) => {
     <div>
       <form>
         <label>
-          Serach:
+          Search:
           <input type="text" 
             name="search" 
             value={props.text} 

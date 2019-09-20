@@ -1,7 +1,7 @@
 import React from 'react';
 import Volunteers from './Volunteers'
 
-const Overview = (prpos) => {
+const Overview = (props) => {
   return <Volunteers/>
 }
 
