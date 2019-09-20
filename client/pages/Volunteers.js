@@ -2,6 +2,49 @@ import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom'
 import apis from './../apis'
 import SearchInput from './../components/SearchInput'
+import { makeStyles } from '@material-ui/core/styles';
+import { Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@material-ui/core/';
+
+const useStyles = makeStyles( theme => ({
+  root: {
+    width: '100%',
+    marginTop: theme.spacing(3),
+    overflowX: 'auto',
+  },
+  table: {
+    minWidth: 650,
+  },
+ }));
+
+ const SimpleTable = (props) => {
+   const classes = useStyles();
+   return (
+     <Paper className={classes.root}>
+       <Table className={classes.table}>
+         <TableHead>
+           <TableRow>
+             <TableCell>Name</TableCell>
+             <TableCell>Email</TableCell>
+             <TableCell>Phone</TableCell>
+             <TableCell>Class</TableCell>
+           </TableRow>
+         </TableHead>
+         <TableBody>
+           {props.items.map(( item ) => (
+             <TableRow key={item.id}>
+               <TableCell>{`${item.first_name} ${item.last_name}`}</TableCell>
+               <TableCell>{item.email_address}</TableCell>
+               <TableCell>{item.phone_number}</TableCell>
+               <TableCell>{item.class}</TableCell>
+             </TableRow>
+           ))
+
+           }
+         </TableBody>
+       </Table>
+     </Paper>
+   )
+ }
 
 // TODO move this one to components
 const VolunteerTable = (props) => {
@@ -54,7 +97,7 @@ const Volunteers = (props) => {
       <div>Volunteers</div>
       <SearchInput handleChange={handleChange} text={text}/>
       <ul>
-        <VolunteerTable items={volunteers}></VolunteerTable>
+        <SimpleTable items={volunteers}></SimpleTable>
       </ul>
     </div>        
   )
