@@ -6,7 +6,7 @@ const Volunteer = (props) => {
   const [personInfo, setPersonInfo] = useState({});
   const [certifications, setCertifications] = useState([]);
 
-  const getVolunteer = () => {
+  const getVolunteer = () => {    
     apis.getVolunteer(id)
     .then((res) => {
       const data = res.data.data;
