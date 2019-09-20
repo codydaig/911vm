@@ -159,7 +159,7 @@ Persons.search = (keyword) => {
         'id': person.id,
         'email_address': person.email_address,
         'last_name': person.last_name,
-        'first_name': person.last_name,
+        'first_name': person.first_name,
         'class': person.class,
         'start_date': person.start_date
       }
