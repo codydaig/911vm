@@ -5,6 +5,7 @@ import SearchInput from './../components/SearchInput'
 import { makeStyles } from '@material-ui/core/styles';
 import { Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@material-ui/core/';
 
+
 const useStyles = makeStyles( theme => ({
   root: {
     width: '100%',
@@ -14,6 +15,13 @@ const useStyles = makeStyles( theme => ({
   table: {
     minWidth: 650,
   },
+  wrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: "100%"
+  }
  }));
 
  const SimpleTable = (props) => {
@@ -62,6 +70,7 @@ const VolunteerTable = (props) => {
 const Volunteers = (props) => {
   const [volunteers, setVolunteers] = useState([]);
   const [text, setText] = useState('');
+  const classes = useStyles();
 
   const getVolunteers = () => {
     apis.getVolunteers()
@@ -94,11 +103,13 @@ const Volunteers = (props) => {
 
   return (
     <div>
-      <div>Volunteers</div>
-      <SearchInput handleChange={handleChange} text={text}/>
-      <ul>
-        <SimpleTable items={volunteers}></SimpleTable>
-      </ul>
+      <div className={classes.wrapper}>
+        <h1>911 Volunteer Management</h1>
+        <SearchInput handleChange={handleChange} text={text}/>
+      </div>
+       
+          <SimpleTable items={volunteers}></SimpleTable>
+        
     </div>        
   )
 }
