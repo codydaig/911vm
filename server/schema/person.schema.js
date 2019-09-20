@@ -7,6 +7,10 @@ const schema = {
     required: true,
     default: () => uuidv4(),
   },
+  password: {
+    type: 'string',
+    empty: true,
+  },
   radio_id: {
     type: 'string',
     empty: true,
@@ -59,22 +63,22 @@ const schema = {
     'cascade': 'detach',
     properties: {
       expriation_date: {
-        type: 'number',        
+        empty: true
       },
       signature_person_id: {
         type: 'string',
+        empty: true
       },
-      // signature_person_first_name: {
-      //   type: 'name',
-      // },
-      // signature_person_last_name: {
-      //   type: 'name',
-      // },
+      signature_person_name: {
+        type: 'string',
+        empty: true
+      },
       signature_date: {
         type: 'number',
+        empty: true
       }
     }
-  }   
+  }
 }
 
 module.exports = schema;

@@ -1,39 +1,21 @@
-import React from 'react';
-import ReportCard from './ReportCard.jsx';
 import axios from 'axios';
-import ReportCardView from './ReportCardView.jsx';
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import OpenFormButton from './OpenFormButton.jsx';
+import React from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+import ReportCardView from './ReportCardView.jsx';
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      personInfo: [],
-      certifications: [],
-      loaded: false
-    }
-  }
-  
-  // componentDidMount() {
-  //   axios.get(`/api/person/${id}`)
-  //     .then((response) => {
-  //       this.setState({personInfo: response.data.data, loaded:true})
-  //     })
-  //     .catch((error) => {
-  //       console.log("error", error)
-  //     })
-  // }
-
   render() {
-    const { personInfo, loaded } = this.state;
-    // const { personInfo, certifications, loaded } = this.state;
     return (
-        <div>
-            <ReportCardView />
-        </div>
-      )
+      
+      <div>
+        <h1>911 Volunteer Management</h1>
+        <Router>
+          <Route path="/reportcard/:id" exact component={ReportCardView} />
+        </Router>
+        {/* <ReportCard personInfo={personInfo} /> */}
+      </div>
+    )
   }
 }
 export default App;

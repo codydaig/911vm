@@ -8,8 +8,8 @@ import axios from "axios";
 const routeId = "729c140b-2026-41e7-be84-c4b4828bb569";
 
 class ReportCardView extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.getVolunteers = this.getVolunteers.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -20,9 +20,9 @@ class ReportCardView extends React.Component {
       personNames: [], //volunteer names for select elements
       certifications: {}, //certification info
       currentPerson: "", //currently selected person
-      currentId: "",
+      currentId: props.match.params.id,
       signOff: "",
-      loaded: false
+      loaded: false,
     };
   }
 
