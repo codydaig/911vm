@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import apis from './../apis'
 import SearchInput from './../components/SearchInput'
 import { makeStyles } from '@material-ui/core/styles';
-import { Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@material-ui/core/';
+import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography } from '@material-ui/core/';
 
 
 const useStyles = makeStyles( theme => ({
@@ -104,7 +104,7 @@ const Volunteers = (props) => {
   return (
     <div>
       <div className={classes.wrapper}>
-        <h1>911 Volunteer Management</h1>
+        <Typography variant="h3" component="h3" gutterBottom>911 Volunteer Management</Typography>
         <SearchInput handleChange={handleChange} text={text}/>
       </div>
        
