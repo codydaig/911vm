@@ -56,6 +56,14 @@ const schema = {
     type: 'boolean',
     default: true,
   },
+  reset_password_token: {
+    type: 'string',
+    empty: true,
+  },
+  reset_password_expires: {
+    type: 'number',
+    empty: true,
+  },  
   has_certification: {
     type: 'relationship',
     relationship: 'HAS_CERTIFICATION',
