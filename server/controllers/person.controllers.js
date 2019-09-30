@@ -66,14 +66,33 @@ const forgotPassword = (req, res) => {
   } else {
     Persons.forgotPassword(emailAddress)
     .then((data) => {
-      console.log(data)
       res.status(201).json({data: data})
     })
     .catch((err) => {
       res.status(400).json({error_message: err.message})
-    });    
+    });
   }
-} 
+}
+
+const resetPassword = (req, res) => {
+  const token = req.body.token;  
+  const emailAddress = token.split('|')[0];
+  const accessToken = token.split('|')[1];
+  
+  const password = req.body.password;
+
+  if(!token || !emailAddress || !accessToken) {
+    res.status(400).json({error_message: 'Invalid token'})
+  } else {
+    Persons.resetPassword(emailAddress, accessToken, password)
+    .then((data) => {
+      res.status(201).json({data: data})
+    })
+    .catch((err) => {
+      res.status(400).json({error_message: err.message})
+    }); 
+  }  
+}
 
 // GET all volunteers
 const get = (req, res) => {  
@@ -200,5 +219,6 @@ module.exports = {
   signUp: signUp,
   login: login,
   protect: protect,
-  forgotPassword: forgotPassword
+  forgotPassword: forgotPassword,
+  resetPassword: resetPassword
 }

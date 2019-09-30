@@ -89,21 +89,77 @@ Persons.forgotPassword = (emailAddress) => {
   // 2. Generate access token
   // 3. send user reset password email with access token
   return neode.first('Person', 'email_address', emailAddress)
-  .then((person) => {  
-    const buf = crypto.randomBytes(24);
-    const token = `${emailAddress}|${buf.toString('hex')}`   
-    return person.update({
+  .then((person) => { 
+    if(person) {
+      const buf = crypto.randomBytes(24);
+      const token = buf.toString('hex')
+      return person.update({
+        id: person.get('id'),
+        first_name: person.get('first_name'),
+        last_name: person.get('last_name'),
+        email_address: person.get('email_address'),
+        reset_password_token: token,
+        reset_password_expires: (new Date()).getTime() + 30 * 60000
+      })
+    }
+    else {
+      throw new Error('User does not exist.');
+    }
+  })
+  .then((person) => {
+    return `${process.env.SERVER_ENDPOINT}/forgot_password/token=${person.get('email_address')}|${person.get('reset_password_token')}`
+    // return `${person.get('email_address')}|${person.get('reset_password_token')}`
+  })
+}
+
+// reset password
+// find user with email and reset_password_token
+// compare reset_password_expires time vs now
+// update user password
+// return user auth token
+Persons.resetPassword = (emailAddress, token, password) => {
+  const now = (new Date()).getTime();
+  const buf = crypto.randomBytes(24);
+  const randomToken = buf.toString('hex')
+
+  return neode.first('Person', {email_address: emailAddress, reset_password_token: token})  
+  .then((person) => {
+    if(!person) {
+      throw new Error('User does not exist.');      
+    } else if(person.get('reset_password_expires') < now) {
+      throw new Error('Invalid token');
+    } else {
+      // hash password
+      const salt = bcrypt.genSaltSync(saltRounds);
+      const hash = bcrypt.hashSync(password, salt);  
+      return person.update({
+        id: person.get('id'),
+        first_name: person.get('first_name'),
+        last_name: person.get('last_name'),
+        email_address: person.get('email_address'),
+        password: hash,
+        reset_password_token: randomToken,
+        reset_password_expires: 100
+      })
+    }
+  })
+  .then((person) => {
+    const user = {
       id: person.get('id'),
       first_name: person.get('first_name'),
       last_name: person.get('last_name'),
       email_address: person.get('email_address'),
-      reset_password_token: token,
-      reset_password_expires: (new Date((new Date() + 30 * 60000))).getTime()
-    })
+      phone_number: person.get('phone_number'),
+      is_admin: person.get('is_admin'),
+      is_volunteer: person.get('is_volunteer')
+    }
+    return user;    
   })
-  .then((person) => {
-    return `${process.env.SERVER_ENDPOINT}/forgot_password/token=${person.get('reset_password_token')}`
-  })
+  .then((user) => {
+    const token = auth.newToken(user);
+    user.token = token;
+    return user;
+  })   
 }
 
 Persons.getAll = () => {
