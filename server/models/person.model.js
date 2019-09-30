@@ -232,6 +232,7 @@ Persons.findOneByIdAndDelete = (id) => {
 
 // Add a certification to a volunteer as well as signed it off by admin
 Persons.addCertificationAndSignature = (personId, certificationId, expriationDate, signaturePersonId, signatureDate) => {  
+  
   return Promise.all([
     neode.first('Person', 'id', personId),
     neode.first('Certification', 'id', certificationId),
@@ -245,12 +246,12 @@ Persons.addCertificationAndSignature = (personId, certificationId, expriationDat
       signature_date: signatureDate
     }
     let data = {}
-    
+
     Object.keys(_data).forEach((key) => {
       if(_data[key]) {
         data[key] = _data[key]
       }      
-    })
+    })    
     return person.relateTo(certification, 'has_certification', data)
   })
   .then(() => {

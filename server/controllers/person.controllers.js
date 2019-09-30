@@ -133,13 +133,13 @@ const remove = (req, res) => {
 }
 
 // ADD Certification to volunteer and sign off it
-const addCertificationAndSignature = (req, res) => {
+const addCertificationAndSignature = (req, res) => {  
   const personId = req.params.id;
   const certificationId = req.body.certification_id;
   const signaturePersonId = req.body.signature_person_id
   const expiredAt = req.body.expriation_date ? (new Date(req.body.expriation_date)).getTime() : null;
   const signatureDate = req.body.signature_date ? (new Date(req.body.signature_date)).getTime() : (new Date()).getTime();
-  
+
   Persons.addCertificationAndSignature(personId , certificationId, expiredAt, signaturePersonId, signatureDate)
   .then((data) => {    
     res.status(200).json({data: data})
