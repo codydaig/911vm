@@ -9,8 +9,10 @@ module.exports = function(app) {
   app.get('/helloworld', controllers.helloWorld);
 
   // Authentication
-  app.post('/signup', Person.signUp)
-  app.post('/login', Person.login)
+  app.post('/auth/signup', Person.signUp)
+  app.post('/auth/login', Person.login)
+  app.post('/auth/forgot_password', Person.forgotPassword)
+  app.get('/auth/forgot_password/:token')
 
   // Middleware to check JWT on all api transactions
   // app.use('/api', Person.protect);
