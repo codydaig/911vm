@@ -2,6 +2,7 @@ const moment = require('moment');
 const neode = require('../schema/index');
 const auth = require('../utils/auth');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 const saltRounds = 10;
 
 let Persons = {};
@@ -81,6 +82,28 @@ Persons.login = (params) => {
     user.token = token;
     return user;
   })   
+}
+
+Persons.forgotPassword = (emailAddress) => {
+  // 1. Look up user with email address
+  // 2. Generate access token
+  // 3. send user reset password email with access token
+  return neode.first('Person', 'email_address', emailAddress)
+  .then((person) => {  
+    const buf = crypto.randomBytes(24);
+    const token = `${emailAddress}|${buf.toString('hex')}`   
+    return person.update({
+      id: person.get('id'),
+      first_name: person.get('first_name'),
+      last_name: person.get('last_name'),
+      email_address: person.get('email_address'),
+      reset_password_token: token,
+      reset_password_expires: (new Date((new Date() + 30 * 60000))).getTime()
+    })
+  })
+  .then((person) => {
+    return `${process.env.SERVER_ENDPOINT}/forgot_password/token=${person.get('reset_password_token')}`
+  })
 }
 
 Persons.getAll = () => {

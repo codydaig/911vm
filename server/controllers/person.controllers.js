@@ -58,6 +58,23 @@ const login = (req, res) => {
   }
 }
 
+// reset account
+const forgotPassword = (req, res) => {
+  const emailAddress = req.body.emailAddress;
+  if(!emailAddress) {
+    res.status(400).json({error_message: 'Missing email address'})
+  } else {
+    Persons.forgotPassword(emailAddress)
+    .then((data) => {
+      console.log(data)
+      res.status(201).json({data: data})
+    })
+    .catch((err) => {
+      res.status(400).json({error_message: err.message})
+    });    
+  }
+} 
+
 // GET all volunteers
 const get = (req, res) => {  
   Persons.getAll()
@@ -183,4 +200,5 @@ module.exports = {
   signUp: signUp,
   login: login,
   protect: protect,
+  forgotPassword: forgotPassword
 }
