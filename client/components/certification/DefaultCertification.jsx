@@ -1,6 +1,6 @@
 import React from "react";
 
-class DefaultCertificationCard extends Component {
+class DefaultCertification extends React.Component {
     constructor() {
         super()
         
@@ -10,6 +10,7 @@ class DefaultCertificationCard extends Component {
     }
 
     render() {
+      const { data } = this.props;
         return (
           <div className="certifications">
             <div className="cell">
@@ -19,17 +20,22 @@ class DefaultCertificationCard extends Component {
               <p>{data.expriation_date}</p>
             </div>
             <div className="cell">
-              <p>{data.sign_off.signature_date}</p>
+              <p>{data.signature_person_name}</p>
             </div>
             <div className="cell">
-              {/* <button className="edit-certification" onClick={this.handleClick}> */}
-              <button className="edit-certification" >
+              <p>{data.signature_date}</p>
+            </div>
+            <div className="cell">
+              {/* <button className="edit-certification" onClick={this.props.onClick} >
                 Edit
               </button>
+              <button>
+                Delete
+              </button> */}
             </div>
           </div>
         );
     }
 };
 
-export default DefaultCertificationCard;
+export default DefaultCertification;

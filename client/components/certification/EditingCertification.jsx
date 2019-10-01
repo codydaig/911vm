@@ -9,16 +9,17 @@ class EditingCertification extends React.Component {
   }
 
   render() {
+    const { data, certificationTypes } = this.props;
+    console.log(data)
     return (
       <div className="certifications">
         <div className="cell">
           <select
-            defaultValue={data.certification.id}
+            defaultValue={data.id}
             name="certification_name"
-            onChange={onChange}
+            // onChange={onChange}
           >
             {certificationTypes.map((cert, i) => {
-              console.log("cert", cert);
               return (
                 <option name={cert.name} data-id={cert.id} key={i}>
                   {cert.name}
@@ -35,6 +36,9 @@ class EditingCertification extends React.Component {
           />
         </div>
         <div className="cell">
+          
+        </div>
+        <div className="cell">
           <DateBox
             name="exp_date"
             // handle={this.handleChange}
@@ -42,10 +46,10 @@ class EditingCertification extends React.Component {
           />
         </div>
         <div className="cell">
-          <button className="save-btn" onClick={this.handleSaveClick}>
+          <button className="save-btn" onClick={this.handleSaveClick} onClick={this.props.onClick}>
             Save
           </button>
-          <button className="cancel-btn" onClick={this.handleSaveClick}>
+          <button className="cancel-btn" onClick={this.handleSaveClick} onClick={this.props.onClick}>
             Cancel
           </button>
         </div>
