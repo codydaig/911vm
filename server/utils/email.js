@@ -1,5 +1,3 @@
-const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const RESET_PASSWORD_EMAIL_FROM = process.env.RESET_PASSWORD_EMAIL_FROM
 
 class Email {
@@ -15,9 +13,10 @@ class Email {
       to: this.to,
       from: this.from,
       subject: this.subject,
+      text: this.html,
       html: this.html
     }
-    sgMail.send(msg);
+    console.log(msg)
   }
 }
 
