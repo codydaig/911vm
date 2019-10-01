@@ -7,26 +7,23 @@ export default class Certification extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editing : false,
-      name: "",
-      id: "",
-      expriation_date: "",
-      sign_off: "",
-      certificationTypes: []
+      editing : false
     };
+    this.handleClick = this.handleClick.bind(this);
+
     this.handleCertificationInfoChange = this.handleCertificationInfoChange.bind(this);
   }
 
   componentDidMount() {
-    axios.get("/api/certification")
-      .then(response => {
-        this.setState({
-          certificationTypes: response.data.data
-        })
-      })
-      .catch(error => {
-        console.log("error", error);
-      });
+    // axios.get("/api/certification")
+    //   .then(response => {
+    //     this.setState({
+    //       certificationTypes: response.data.data
+    //     })
+    //   })
+    //   .catch(error => {
+    //     console.log("error", error);
+    //   });
   }
 
   handleCertificationInfoChange(e) {
@@ -47,22 +44,30 @@ export default class Certification extends React.Component {
     // this.setState({[name]: e.target.value})
   }
 
+  handleClick() {
+    const editingValue = !this.state.editing;
+    this.setState({ editing: editingValue });
+  }
+
   render() {
-    const { data, unixConverter, editing, handleChange } = this.props;
-    const { expriation_date, sign_off, certificationTypes } = this.state;
+    const { data, certificationTypes} = this.props;
+    const { editing } = this.state;
 
     return (
       <div className="certifications">
         {editing ? (
           <EditingCertification
             data={data}
-            unixConverter={unixConverter}
             // handleChange={handleChange}
             certificationTypes={certificationTypes}
             onChange={this.handleCertificationInfoChange}
+            onClick={this.handleClick}
           />
         ) : (
-          <DefaultCertification data={data} unixConverter={unixConverter} />
+          <DefaultCertification 
+            data={data} 
+            onClick={this.handleClick} 
+          />
         )}
       </div>
     );
