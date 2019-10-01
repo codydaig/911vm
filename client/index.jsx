@@ -10,15 +10,15 @@ var head = document.getElementsByTagName("HEAD")[0];
 // Create new link elements
 var datepicker = document.createElement("link");
 datepicker.rel = "stylesheet";
-datepicker.href = "style/datepicker.css";
+datepicker.href = "/style/datepicker.css";
 
 var form = document.createElement("link");
 form.rel = "stylesheet";
-form.href = "style/form.css";
+form.href = "/style/form.css";
 
 var reportCard = document.createElement("link");
 reportCard.rel = "stylesheet";
-reportCard.href = "style/reportcard.css";
+reportCard.href = "/style/reportcard.css";
 
 // Append link elements to HTML head
 head.appendChild(datepicker);
