@@ -13,7 +13,7 @@ const DateBox = props => {
       <DatePicker
         selected={props.selected}
         onChange={props.handle}
-        name={"start_date"}
+        name={props.name}
         value={props.selected}
         className="form-date"
         dateFormat="MM/dd/yyyy"
