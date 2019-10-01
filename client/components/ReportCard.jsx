@@ -3,11 +3,6 @@ import moment from "moment";
 import axios from "axios";
 
 // @Karin Hsu i have few endpoints you can play with.  GET /api/person,  GET /api/person/:id,  GET /api/person/:id/certification
-<<<<<<< HEAD
-//placeholder id
-const id = "54ddf0c0-b342-4caa-b9dd-04870c55ffc9";
-=======
->>>>>>> 7525d1dcf52cb954ccb655cad7ac499ee1490fe7
 
 const EditingPersonalInfoCard = ({ personInfo, onChange }) => {
   return (
@@ -136,50 +131,17 @@ export default class ReportCard extends React.Component {
       is_admin: "",
       is_volunteer: "",
       certifications: [],
-<<<<<<< HEAD
       volunteerNames: [],
       volunteerInfo: {},
       currentVolunteer: {}
     };
-=======
-      loaded: false,
-      id: props.match.params.id // get the ID from the
-    }
->>>>>>> 7525d1dcf52cb954ccb655cad7ac499ee1490fe7
-    this.handleClick = this.handleClick.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
     this.unixConverter = this.unixConverter.bind(this);
     this.handlePersonalInfoChange = this.handlePersonalInfoChange.bind(this);
     this.handleSaveClick = this.handleSaveClick.bind(this);
     this.createCertification = this.createCertification.bind(this);
   }
 
-<<<<<<< HEAD
-=======
-  componentDidMount() {
-    axios.get(`/api/person/${this.state.id}`)
-      .then((response) => {
-        this.setState({
-          personInfo: response.data.data,
-          email_address: response.data.data.email_address,
-          phone_number: response.data.data.phone_number,
-          is_admin: response.data.data.is_admin,
-          is_volunteer: response.data.data.is_volunteer
-        })
-        return axios.get(`/api/person/${this.state.id}/certification`)
-      }) 
-      .then((response) => {
-        this.setState({
-          editing: false, 
-          certifications: response.data.data,
-          loaded: true
-        });
-      })
-      .catch((error) => {
-        console.log("error", error)
-      });
-  }
-
->>>>>>> 7525d1dcf52cb954ccb655cad7ac499ee1490fe7
   unixConverter(unix) {
     const time = moment(unix).format("MM/DD/YYYY");
     return time;
@@ -235,7 +197,6 @@ export default class ReportCard extends React.Component {
   }
 
   render() {
-<<<<<<< HEAD
     const { personInfo } = this.props;
 
     const {
@@ -247,15 +208,6 @@ export default class ReportCard extends React.Component {
       certifications
     } = this.state;
 
-=======
-    // const { personInfo } = this.props;
-    const { editing, email_address, phone_number, is_admin, is_volunteer, certifications, personInfo } = this.state;
-
-    if(!this.state.loaded) {
-      return ( <div>Loading.....</div>)
-    }
-      
->>>>>>> 7525d1dcf52cb954ccb655cad7ac499ee1490fe7
     return (
       <div>
         {editing ? (
