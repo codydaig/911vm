@@ -1,8 +1,10 @@
 const moment = require('moment');
-const neode = require('../schema/index');
-const auth = require('../utils/auth');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+const emailApp = require('../utils/email')
+const neode = require('../schema/index');
+const auth = require('../utils/auth');
+
 const saltRounds = 10;
 
 let Persons = {};
@@ -107,8 +109,13 @@ Persons.forgotPassword = (emailAddress) => {
     }
   })
   .then((person) => {
-    return `${process.env.SERVER_ENDPOINT}/forgot_password/token=${person.get('email_address')}|${person.get('reset_password_token')}`
-    // return `${person.get('email_address')}|${person.get('reset_password_token')}`
+    
+    const to = person.get('email_address')
+    const subject = '911 vm password reset'
+    const html = `Reset link ${process.env.SERVER_ENDPOINT}/reset_password_token/${person.get('email_address')}|${person.get('reset_password_token')}`
+    const email = new emailApp(to, subject, html);
+    email.send()
+    return 'Reset password email sent.'
   })
 }
 
