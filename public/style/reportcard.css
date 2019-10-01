@@ -17,7 +17,7 @@ body {
   border-bottom: 1px solid #999;
   border-left: 1px solid #999;
   margin-left: -2px;
-  margin-bottom: -2px;
+  margin-bottom: -1px;
 }
 .rc-group {
   width: 15em;
@@ -86,7 +86,7 @@ body {
   width: 50em;
 
   display: grid;
-  grid-template-columns: repeat 4 (1fr);
+  grid-template-columns: repeat 6 (1fr);
 
   border: 1px solid #999999;
   border-radius: .2em;
@@ -99,13 +99,21 @@ body {
 .certifications {
   width: 100%;
   grid-column-start: 1;
-  grid-column-end: 5;
+  grid-column-end: 6;
 
   text-align: center;
+}
+.certification-header > button {
+  display: block;
+  position: absolute;
+  right: .5em;
+  top: 25%;
+  z-index: 10;
 }
 .certification-header {
   border-bottom: 1px solid #999;
   background: rgb(243, 243, 243);
+  position: relative;
 }
 .certification-header h2 {
   font-size: 1.25em;
@@ -120,6 +128,6 @@ body {
 }
 .certifications{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
