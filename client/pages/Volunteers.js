@@ -39,7 +39,7 @@ const useStyles = makeStyles( theme => ({
          </TableHead>
          <TableBody>
            {props.items.map(( item ) => (
-             <TableRow key={item.id}>
+             <TableRow key={item.id} onClick={() => { props.handleVolunteerClick(item.id) }}>
                <TableCell>{`${item.first_name} ${item.last_name}`}</TableCell>
                <TableCell>{item.email_address}</TableCell>
                <TableCell>{item.phone_number}</TableCell>
@@ -101,6 +101,8 @@ const Volunteers = (props) => {
     })    
   }
 
+  const handleVolunteer = (id) => {props.history.push(`/reportcard/${id}`)};
+
   return (
     <div>
       <div className={classes.wrapper}>
@@ -108,7 +110,7 @@ const Volunteers = (props) => {
         <SearchInput handleChange={handleChange} text={text}/>
       </div>
        
-          <SimpleTable items={volunteers}></SimpleTable>
+          <SimpleTable items={volunteers} handleVolunteerClick={handleVolunteer}></SimpleTable>
         
     </div>        
   )
