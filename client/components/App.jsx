@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import ReportCard from './ReportCard.jsx';
+import ReportCardView from './ReportCardView.jsx';
 
 class App extends React.Component {
   render() {
@@ -11,7 +11,7 @@ class App extends React.Component {
       <div>
         <h1>911 Volunteer Management</h1>
         <Router>
-          <Route path="/reportcard/:id" exact component={ReportCard} />
+          <Route path="/reportcard/:id" exact component={ReportCardView} />
         </Router>
         {/* <ReportCard personInfo={personInfo} /> */}
       </div>
