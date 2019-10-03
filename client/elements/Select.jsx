@@ -1,15 +1,18 @@
 import React from "react";
 
 const Select = props => {
+  const label = props.label ? (
+    <label htmlFor={name} className={props.labelClass}>
+      {props.label}:
+    </label>
+  ) : null;
   return (
-    <div className="form-group">
-      <label className="form-label" htmlFor={props.name}>
-        {props.label}:{" "}
-      </label>
+    <div className={props.groupClass}>
+      {label}
       <select
         name={props.name}
         onChange={props.handle}
-        className="form-select"
+        className={props.selectClass}
         value={props.selected}
       >
         {props.options.map(option => {

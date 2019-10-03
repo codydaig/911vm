@@ -226,6 +226,34 @@ Persons.getAllWithCertifications = () => {
   })  
 }
 
+Persons.search = (keyword) => {
+  const query = `
+  match (p:Person)
+  where p.first_name =~ '(?i)${keyword}.*'
+  or p.last_name =~ '(?i)${keyword}.*'
+  or p.email_address =~ '(?i)${keyword}.*'
+  return p 
+  `;
+
+  return neode.cypher(query, {})
+  .then((collection) => {
+    
+    const data = collection.records.map((item) => {
+      const person = item['_fields'][0]['properties']      
+      if(person['start_date']) {person['start_date'] = moment(person['start_date']).format('YYYY-MM-DD')}
+      return {
+        'id': person.id,
+        'email_address': person.email_address,
+        'last_name': person.last_name,
+        'first_name': person.first_name,
+        'class': person.class,
+        'start_date': person.start_date
+      }
+    })
+
+    return data;
+  })  
+}
 
 Persons.findOneById = (id) => {
   const query = `
