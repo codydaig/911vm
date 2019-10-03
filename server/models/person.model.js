@@ -232,6 +232,7 @@ Persons.search = (keyword) => {
   where p.first_name =~ '(?i)${keyword}.*'
   or p.last_name =~ '(?i)${keyword}.*'
   or p.email_address =~ '(?i)${keyword}.*'
+  or p.phone_number =~ '(?i)${keyword}.*'
   return p 
   `;
 
@@ -247,7 +248,8 @@ Persons.search = (keyword) => {
         'last_name': person.last_name,
         'first_name': person.first_name,
         'class': person.class,
-        'start_date': person.start_date
+        'start_date': person.start_date,
+        'phone_number': person.phone_number
       }
     })
 
