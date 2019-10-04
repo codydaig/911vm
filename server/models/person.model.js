@@ -1,7 +1,10 @@
 const moment = require('moment');
+const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+const emailApp = require('../utils/email')
 const neode = require('../schema/index');
 const auth = require('../utils/auth');
-const bcrypt = require('bcrypt');
+
 const saltRounds = 10;
 
 let Persons = {};
@@ -83,6 +86,89 @@ Persons.login = (params) => {
   })   
 }
 
+Persons.forgotPassword = (emailAddress) => {
+  // 1. Look up user with email address
+  // 2. Generate access token
+  // 3. send user reset password email with access token
+  return neode.first('Person', 'email_address', emailAddress)
+  .then((person) => { 
+    if(person) {
+      const buf = crypto.randomBytes(24);
+      const token = buf.toString('hex')
+      return person.update({
+        id: person.get('id'),
+        first_name: person.get('first_name'),
+        last_name: person.get('last_name'),
+        email_address: person.get('email_address'),
+        reset_password_token: token,
+        reset_password_expires: (new Date()).getTime() + 30 * 60000
+      })
+    }
+    else {
+      throw new Error('User does not exist.');
+    }
+  })
+  .then((person) => {
+    
+    const to = person.get('email_address')
+    const subject = '911 vm password reset'
+    const html = `Reset link ${process.env.SERVER_ENDPOINT}/reset_password_token/${person.get('email_address')}|${person.get('reset_password_token')}`
+    const email = new emailApp(to, subject, html);
+    email.send()
+    return 'Reset password email sent.'
+  })
+}
+
+// reset password
+// find user with email and reset_password_token
+// compare reset_password_expires time vs now
+// update user password
+// return user auth token
+Persons.resetPassword = (emailAddress, token, password) => {
+  const now = (new Date()).getTime();
+  const buf = crypto.randomBytes(24);
+  const randomToken = buf.toString('hex')
+
+  return neode.first('Person', {email_address: emailAddress, reset_password_token: token})  
+  .then((person) => {
+    if(!person) {
+      throw new Error('User does not exist.');      
+    } else if(person.get('reset_password_expires') < now) {
+      throw new Error('Invalid token');
+    } else {
+      // hash password
+      const salt = bcrypt.genSaltSync(saltRounds);
+      const hash = bcrypt.hashSync(password, salt);  
+      return person.update({
+        id: person.get('id'),
+        first_name: person.get('first_name'),
+        last_name: person.get('last_name'),
+        email_address: person.get('email_address'),
+        password: hash,
+        reset_password_token: randomToken,
+        reset_password_expires: 100
+      })
+    }
+  })
+  .then((person) => {
+    const user = {
+      id: person.get('id'),
+      first_name: person.get('first_name'),
+      last_name: person.get('last_name'),
+      email_address: person.get('email_address'),
+      phone_number: person.get('phone_number'),
+      is_admin: person.get('is_admin'),
+      is_volunteer: person.get('is_volunteer')
+    }
+    return user;    
+  })
+  .then((user) => {
+    const token = auth.newToken(user);
+    user.token = token;
+    return user;
+  })   
+}
+
 Persons.getAll = () => {
   const query = 'match (p:Person) return p';
   return neode.cypher(query, {})
@@ -146,6 +232,7 @@ Persons.search = (keyword) => {
   where p.first_name =~ '(?i)${keyword}.*'
   or p.last_name =~ '(?i)${keyword}.*'
   or p.email_address =~ '(?i)${keyword}.*'
+  or p.phone_number =~ '(?i)${keyword}.*'
   return p 
   `;
 
@@ -161,7 +248,8 @@ Persons.search = (keyword) => {
         'last_name': person.last_name,
         'first_name': person.first_name,
         'class': person.class,
-        'start_date': person.start_date
+        'start_date': person.start_date,
+        'phone_number': person.phone_number
       }
     })
 
@@ -260,6 +348,7 @@ Persons.findOneByIdAndDelete = (id) => {
 
 // Add a certification to a volunteer as well as signed it off by admin
 Persons.addCertificationAndSignature = (personId, certificationId, expriationDate, signaturePersonId, signatureDate) => {  
+  
   return Promise.all([
     neode.first('Person', 'id', personId),
     neode.first('Certification', 'id', certificationId),
@@ -273,12 +362,12 @@ Persons.addCertificationAndSignature = (personId, certificationId, expriationDat
       signature_date: signatureDate
     }
     let data = {}
-    
+
     Object.keys(_data).forEach((key) => {
       if(_data[key]) {
         data[key] = _data[key]
       }      
-    })
+    })    
     return person.relateTo(certification, 'has_certification', data)
   })
   .then(() => {

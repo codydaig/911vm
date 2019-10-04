@@ -58,6 +58,42 @@ const login = (req, res) => {
   }
 }
 
+// reset account
+const forgotPassword = (req, res) => {
+  const emailAddress = req.body.emailAddress;
+  if(!emailAddress) {
+    res.status(400).json({error_message: 'Missing email address'})
+  } else {
+    Persons.forgotPassword(emailAddress)
+    .then((data) => {
+      res.status(201).json({data: data})
+    })
+    .catch((err) => {
+      res.status(400).json({error_message: err.message})
+    });
+  }
+}
+
+const resetPassword = (req, res) => {
+  const token = req.body.token;  
+  const emailAddress = token.split('|')[0];
+  const accessToken = token.split('|')[1];
+  
+  const password = req.body.password;
+
+  if(!token || !emailAddress || !accessToken) {
+    res.status(400).json({error_message: 'Invalid token'})
+  } else {
+    Persons.resetPassword(emailAddress, accessToken, password)
+    .then((data) => {
+      res.status(201).json({data: data})
+    })
+    .catch((err) => {
+      res.status(400).json({error_message: err.message})
+    }); 
+  }  
+}
+
 // GET all volunteers
 const get = (req, res) => {  
   Persons.getAll()
@@ -146,13 +182,13 @@ const remove = (req, res) => {
 }
 
 // ADD Certification to volunteer and sign off it
-const addCertificationAndSignature = (req, res) => {
+const addCertificationAndSignature = (req, res) => {  
   const personId = req.params.id;
   const certificationId = req.body.certification_id;
   const signaturePersonId = req.body.signature_person_id
   const expiredAt = req.body.expriation_date ? (new Date(req.body.expriation_date)).getTime() : null;
   const signatureDate = req.body.signature_date ? (new Date(req.body.signature_date)).getTime() : (new Date()).getTime();
-  
+
   Persons.addCertificationAndSignature(personId , certificationId, expiredAt, signaturePersonId, signatureDate)
   .then((data) => {    
     res.status(200).json({data: data})
@@ -196,5 +232,7 @@ module.exports = {
   signUp: signUp,
   login: login,
   protect: protect,
+  forgotPassword: forgotPassword,
+  resetPassword: resetPassword,
   search: search,
 }

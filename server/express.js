@@ -13,6 +13,10 @@ app.use(bodyParser.json());
 
 require('./routes.js')(app);
 
+app.get('/auth/*', (req, res) => {
+  res.status(404).send({data: "Not Found"});
+});
+
 app.get('/api/*', (req, res) => {
   res.status(404).send({data: "Not Found"});
 });
