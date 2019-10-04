@@ -27,6 +27,7 @@ module.exports = function(app) {
   app.get('/api/person/certifications', Person.getWithCerts);
   app.post('/api/person', Person.create);
   app.post('/api/person/search', Person.search);
+  app.get('/api/person/dashboard', Person.dashboard);
   app.get('/api/person/:id', Person.show);
   app.put('/api/person/:id', Person.update);
   app.delete('/api/person/:id', Person.remove);
