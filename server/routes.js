@@ -8,6 +8,13 @@ module.exports = function(app) {
 
   app.get('/helloworld', controllers.helloWorld);
 
+  // Authentication
+  app.post('/signup', Person.signUp)
+  app.post('/login', Person.login)
+
+  // Middleware to check JWT on all api transactions
+  // app.use('/api', Person.protect);
+
   // Certification Routes
   app.post('/api/certification', Certification.create)
   app.get('/api/certification', Certification.get)
@@ -17,13 +24,11 @@ module.exports = function(app) {
 
   // Person Routes
   app.get('/api/person', Person.get);
+  app.get('/api/person/certifications', Person.getWithCerts);
   app.post('/api/person', Person.create);
   app.get('/api/person/:id', Person.show);
   app.put('/api/person/:id', Person.update);
   app.delete('/api/person/:id', Person.remove);
-  app.post('/api/person/:id/certification', Person.addCertification);
-  app.get('/api/person/:id/certification', Person.getCertifications);
-
-
-
+  app.post('/api/person/:id/certification', Person.addCertificationAndSignature);
+  app.put('/api/person/:id/certification/:certification_id', Person.updateCertifcation);
 };
