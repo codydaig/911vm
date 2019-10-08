@@ -91,9 +91,13 @@ class AddVolunteerForm extends React.Component {
     axios
       .post(`/api/person`, userData)
       .then(res => {
-        this.reset();
+        alert('Volunteer saved.')
+        this.reset(e);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        alert('Unable to save volunteer.')
+        console.log(err)
+      });
   }
 
   render() {
