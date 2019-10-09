@@ -128,7 +128,6 @@ class ReportCardView extends React.Component {
     if (type === "volunteer") {
       this.setState({ currentPerson: name });
       this.setState({ currentId: id });
-      this.updatePerson()
       this.props.history.push(`/reportcard/${id}`);
     //if sign off is being selected
     } else if (type === "sign-off") {
