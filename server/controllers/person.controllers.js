@@ -145,6 +145,8 @@ const show = (req, res) => {
 // Add a new volunteer
 const create = (req, res) => {
   const data = req.body;
+  req.body.start_date ? data['start_date'] = (new Date(req.body.start_date)).getTime() : null;
+  req.body.end_date ? data['end_date'] = (new Date(req.body.end_date)).getTime() : null;
 
   Persons.addOne(data)
   .then((data) => {
@@ -159,6 +161,8 @@ const create = (req, res) => {
 const update = (req, res) => {
   const id = req.params.id;
   const data = req.body;
+  data.start_date ? data['start_date'] = (new Date(data.start_date)).getTime() : null;
+  data.end_date ? data['end_date'] = (new Date(data.end_date)).getTime() : null;
 
   Persons.findOneByIdAndUpdate(id, data)
   .then((data) => {
