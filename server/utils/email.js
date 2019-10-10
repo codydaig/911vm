@@ -1,4 +1,6 @@
+const sgMail = require('@sendgrid/mail');
 const RESET_PASSWORD_EMAIL_FROM = process.env.RESET_PASSWORD_EMAIL_FROM
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 class Email {
   constructor(to, subject, html) {
@@ -7,7 +9,7 @@ class Email {
     this.subject = subject;
     this.html = html;
   }
-
+  
   send() {
     const msg = {
       to: this.to,
@@ -16,7 +18,15 @@ class Email {
       text: this.html,
       html: this.html
     }
-    console.log(msg)
+    // console.log(msg)
+    sgMail.send(msg).then((res) => {
+      console.log('sent')
+      //console.log(res)
+    })
+    .catch((err) => {
+      console.log('err')
+      //console.log(err)
+    })
   }
 }
 
