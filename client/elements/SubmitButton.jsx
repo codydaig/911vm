@@ -2,11 +2,11 @@ import React from "react";
 
 const SubmitButton = props => {
   return (
-    <div className="form-group">
+    <div className={props.groupClass}>
       <input
-        className="form-submit"
+        className={props.submitClass}
         type="submit"
-        value="Submit"
+        value={props.buttonText}
         onSubmit={props.onSubmit}
       />
     </div>

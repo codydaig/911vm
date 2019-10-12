@@ -49,6 +49,40 @@ Persons.signUp = (params) => {
   })
 }
 
+Persons.login = (params) => {
+  const emailAddress = params.emailAddress;
+  const password = params.password;
+
+  return neode.first('Person', {email_address: emailAddress})
+  .then ( (person) => {
+    if ( person ) {
+      const passwordHash = person.get('password');
+      const isPasswordMatch = auth.checkPassword(passwordHash, password);
+      if(isPasswordMatch) {
+        const user = {
+          id: person.get('id'),
+          first_name: person.get('first_name'),
+          last_name: person.get('last_name'),
+          email_address: person.get('email_address'),
+          phone_number: person.get('phone_number'),
+          is_admin: person.get('is_admin'),
+          is_volunteer: person.get('is_volunteer')
+        }
+        return user;
+      } else {
+        throw new Error('Password does not match');
+      }
+    } else {
+      throw new Error('User does not exist.');
+    } 
+  })
+  .then((user) => {
+    const token = auth.newToken(user);
+    user.token = token;
+    return user;
+  })   
+}
+
 Persons.getAll = () => {
   const query = 'match (p:Person) return p';
   return neode.cypher(query, {})
@@ -58,6 +92,81 @@ Persons.getAll = () => {
     });
     return data;
   }) 
+}
+
+Persons.getAllWithCertifications = () => {
+  const query = `
+  MATCH (p:Person)-[r:HAS_CERTIFICATION]->(c:Certification)
+  WITH p, collect({
+    name: c.name,
+    id: c.id,
+    expriation_date: r.expriation_date,
+    signature_person_id: r.signature_person_id,
+    signature_person_name: r.signature_person_name,
+    signature_date: r.signature_date     
+  }) as certification
+  RETURN {
+    data: {
+      person: {
+        id: p.id,
+        last_name: p.last_name,
+        first_name: p.first_name,
+        phone_number: p.phone_number,
+        email_address: p.email_address,
+        class: p.class,
+        start_date: p.start_date        
+      },
+      certifications: certification
+    }
+  }
+  `;
+
+  return neode.cypher(query, {})
+  .then((collection) => {
+    const data = collection.records.map((item) => {
+      const person = item['_fields'][0]['data']['person'];            
+      if(person['start_date']) {person['start_date'] = moment(person['start_date']).format('YYYY-MM-DD')}      
+      const certifications = item['_fields'][0]['data']['certifications'];            
+      certifications.forEach((cert) => {
+        if(cert['expriation_date']) cert['expriation_date'] = moment(cert['expriation_date']).format('YYYY-MM-DD')
+        if(cert['signature_date']) cert['signature_date'] = moment(cert['signature_date']).format('YYYY-MM-DD')
+      })
+      return item['_fields'][0]['data'];
+    })
+    if(data[0]['certifications'][0]['id'] === null) {
+      data[0]['certifications'] = []
+    }
+    return data;
+  })  
+}
+
+Persons.search = (keyword) => {
+  const query = `
+  match (p:Person)
+  where p.first_name =~ '(?i)${keyword}.*'
+  or p.last_name =~ '(?i)${keyword}.*'
+  or p.email_address =~ '(?i)${keyword}.*'
+  return p 
+  `;
+
+  return neode.cypher(query, {})
+  .then((collection) => {
+    
+    const data = collection.records.map((item) => {
+      const person = item['_fields'][0]['properties']      
+      if(person['start_date']) {person['start_date'] = moment(person['start_date']).format('YYYY-MM-DD')}
+      return {
+        'id': person.id,
+        'email_address': person.email_address,
+        'last_name': person.last_name,
+        'first_name': person.first_name,
+        'class': person.class,
+        'start_date': person.start_date
+      }
+    })
+
+    return data;
+  })  
 }
 
 Persons.findOneById = (id) => {
@@ -151,6 +260,7 @@ Persons.findOneByIdAndDelete = (id) => {
 
 // Add a certification to a volunteer as well as signed it off by admin
 Persons.addCertificationAndSignature = (personId, certificationId, expriationDate, signaturePersonId, signatureDate) => {  
+  
   return Promise.all([
     neode.first('Person', 'id', personId),
     neode.first('Certification', 'id', certificationId),
@@ -164,12 +274,12 @@ Persons.addCertificationAndSignature = (personId, certificationId, expriationDat
       signature_date: signatureDate
     }
     let data = {}
-    
+
     Object.keys(_data).forEach((key) => {
       if(_data[key]) {
         data[key] = _data[key]
       }      
-    })
+    })    
     return person.relateTo(certification, 'has_certification', data)
   })
   .then(() => {
