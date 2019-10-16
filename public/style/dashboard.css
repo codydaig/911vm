@@ -1,0 +1,28 @@
+.certification_name {
+  display: inline-block;
+  width: 100px;
+  border: 2px solid green;
+  border-right: none;
+  text-align: center;
+  
+}
+.volunteer_person {
+  border: 2px solid black;
+  border-bottom: none;
+  width: 150px;
+  text-align: center;
+}
+
+.table_row {
+  overflow: hidden;
+  display: flex;
+}
+
+.status_check {
+  border: 2px solid purple;
+  display: inline-block;
+  text-align: center;
+  width: 50px;
+  /* height: 19px; */
+
+}

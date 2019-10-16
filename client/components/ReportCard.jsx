@@ -2,8 +2,6 @@ import React from "react";
 import moment from "moment";
 import axios from "axios";
 
-// @Karin Hsu i have few endpoints you can play with.  GET /api/person,  GET /api/person/:id,  GET /api/person/:id/certification
-
 const EditingPersonalInfoCard = ({ personInfo, onChange }) => {
   return (
     <div>
