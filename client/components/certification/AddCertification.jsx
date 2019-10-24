@@ -16,7 +16,8 @@ class AddCertification extends React.Component {
     this.state = {
       certId: "",
       exp_date: new Date(),
-      signoff_date: new Date()
+      signoff_date: new Date(),
+      signOffId: ""
     };
   }
 
@@ -33,19 +34,31 @@ class AddCertification extends React.Component {
   }
 
   handleClick(e) {
-      this.addCertification();
-      this.props.handleClick(e);
+    this.addCertification();
+    this.props.handleClick(e);
   }
 
   handleChange(e) {
-    let value = e.target.value;
-    this.setState({ certId: this.props.certificationTypes[value] });
+    e.preventDefault();
+
+    const type = e.target.name;
+    const name = e.target.value;
+    let id = "";
+
+    //if certification is being selected
+    if (type === "certType") {
+      this.setState({ certId: this.props.certificationTypes[name] });
+      //if sign off is being selected
+    } else if (type === "sign-off") {
+      id = this.props.volunteers[name].id;
+      this.setState({ signOffId: id });
+    }
   }
 
   addCertification() {
     const info = {
       signature_date: this.state.signoff_date.toISOString().split("T")[0],
-      signature_person_id: this.props.signOffId,
+      signature_person_id: this.state.signOffId,
       expriation_date: this.state.exp_date.toISOString().split("T")[0],
       certification_id: this.state.certId
     };
@@ -63,7 +76,7 @@ class AddCertification extends React.Component {
   }
 
   render() {
-    const { certificationTypes } = this.props;
+    const { certificationTypes, volunteerNames } = this.props;
 
     return (
       <div className="certifications">
@@ -82,7 +95,16 @@ class AddCertification extends React.Component {
             selected={this.state.exp_date}
           />
         </div>
-        <div className="cell">{this.props.signOffName}</div>
+        <div className="cell">
+          <Select
+            name="sign-off"
+            options={volunteerNames}
+            handle={this.handleChange}
+            groupClass=""
+            labelClass=""
+            selectClass=""
+          />
+        </div>
         <div className="cell">
           <DateBox
             name="signoff_date"
