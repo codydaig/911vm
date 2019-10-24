@@ -1,29 +1,88 @@
 import React from "react";
-import EditingCertification from './EditingCertification.jsx';
-import DefaultCertification from './DefaultCertification.jsx';
+import EditingCertification from "./EditingCertification.jsx";
+import DefaultCertification from "./DefaultCertification.jsx";
 import axios from "axios";
 
 export default class Certification extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      editing : false
-    };
-    this.handleClick = this.handleClick.bind(this);
 
-    this.handleCertificationInfoChange = this.handleCertificationInfoChange.bind(this);
+    this.state = {
+      editing: false,
+      initialData: {
+        expriation_date: "",
+        id: "",
+        name: "",
+        signature_date: "",
+        signature_person_id: "",
+        signature_person_name: ""
+      },
+      newData: {
+        expriation_date: "",
+        id: "",
+        name: "",
+        signature_date: "",
+        signature_person_id: "",
+        signature_person_name: ""
+      }
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleExpDate = this.handleExpDate.bind(this);
+    this.handleSignOffDate = this.handleSignOffDate.bind(this);
+    this.handleCertificationInfoChange = this.handleCertificationInfoChange.bind(
+      this
+    );
+    this.updateCertification = this.updateCertification.bind(this);
   }
 
   componentDidMount() {
-    // axios.get("/api/certification")
-    //   .then(response => {
-    //     this.setState({
-    //       certificationTypes: response.data.data
-    //     })
-    //   })
-    //   .catch(error => {
-    //     console.log("error", error);
-    //   });
+    this.setState({ initialData: this.props.data });
+    this.setState({ newData: this.props.data });
+  }
+
+  updateCertification() {
+    const updateData = {
+      id: this.props.personId,
+      certification_id: this.state.newData.id,
+      expriation_date: this.state.newData.expriation_date,
+      signature_date: this.state.newData.signature_date,
+      signature_person_id: this.state.newData.signature_person_id
+    };
+
+    axios
+      .put(
+        `/api/person/${this.props.personId}/certification/${this.state.newData.id}`,
+        updateData
+      )
+      .then(() => {
+        this.setState({ initialData: this.state.newData });
+        this.props.updatePerson();
+        alert("Successfully updated certification :)");
+      })
+      .catch(error => {
+        alert("Error updating certification :(");
+        console.log("error", error);
+      });
+  }
+
+  handleExpDate(e) {
+    this.setState(prevState => ({
+      newData: {
+        ...prevState.newData,
+        expriation_date: new Date(e).toISOString().split("T")[0]
+      }
+    }));
+  }
+
+  handleSignOffDate(e) {
+    this.setState(prevState => ({
+      newData: {
+        ...prevState.newData,
+        signature_date: new Date(e).toISOString().split("T")[0]
+      }
+    }));
   }
 
   handleCertificationInfoChange(e) {
@@ -44,30 +103,80 @@ export default class Certification extends React.Component {
     // this.setState({[name]: e.target.value})
   }
 
-  handleClick() {
-    const editingValue = !this.state.editing;
-    this.setState({ editing: editingValue });
+  handleChange(e) {
+    e.preventDefault();
+
+    const type = e.target.name;
+    const name = e.target.value;
+    let id = "";
+
+    //if volunteer is being selected
+    if (type === "certType") {
+      id = this.props.certificationTypes[name];
+
+      this.setState(prevState => ({
+        newData: {
+          ...prevState.newData,
+          name: name
+        }
+      }));
+      this.setState(prevState => ({
+        newData: {
+          ...prevState.newData,
+          id: id
+        }
+      }));
+      //if sign off is being selected
+    } else if (type === "sign-off") {
+      id = this.props.volunteers[name].id;
+
+      this.setState(prevState => ({
+        newData: {
+          ...prevState.newData,
+          signature_person_name: name
+        }
+      }));
+      this.setState(prevState => ({
+        newData: {
+          ...prevState.newData,
+          signature_person_id: id
+        }
+      }));
+    }
+  }
+
+  handleClick(e) {
+    const editing = this.state.editing;
+    const name = e.target.name;
+
+    if (name === "save-btn") {
+      this.updateCertification();
+    } else if (name === "cancel-btn") {
+      this.setState({ newData: this.state.initialData });
+    }
+
+    this.setState({ editing: !editing });
+    this.props.handleAllEditing();
   }
 
   render() {
-    const { data, certificationTypes} = this.props;
-    const { editing } = this.state;
+    const { certificationTypes, volunteers, volunteerNames } = this.props;
+    const { editing, newData } = this.state;
 
     return (
       <div className="certifications">
-        {editing ? (
+        {editing && this.props.allEditing ? (
           <EditingCertification
-            data={data}
-            // handleChange={handleChange}
+            data={newData}
             certificationTypes={certificationTypes}
-            onChange={this.handleCertificationInfoChange}
-            onClick={this.handleClick}
+            handleExpDate={this.handleExpDate}
+            handleSignOffDate={this.handleSignOffDate}
+            volunteerNames={volunteerNames}
+            handleChange={this.handleChange}
+            handleClick={this.handleClick}
           />
         ) : (
-          <DefaultCertification 
-            data={data} 
-            onClick={this.handleClick} 
-          />
+          <DefaultCertification data={newData} handleClick={this.handleClick} />
         )}
       </div>
     );
