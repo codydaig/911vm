@@ -10,6 +10,7 @@ class ReportCardView extends React.Component {
 
     this.getVolunteers = this.getVolunteers.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleAllEditing = this.handleAllEditing.bind(this);
     this.getCertifications = this.getCertifications.bind(this);
     this.updatePerson = this.updatePerson.bind(this);
 
@@ -21,7 +22,8 @@ class ReportCardView extends React.Component {
       currentId: props.match.params.id,
       signOffId: "",
       signOffName: "",
-      loaded: false
+      loaded: false,
+      allEditing: false
     };
   }
 
@@ -117,9 +119,11 @@ class ReportCardView extends React.Component {
       });
   }
 
-  handleChange(e) {
-    e.preventDefault();
+  handleAllEditing(e) {
+    this.setState({ allEditing: !this.state.allEditing });
+  }
 
+  handleChange(e) {
     const type = e.target.name;
     const name = e.target.value;
     const id = this.state.personInfo[name].id;
@@ -129,7 +133,11 @@ class ReportCardView extends React.Component {
       this.setState({ currentPerson: name });
       this.setState({ currentId: id });
       this.props.history.push(`/reportcard/${id}`);
-    //if sign off is being selected
+
+      if (this.state.allEditing) {
+        this.handleAllEditing();
+      }
+      //if sign off is being selected
     } else if (type === "sign-off") {
       this.setState({ signOffName: name });
       this.setState({ signOffId: id });
@@ -158,7 +166,7 @@ class ReportCardView extends React.Component {
             labelClass="rc-label"
             selectClass="rc-select"
           />
-          <Select
+          {/* <Select
             name="sign-off"
             label="Select sign off name"
             options={this.state.personNames}
@@ -167,14 +175,16 @@ class ReportCardView extends React.Component {
             groupClass="rc-group"
             labelClass="rc-label"
             selectClass="rc-select"
-          />
+          /> */}
           <ReportCard personInfo={personInfo[currentPerson]} />
           <CertificationView
             certifications={certifications[currentId]}
-            signOffName={this.state.signOffName}
-            signOffId={this.state.signOffId}
-            personId={this.state.currentId}
+            personId={currentId}
             updatePerson={this.updatePerson}
+            volunteers={personInfo}
+            volunteerNames={this.state.personNames}
+            allEditing={this.state.allEditing}
+            handleAllEditing={this.handleAllEditing}
           />
         </div>
       );
