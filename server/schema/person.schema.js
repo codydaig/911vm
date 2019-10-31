@@ -63,7 +63,8 @@ const schema = {
     'cascade': 'detach',
     properties: {
       expriation_date: {
-        empty: true
+        empty: true,
+        type: 'number'
       },
       signature_person_id: {
         type: 'string',
