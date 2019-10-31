@@ -1,21 +1,21 @@
 import axios from 'axios';
 
-const base = 'http://localhost:3030' // TODO: process.env.SERVER_ENDPOINT;
+//const base = 'http://localhost:3030' // TODO: process.env.SERVER_ENDPOINT;
 const apis = {}
 
 // Volunteers
 apis.getVolunteers = () => {	
-	const url = `${base}/api/person`
+	const url = `/api/person`
 	return axios.get(url);
 }
 
 apis.getVolunteer = (id) => {
-	const url = `${base}/api/person/${id}`
+	const url = `/api/person/${id}`
 	return axios.get(url);
 }
 
 apis.searchVolunteers = (keyword) => {
-  const url = `${base}/api/person/search`
+  const url = `/api/person/search`
   return axios.post(url, {
     'keyword': keyword
   })
