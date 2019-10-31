@@ -12,8 +12,8 @@ class CertificationView extends React.Component {
 
     this.state = {
       loaded: false,
-      editing: false,
-      adding: false
+      adding: false,
+      certificationTypes: {}
     };
   }
 
@@ -37,20 +37,14 @@ class CertificationView extends React.Component {
   }
 
   handleClick(e) {
-    const editingValue = this.state.editing;
     const adding = this.state.adding;
 
-    if (e.target.name === "add-btn") {
-      if (!adding) {
-        this.setState({ adding: !adding });
-      }
-    } else if (
-      e.target.name === "cancel-btn" ||
-      e.target.name === "save-btn"
-    ) {
+    if (e.target.name === "add-btn" && (!adding && !this.props.allEditing)) {
       this.setState({ adding: !adding });
-    } else if (e.target.name === "edit-btn") {
-      this.setState({ editing: !editingValue });
+      this.props.handleAllEditing();
+    } else if (e.target.name === "cancel-btn") {
+      this.setState({ adding: !adding });
+      this.props.handleAllEditing();
     }
   }
 
@@ -86,17 +80,23 @@ class CertificationView extends React.Component {
                   data={data}
                   key={i}
                   certificationTypes={this.state.certificationTypes}
+                  volunteers={this.props.volunteers}
+                  volunteerNames={this.props.volunteerNames}
+                  personId={this.props.personId}
+                  updatePerson={this.props.updatePerson}
+                  allEditing={this.props.allEditing}
+                  handleAllEditing={this.props.handleAllEditing}
                 />
               );
             })}
-          {this.state.adding ? (
+          {this.state.adding && this.props.allEditing ? (
             <AddCertification
               certificationTypes={this.state.certificationTypes}
-              signOffName={this.props.signOffName}
-              signOffId={this.props.signOffId}
               personId={this.props.personId}
               handleClick={this.handleClick}
               updatePerson={this.props.updatePerson}
+              volunteers={this.props.volunteers}
+              volunteerNames={this.props.volunteerNames}
             />
           ) : null}
         </div>
