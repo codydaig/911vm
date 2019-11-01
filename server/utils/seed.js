@@ -5,8 +5,8 @@ const neode = require('./../schema/index');
 const volunteers = JSON.parse(fs.readFileSync(__dirname+"/./../libs/data_dump/volunteers.json"));
 const certificationTypes = JSON.parse(fs.readFileSync(__dirname+"/./../libs/data_dump/certificationTypes.json"));
 const certificationExiprations = JSON.parse(fs.readFileSync(__dirname+"/./../libs/data_dump/certificationExiprations.json"));
-// const certificationSigns = JSON.parse(fs.readFileSync(__dirname+"/./../libs/data_dump/certificationSigns.json"));
-const certificationSigns = []
+const certificationSigns = JSON.parse(fs.readFileSync(__dirname+"/./../libs/data_dump/certificationSigns.json"));
+// const certificationSigns = []
 
 const personQuery = (items) => {
   return items.map((item) => {
