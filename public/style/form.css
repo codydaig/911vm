@@ -45,19 +45,19 @@ html {
 }
 .form-select {
   height: 1.75em;
-  width: 100%;
+  width: 90%;
   margin: 0.2em 0;
   font-size: 1em;
 }
 .react-datepicker-wrapper,
 .react-datepicker__input-container {
-  width: 100% !important;
+  width: 90% !important;
 }
 .form-date {
   display: block;
   box-sizing: border-box;
   height: 1.75em;
-  width: 100%;
+  width: 90%;
   margin: 0.2em 0;
   font-size: 1em;
 }
