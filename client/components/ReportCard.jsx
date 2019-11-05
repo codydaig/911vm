@@ -26,11 +26,9 @@ const EditingPersonalInfoCard = ({ personInfo, onChange }) => {
           <div className="cell">
             <h3>Volunteer</h3>
           </div>
+
           <div className="cell">
-          <button>Edit</button>
-          </div>
-          <div className="cell">
-          <button>Cancel</button>
+            <h3>Actions</h3>
           </div>
 
           <div className="cell">
@@ -106,6 +104,9 @@ const DefaultPersonalInfoCard = ({
         <h3>Volunteer</h3>
       </div>
       <div className="cell">
+        <h3>Actions</h3>
+      </div>
+      <div className="cell">
         <p>{personInfo.email_address}</p>
       </div>
       <div className="cell">
@@ -116,6 +117,9 @@ const DefaultPersonalInfoCard = ({
       </div>
       <div className="cell">
         <p>{personInfo.is_volunteer ? "Yes" : "No"}</p>
+      </div>
+      <div className="cell">
+        <button>Edit</button>
       </div>
     </div>
   );
@@ -173,13 +177,13 @@ export default class ReportCard extends React.Component {
   handlePersonalInfoChange(event) {
     event.preventDefault();
     const id = event.target.id;
-    let value; 
+    let value;
     if (id === "admin" || id === "volunteer") {
-      value = (event.target.value == "true")
+      value = event.target.value == "true";
     } else {
-      value = event.target.value
+      value = event.target.value;
     }
-    this.setState({[id]: value});
+    this.setState({ [id]: value });
   }
 
   createCertification() {
