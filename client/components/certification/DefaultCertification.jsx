@@ -11,7 +11,7 @@ class DefaultCertification extends React.Component {
     const { data } = this.props;
 
     return (
-      <div className="certifications">
+      <React.Fragment>
         <div className="cell">
           <p>{data.name}</p>
         </div>
@@ -34,7 +34,7 @@ class DefaultCertification extends React.Component {
           </button>
           <button name="delete-btn">Delete</button>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

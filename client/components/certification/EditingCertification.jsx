@@ -32,7 +32,7 @@ class EditingCertification extends React.Component {
       signatureDate = signatureDate.join("-");
     }
     return (
-      <div className="certifications">
+      <React.Fragment>
         <div className="cell">
           {/* <Select
             name="certType"
@@ -72,7 +72,7 @@ class EditingCertification extends React.Component {
             Cancel
           </button>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

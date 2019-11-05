@@ -150,13 +150,20 @@ export default class Certification extends React.Component {
     const name = e.target.name;
 
     if (name === "save-btn") {
+      this.props.handleAllEditing();
       this.updateCertification();
+    } else if (name === "edit-btn") {
+      this.setState({ editing: !editing });
+      if (!this.props.allEditing) {
+        this.props.handleAllEditing();
+      }
     } else if (name === "cancel-btn") {
       this.setState({ newData: this.state.initialData });
+      this.setState({ editing: !editing });
+      if (this.props.allEditing) {
+        this.props.handleAllEditing();
+      }
     }
-
-    this.setState({ editing: !editing });
-    this.props.handleAllEditing();
   }
 
   render() {
@@ -164,8 +171,8 @@ export default class Certification extends React.Component {
     const { editing, newData } = this.state;
 
     return (
-      <div className="certifications">
-        {editing && this.props.allEditing ? (
+      <React.Fragment>
+        {editing ? (
           <EditingCertification
             data={newData}
             certificationTypes={certificationTypes}
@@ -178,7 +185,7 @@ export default class Certification extends React.Component {
         ) : (
           <DefaultCertification data={newData} handleClick={this.handleClick} />
         )}
-      </div>
+      </React.Fragment>
     );
   }
 }
