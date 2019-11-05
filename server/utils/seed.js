@@ -6,6 +6,7 @@ const volunteers = JSON.parse(fs.readFileSync(__dirname+"/./../libs/data_dump/vo
 const certificationTypes = JSON.parse(fs.readFileSync(__dirname+"/./../libs/data_dump/certificationTypes.json"));
 const certificationExiprations = JSON.parse(fs.readFileSync(__dirname+"/./../libs/data_dump/certificationExiprations.json"));
 const certificationSigns = JSON.parse(fs.readFileSync(__dirname+"/./../libs/data_dump/certificationSigns.json"));
+// const certificationSigns = []
 
 const personQuery = (items) => {
   return items.map((item) => {
@@ -41,7 +42,10 @@ const volunteerCertificationQuery = (items) => {
     const certifications = Object.keys(item);    
     certifications.forEach((cert) => {
       if(cert !== 'Name' && item[cert] !== '' && item[cert] !== 'n/a') {
-        queries.push({query: 'MATCH (p:Person {first_name: {first_name}, last_name: {last_name}}), (c:Certification {name:{cert}}) CREATE (p)-[:HAS_CERTIFICATION {expriation_date: {expriation_date}}]->(c)', params: {first_name: first_name, last_name: last_name, cert: cert, expriation_date: new Date(item[cert]).getTime()}});
+        queries.push({query: `MATCH (p:Person {first_name: {first_name}, 
+          last_name: {last_name}}), 
+          (c:Certification {name:{cert}}) 
+          CREATE (p)-[:HAS_CERTIFICATION {expriation_date: {expriation_date}}]->(c)`, params: {first_name: first_name, last_name: last_name, cert: cert, expriation_date: new Date(item[cert]).getTime()}});
       }
     })
   });
@@ -51,13 +55,33 @@ const volunteerCertificationQuery = (items) => {
 
 const certificationSignQuery = (items) => {
   return items.map((item) => {
-    return {'query': `
-    MATCH (p1:Person {email_address:{sign_by_email_address}}), 
-    ((p2:Person {email_address:{email_address}})-[r:HAS_CERTIFICATION]->(c:Certification {name:{certification_name}})) 
-    SET r.signature_person_id = p1.id, 
-    r.signature_date = {signature_date}`, params: {email_address: item.email_address, sign_by_email_address: item.sign_by_email_address, certification_name: item.certification_name, signature_date: new Date(item['signed_at']).getTime()}}
+    return {
+      'query': `MATCH (p:Person {email_address:{email_address}}),
+      (p1:Person {email_address:{sign_by_email_address}}),
+      (c:Certification {name:{certification_name}})
+      CREATE (p)-[:HAS_CERTIFICATION {
+         signature_person_id: p1.id,
+         signature_person_name: p1.first_name + ' ' + p1.last_name,
+         signature_date: {signature_date} }]->(c)`,
+      'params': {
+        email_address: item.email_address,
+        sign_by_email_address: item.sign_by_email_address,
+        certification_name: item.certification_name,
+        signature_date: new Date(item['signed_at']).getTime()
+      }
+    }
   })
 }
+
+// const certificationSignQuery = (items) => {
+//   return items.map((item) => {
+//     return {'query': `
+//     MATCH (p1:Person {email_address:{sign_by_email_address}}), 
+//     ((p2:Person {email_address:{email_address}})-[r:HAS_CERTIFICATION]->(c:Certification {name:{certification_name}})) 
+//     SET r.signature_person_id = p1.id, 
+//     r.signature_date = {signature_date}`, params: {email_address: item.email_address, sign_by_email_address: item.sign_by_email_address, certification_name: item.certification_name, signature_date: new Date(item['signed_at']).getTime()}}
+//   })
+// }
 
 const personQueries = personQuery(volunteers);
 const certificationTypeQueries = certificationTypeQuery(certificationTypes);

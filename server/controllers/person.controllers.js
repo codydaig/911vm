@@ -162,6 +162,7 @@ const addCertificationAndSignature = (req, res) => {
     res.status(200).json({data: data})
   })
   .catch((err) => {
+    console.error(err);
     res.status(404).json({error_message: err.message});
   })  
 }
