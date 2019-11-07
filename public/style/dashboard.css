@@ -1,28 +1,46 @@
+.dashboard {
+  border: black solid 2px;
+}
+
+
+td {
+  border: 1px solid black;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 19px;
+  width: 130px;
+  text-align: center;
+  
+}
+
 .certification_name {
   display: inline-block;
-  width: 100px;
-  border: 2px solid green;
+  width: 130px;
+  border: 2px solid black;
+  background: black;
+  color: white;
   border-right: none;
   text-align: center;
   
 }
-.volunteer_person {
-  border: 2px solid black;
-  border-bottom: none;
-  width: 150px;
-  text-align: center;
-}
 
-.table_row {
-  overflow: hidden;
-  display: flex;
-}
+/* tr .volunteer_row { 
+  border-bottom: 2px red solid;
+} */
 
+/* .volunteer_person {
+  border: 1px solid red;
+} */
+
+
+
+/* 
 .status_check {
-  border: 2px solid purple;
+  border: 1px solid black;
   display: inline-block;
   text-align: center;
   width: 50px;
-  /* height: 19px; */
+  height: 19px;
 
-}
+} */
