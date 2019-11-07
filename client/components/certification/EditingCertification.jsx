@@ -15,10 +15,10 @@ class EditingCertification extends React.Component {
   render() {
     let { data, volunteers, volunteerNames, handleChange } = this.props;
     let signOffName = data.signature_person_name || volunteerNames.sort()[0];
-    let expirationDate,
-      signatureDate = new Date();
+    let expirationDate = new Date();
+    let signatureDate = new Date();
     let year = "";
-
+    
     if (data.expriation_date) {
       expirationDate = data.expriation_date.split("-");
       year = expirationDate.shift();
@@ -31,6 +31,7 @@ class EditingCertification extends React.Component {
       signatureDate.push(year);
       signatureDate = signatureDate.join("-");
     }
+
     return (
       <div className="certifications">
         <div className="cell">
