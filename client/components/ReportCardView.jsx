@@ -1,5 +1,5 @@
 import React from "react";
-import ReportCard from "./ReportCard.jsx";
+import PersonalInfoView from "./personal-info/PersonalInfoView.jsx";
 import CertificationView from "./certification/CertificationView.jsx";
 import Select from "../elements/Select.jsx";
 import axios from "axios";
@@ -137,10 +137,6 @@ class ReportCardView extends React.Component {
       if (this.state.allEditing) {
         this.handleAllEditing();
       }
-      //if sign off is being selected
-    } else if (type === "sign-off") {
-      this.setState({ signOffName: name });
-      this.setState({ signOffId: id });
     }
   }
 
@@ -176,9 +172,9 @@ class ReportCardView extends React.Component {
             labelClass="rc-label"
             selectClass="rc-select"
           /> */}
-          <ReportCard personInfo={personInfo[currentPerson]} />
+          <PersonalInfoView personInfo={personInfo[currentPerson]} />
           <CertificationView
-            certifications={certifications[currentId]}
+            certifications={certifications}
             personId={currentId}
             updatePerson={this.updatePerson}
             volunteers={personInfo}
