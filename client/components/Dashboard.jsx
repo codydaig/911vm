@@ -1,40 +1,42 @@
 import React from 'react';
-import signOffs from "../../911vmDataDump/dashboard";
+// import signOffs from "../../911vmDataDump/dashboard";
 
-const Dashboard = () => {
+const Dashboard = ({signOffHeaders, signOffBody}) => {
   let personCerts = [];
   const headers = [];
 
   return (
     <div>
-      <table className="dashboard">
-        <tr>
-          <th className="certification_name">Volunteer name</th>
-          {signOffs.data.headers.map((header, i) => {
-              headers.push(header.name);
-              return (
-                <th className="certification_name" key={i}>{header.name} </th>
-              )
-            })}
-        </tr>
-        {signOffs.data.body.map(person => {
-          personCerts = [];
-          {person.SignOffs.map(cert => {
-            personCerts.push(cert.name);
-          })}
-          return ( 
-            <React.Fragment>
-              <tr className="volunteer_row">
-                <td className="volunteer_person">{person.volunteer.first_name + " " + person.volunteer.last_name}</td>
-                {headers.map((hasThisCert, x) => {
-                  return (
-                    <td className="status_check" key={x}> {personCerts.includes(hasThisCert)? "x" : null } </td>
-                  )
-                })}
+      <table>
+        <thead className="certification_name">
+          <tr>
+            <th >Volunteer name</th>
+            {signOffHeaders.map((header, i) => {
+                headers.push(header.name);
+                return (
+                  <th key={i.toString()}>{header.name} </th>
+                )
+              })}
+          </tr>
+        </thead>   
+        <tbody>
+          {
+            signOffBody.map(person => 
+              <tr key={person.volunteer.id} >
+                <td>{person.volunteer.first_name} {person.volunteer.last_name}</td>
+                {
+                  person.SignOffs.map((signOff, x) => {
+                    return (
+                      <td key={x.toString() + person.volunteer.id}>
+                        {signOff.signature_date? "x" : '' }
+                      </td>
+                    )
+                  })
+                }
               </tr>
-            </React.Fragment>
             )
-        })}
+          }
+        </tbody>
       </table>
     </div>
   )
