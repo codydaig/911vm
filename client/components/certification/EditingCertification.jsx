@@ -22,7 +22,7 @@ const EditingCertification = props => {
   }
 
   return (
-    <>
+    <React.Fragment>
       <div className="cell">
         {/* <Select
             name="certType"
@@ -62,7 +62,7 @@ const EditingCertification = props => {
           Cancel
         </button>
       </div>
-    </>
+    </React.Fragment>
   );
 };
 

@@ -177,7 +177,7 @@ export default class Certification extends React.Component {
     const { editing, initialData, newData } = this.state;
 
     return (
-      <>
+      <React.Fragment>
         {editing ? (
           <EditingCertification
             data={newData}
@@ -194,7 +194,7 @@ export default class Certification extends React.Component {
             handleClick={this.handleClick}
           />
         )}
-      </>
+      </React.Fragment>
     );
   }
 }
