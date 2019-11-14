@@ -1,5 +1,6 @@
 import React from "react";
 
+<<<<<<< HEAD
 class DefaultCertification extends React.Component {
   constructor() {
     super();
@@ -38,5 +39,35 @@ class DefaultCertification extends React.Component {
     );
   }
 }
+=======
+const DefaultCertification = props => {
+  return (
+    <div className="certifications">
+      <div className="cell">
+        <p>{props.data.name}</p>
+      </div>
+      <div className="cell">
+        <p>{props.data.expriation_date}</p>
+      </div>
+      <div className="cell">
+        <p>{props.data.signature_person_name}</p>
+      </div>
+      <div className="cell">
+        <p>{props.data.signature_date}</p>
+      </div>
+      <div className="cell">
+        <button
+          name="edit-btn"
+          className="edit-certification"
+          onClick={props.handleClick}
+        >
+          Edit
+        </button>
+        <button name="delete-btn">Delete</button>
+      </div>
+    </div>
+  );
+};
+>>>>>>> 669ec474e1723f0b1d624f4d8c1fa66b509b9094
 
 export default DefaultCertification;
