@@ -204,8 +204,7 @@ export default class ReportCard extends React.Component {
       email_address,
       phone_number,
       is_admin,
-      is_volunteer,
-      certifications
+      is_volunteer
     } = this.state;
 
     return (
