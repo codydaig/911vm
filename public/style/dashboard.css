@@ -5,18 +5,16 @@
 
 td {
   border: 1px solid black;
-  display: inline-block;
   overflow: hidden;
   white-space: nowrap;
-  height: 19px;
-  width: 130px;
+  min-height: 19px;
+  min-width: 130px;
   text-align: center;
   
 }
 
 .certification_name {
-  display: inline-block;
-  width: 130px;
+  min-width: 130px;
   border: 2px solid black;
   background: black;
   color: white;
