@@ -79,7 +79,7 @@ class AddCertification extends React.Component {
     const { certificationTypes, volunteerNames } = this.props;
 
     return (
-      <div className="certifications">
+      <React.Fragment>
         <div className="cell">
           <Select
             name="certType"
@@ -128,7 +128,7 @@ class AddCertification extends React.Component {
             Cancel
           </button>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

@@ -8,34 +8,32 @@ class ReportCardView extends React.Component {
   constructor(props) {
     super(props);
 
-    this.getVolunteers = this.getVolunteers.bind(this);
+    this.getInfo = this.getInfo.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleAllEditing = this.handleAllEditing.bind(this);
-    this.getCertifications = this.getCertifications.bind(this);
     this.updatePerson = this.updatePerson.bind(this);
 
     this.state = {
       personInfo: {}, //volunteer info
       personNames: [], //volunteer names for select elements
-      certifications: {}, //certification info
-      currentPerson: "", //currently selected person
+      certifications: {}, //certifications for each volunteer
+      certTypes: [],
+      currentPerson: "", //currently selected volunteer
       currentId: props.match.params.id,
-      signOffId: "",
-      signOffName: "",
       loaded: false,
-      allEditing: false
     };
   }
 
   componentDidMount() {
-    this.getVolunteers();
+    this.getInfo();
   }
 
-  getVolunteers() {
+  getInfo() {
     const personNames = [];
     const personInfo = {};
     const currentCertifications = {};
+    const certTypes = [];
 
+    //get volunteer personal info and certifications
     axios
       .get("/api/person/certifications")
       .then(response => {
@@ -65,13 +63,27 @@ class ReportCardView extends React.Component {
           this.setState({ currentPerson: personNames[0] });
           this.setState({ currentId: personInfo[personNames[0]].id });
         }
-        this.setState({ signOffName: personNames[0] });
-        this.setState({ signOffId: personInfo[personNames[0]].id });
+        
         this.setState({ certifications: currentCertifications, loaded: true });
       })
       .catch(error => {
         console.log("error", error);
       });
+
+    //get certification types
+    axios
+    .get("/api/certification")
+    .then(response => {
+      response.data.data.forEach(cert => {
+        certTypes[cert.name] = cert.id;
+      });
+      this.setState({
+        certificationTypes: certTypes
+      });
+    })
+    .catch(error => {
+      console.log("error", error);
+    });
   }
 
   updatePerson() {
@@ -98,31 +110,6 @@ class ReportCardView extends React.Component {
       });
   }
 
-  getCertifications(id) {
-    const currentCertifications = this.state.certifications;
-
-    axios
-      .get(`/api/person/${id}/certification`)
-      .then(response => {
-        const certifications = [];
-
-        response.data.data.forEach(el => {
-          const certification = el.certification;
-          certifications.push(certification);
-        });
-        currentCertifications[id] = certifications;
-
-        this.setState({ certifications: currentCertifications, loaded: true });
-      })
-      .catch(error => {
-        console.log("error", error);
-      });
-  }
-
-  handleAllEditing(e) {
-    this.setState({ allEditing: !this.state.allEditing });
-  }
-
   handleChange(e) {
     const type = e.target.name;
     const name = e.target.value;
@@ -133,11 +120,7 @@ class ReportCardView extends React.Component {
       this.setState({ currentPerson: name });
       this.setState({ currentId: id });
       this.props.history.push(`/reportcard/${id}`);
-
-      if (this.state.allEditing) {
-        this.handleAllEditing();
-      }
-    }
+    } 
   }
 
   render() {
@@ -145,6 +128,7 @@ class ReportCardView extends React.Component {
       personInfo,
       certifications,
       currentPerson,
+      certificationTypes,
       currentId,
       loaded
     } = this.state;
@@ -176,6 +160,7 @@ class ReportCardView extends React.Component {
           <CertificationView
             certifications={certifications}
             personId={currentId}
+            certificationTypes={certificationTypes}
             updatePerson={this.updatePerson}
             volunteers={personInfo}
             volunteerNames={this.state.personNames}

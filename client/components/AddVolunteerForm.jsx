@@ -91,9 +91,13 @@ class AddVolunteerForm extends React.Component {
     axios
       .post(`/api/person`, userData)
       .then(res => {
-        console.log(res);
+        alert('Volunteer saved.')
+        this.reset(e);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        alert('Unable to save volunteer.')
+        console.log(err)
+      });
   }
 
   render() {
@@ -157,7 +161,7 @@ class AddVolunteerForm extends React.Component {
             checked={this.state.newVolunteer.is_admin}
             groupClass="form-group"
             labelClass="form-label"
-            checkboxClass="form-select"
+            checkboxClass="form-checkbox"
           />
           <Checkbox
             name="is_volunteer"

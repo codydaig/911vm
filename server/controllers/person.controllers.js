@@ -109,6 +109,8 @@ const show = (req, res) => {
 // Add a new volunteer
 const create = (req, res) => {
   const data = req.body;
+  req.body.start_date ? data['start_date'] = (new Date(req.body.start_date)).getTime() : null;
+  req.body.end_date ? data['end_date'] = (new Date(req.body.end_date)).getTime() : null;
 
   Persons.addOne(data)
   .then((data) => {
@@ -123,6 +125,8 @@ const create = (req, res) => {
 const update = (req, res) => {
   const id = req.params.id;
   const data = req.body;
+  data.start_date ? data['start_date'] = (new Date(data.start_date)).getTime() : null;
+  data.end_date ? data['end_date'] = (new Date(data.end_date)).getTime() : null;
 
   Persons.findOneByIdAndUpdate(id, data)
   .then((data) => {
@@ -146,18 +150,19 @@ const remove = (req, res) => {
 }
 
 // ADD Certification to volunteer and sign off it
-const addCertificationAndSignature = (req, res) => {
+const addCertificationAndSignature = (req, res) => {  
   const personId = req.params.id;
   const certificationId = req.body.certification_id;
   const signaturePersonId = req.body.signature_person_id
   const expiredAt = req.body.expriation_date ? (new Date(req.body.expriation_date)).getTime() : null;
   const signatureDate = req.body.signature_date ? (new Date(req.body.signature_date)).getTime() : (new Date()).getTime();
-  
+
   Persons.addCertificationAndSignature(personId , certificationId, expiredAt, signaturePersonId, signatureDate)
   .then((data) => {    
     res.status(200).json({data: data})
   })
   .catch((err) => {
+    console.error(err);
     res.status(404).json({error_message: err.message});
   })  
 }
