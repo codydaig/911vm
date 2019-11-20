@@ -17,9 +17,11 @@ class CertificationView extends React.Component {
   handleClick(e) {
     const adding = this.state.adding;
 
-    if (e.target.name === "add-btn" && (!adding && !this.props.allEditing)) {
+    if (e.target.name === "add-btn" && !adding) {
+      this.props.addingCert();
       this.setState({ adding: !adding });
     } else if (e.target.name === "cancel-btn") {
+      this.props.addingCert();
       this.setState({ adding: !adding });
     }
   }
@@ -29,9 +31,9 @@ class CertificationView extends React.Component {
       personId,
       volunteers,
       volunteerNames,
-      certifications,
       certificationTypes,
-      updatePerson,
+      certifications,
+      updatePerson
     } = this.props;
 
     return (
@@ -61,7 +63,7 @@ class CertificationView extends React.Component {
           return (
             <Certification
               data={data}
-              key={i}
+              key={data.id + ' ' + data.signature_person_id}
               certificationTypes={certificationTypes}
               volunteers={volunteers}
               volunteerNames={volunteerNames}
