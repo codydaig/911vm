@@ -11,6 +11,7 @@ class ReportCardView extends React.Component {
     this.getInfo = this.getInfo.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.updatePerson = this.updatePerson.bind(this);
+    this.addingCert = this.addingCert.bind(this);
 
     this.state = {
       personInfo: {}, //volunteer info
@@ -20,6 +21,7 @@ class ReportCardView extends React.Component {
       currentPerson: "", //currently selected volunteer
       currentId: props.match.params.id,
       loaded: false,
+      addingCert: false
     };
   }
 
@@ -95,7 +97,7 @@ class ReportCardView extends React.Component {
       .then(response => {
         const person = response.data.data.person;
         const name = person.first_name + " " + person.last_name;
-        const certifications = response.data.data.certifications.reverse();
+        const certifications = response.data.data.certifications;
 
         currentCertifications[this.state.currentId] = certifications;
         personInfo[name] = person;
@@ -117,10 +119,21 @@ class ReportCardView extends React.Component {
 
     //if volunteer is being selected
     if (type === "volunteer") {
-      this.setState({ currentPerson: name });
-      this.setState({ currentId: id });
-      this.props.history.push(`/reportcard/${id}`);
+      //if a certification is being added
+      if(!this.state.addingCert) {
+        this.setState({ currentPerson: name });
+        this.setState({ currentId: id });
+        this.props.history.push(`/reportcard/${id}`);
+      }
+      else {
+        alert('Finish adding certification or cancel.')
+      }
     } 
+  }
+
+  //flag when adding certification
+  addingCert() {
+    this.setState({ addingCert: !this.state.addingCert})
   }
 
   render() {
@@ -146,16 +159,6 @@ class ReportCardView extends React.Component {
             labelClass="rc-label"
             selectClass="rc-select"
           />
-          {/* <Select
-            name="sign-off"
-            label="Select sign off name"
-            options={this.state.personNames}
-            handle={this.handleChange}
-            selected={this.state.signOffName}
-            groupClass="rc-group"
-            labelClass="rc-label"
-            selectClass="rc-select"
-          /> */}
           <ReportCard personInfo={personInfo[currentPerson]} />
           <CertificationView
             certifications={certifications[currentId]}
@@ -164,8 +167,7 @@ class ReportCardView extends React.Component {
             updatePerson={this.updatePerson}
             volunteers={personInfo}
             volunteerNames={this.state.personNames}
-            allEditing={this.state.allEditing}
-            handleAllEditing={this.handleAllEditing}
+            addingCert={this.addingCert}
           />
         </div>
       );

@@ -15,6 +15,7 @@ export default class Certification extends React.Component {
 
     this.state = {
       editing: false,
+      //initial data
       initialData: {
         expriation_date: "",
         id: "",
@@ -23,6 +24,7 @@ export default class Certification extends React.Component {
         signature_person_id: "",
         signature_person_name: ""
       },
+      //new data when editing
       newData: {
         expriation_date: "",
         id: "",
@@ -103,7 +105,7 @@ export default class Certification extends React.Component {
           id: id
         }
       }));
-      //if sign off is being selected
+    //if sign off is being selected
     } else if (type === "sign-off") {
       id = this.props.volunteers[name].id;
 
@@ -130,6 +132,8 @@ export default class Certification extends React.Component {
       if (!editing) {
         this.setState({ editing: !editing });
 
+        //if expiration date has not been filled
+        //select current date
         if (!this.props.data.expriation_date) {
           this.setState(prevState => ({
             newData: {
@@ -139,6 +143,8 @@ export default class Certification extends React.Component {
           }));
         }
 
+         //if signature date has not been filled
+        //select current date
         if (!this.props.data.signature_date) {
           this.setState(prevState => ({
             newData: {
@@ -147,6 +153,9 @@ export default class Certification extends React.Component {
             }
           }));
         }
+
+         //if signature name has not been filled
+        //select first name and id on list of volunteer
         if (!this.props.data.signature_person_name) {
           this.setState(prevState => ({
             newData: {
@@ -173,7 +182,7 @@ export default class Certification extends React.Component {
   }
 
   render() {
-    const { certificationTypes, volunteers, volunteerNames } = this.props;
+    const { certificationTypes, volunteerNames } = this.props;
     const { editing, initialData, newData } = this.state;
 
     return (
