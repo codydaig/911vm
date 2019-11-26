@@ -156,9 +156,12 @@ class ReportCardView extends React.Component {
             labelClass="rc-label"
             selectClass="rc-select"
           /> */}
-          <PersonalInfoView personInfo={personInfo[currentPerson]} />
+          <PersonalInfoView
+            personInfo={personInfo[currentPerson]}
+            updatePerson={this.updatePerson}
+          />
           <CertificationView
-            certifications={certifications}
+            certifications={certifications[currentId]}
             personId={currentId}
             certificationTypes={certificationTypes}
             updatePerson={this.updatePerson}
