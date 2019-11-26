@@ -17,6 +17,7 @@ const DateBox = props => {
         value={props.selected}
         className="form-date"
         dateFormat="MM/dd/yyyy"
+        todayButton={"Today"}
       />
     </div>
   );
