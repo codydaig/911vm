@@ -1,24 +1,15 @@
 import React from "react";
 
-const DefaultPersonalInfo = ({personInfo}) => {
+const DefaultPersonalInfo = props => {
+  const { personInfo } = props;
+
   return (
-    <div className="personal-info">
-      <div className="personal-info-header">
-        <h1>
-          {personInfo.first_name} {personInfo.last_name}
-        </h1>
+    <React.Fragment>
+      <div className="cell">
+        <p>{personInfo.first_name}</p>
       </div>
       <div className="cell">
-        <h3>Email</h3>
-      </div>
-      <div className="cell">
-        <h3>Phone Number</h3>
-      </div>
-      <div className="cell">
-        <h3>Administrator</h3>
-      </div>
-      <div className="cell">
-        <h3>Volunteer</h3>
+        <p>{personInfo.last_name}</p>
       </div>
       <div className="cell">
         <p>{personInfo.email_address}</p>
@@ -27,12 +18,21 @@ const DefaultPersonalInfo = ({personInfo}) => {
         <p>{personInfo.phone_number}</p>
       </div>
       <div className="cell">
-        <p>{personInfo.is_admin ? "Yes" : "No"}</p>
+        <p>{personInfo.class}</p>
       </div>
       <div className="cell">
-        <p>{personInfo.is_volunteer ? "Yes" : "No"}</p>
+        <p>{personInfo.start_date}</p>
       </div>
-    </div>
+      <div className="cell">
+        <button
+          name="edit-btn"
+          className="edit-certification"
+          onClick={props.handleClick}
+        >
+          Edit
+        </button>
+      </div>
+    </React.Fragment>
   );
 };
 
