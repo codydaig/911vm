@@ -20,9 +20,16 @@ var reportCard = document.createElement("link");
 reportCard.rel = "stylesheet";
 reportCard.href = "/style/reportcard.css";
 
+//checking
+var dashboard = document.createElement("link");
+dashboard.rel = "stylesheet";
+dashboard.href = "/style/dashboard.css";
+
 // Append link elements to HTML head
 head.appendChild(datepicker);
 head.appendChild(form);
-head.appendChild(reportCard)
+head.appendChild(reportCard);
+//check
+head.appendChild(dashboard);
 
 ReactDOM.render(<App />, document.getElementById('app'));

@@ -1,0 +1,44 @@
+.dashboard {
+  border: black solid 2px;
+}
+
+
+td {
+  border: 1px solid black;
+  overflow: hidden;
+  white-space: nowrap;
+  min-height: 19px;
+  min-width: 130px;
+  text-align: center;
+  
+}
+
+.certification_name {
+  min-width: 130px;
+  border: 2px solid black;
+  background: black;
+  color: white;
+  border-right: none;
+  text-align: center;
+  
+}
+
+/* tr .volunteer_row { 
+  border-bottom: 2px red solid;
+} */
+
+/* .volunteer_person {
+  border: 1px solid red;
+} */
+
+
+
+/* 
+.status_check {
+  border: 1px solid black;
+  display: inline-block;
+  text-align: center;
+  width: 50px;
+  height: 19px;
+
+} */

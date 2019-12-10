@@ -1,5 +1,6 @@
 const models = require('./../models');
 const Persons = models.Persons;
+const Certifications = models.Certifications;
 const auth = require('./../utils/auth.js');
 
 const protect = (req, res, next) => {
@@ -189,6 +190,57 @@ const updateCertifcation = (req, res) => {
   })    
 }
 
+// Dashboard (SignOffs spreadsheet)
+const dashboard = (req, res) => {
+  const result = {}
+  let volunteers = [];
+  let certifications = [];
+
+  Certifications.getAll()
+  .then((data) => {
+    certifications = data;
+    return Persons.getAll()
+  })
+  .then((data) => {
+    volunteers = data;
+    return Persons.getAllWithCertifications()
+  })
+  .then((data) => {
+    const rows = [];
+    volunteers.forEach((volunteer) => {
+      const row = {
+        volunteer
+      };
+      items = [];
+      certifications.forEach((cert) => {
+        let item = {};
+        item['name'] = cert.name;
+        item['id'] = cert.id;
+
+        // get sign off info into certification
+        data.forEach((person) => {
+          if(person['person'].id === volunteer.id) {
+            person['certifications'].forEach((certification) => {
+              if(certification.id === cert.id) {
+                item = certification
+              }
+            })
+          }
+        })        
+        items.push(item);
+      })
+      row['SignOffs'] = items
+      rows.push(row);
+    })
+    result['headers'] = certifications;
+    result['body'] = rows
+    res.status(200).json({data: result})
+  })
+  .catch((err) => {
+    res.status(404).json({error_message: err.message});
+  })    
+}
+
 module.exports = {
   get: get,  
   create: create,
@@ -202,4 +254,5 @@ module.exports = {
   login: login,
   protect: protect,
   search: search,
+  dashboard: dashboard
 }
