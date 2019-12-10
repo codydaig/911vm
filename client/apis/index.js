@@ -21,4 +21,9 @@ apis.searchVolunteers = (keyword) => {
   })
 }
 
+apis.getDashboardData = () => {
+  const url = `/api/person/dashboard`
+  return axios.get(url);
+}
+
 export default apis;
