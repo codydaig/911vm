@@ -1,5 +1,5 @@
 import React from "react";
-import ReportCard from "./ReportCard.jsx";
+import PersonalInfoView from "./personal-info/PersonalInfoView.jsx";
 import CertificationView from "./certification/CertificationView.jsx";
 import Select from "../elements/Select.jsx";
 import axios from "axios";
@@ -156,7 +156,10 @@ class ReportCardView extends React.Component {
             labelClass="rc-label"
             selectClass="rc-select"
           /> */}
-          <ReportCard personInfo={personInfo[currentPerson]} />
+          <PersonalInfoView
+            personInfo={personInfo[currentPerson]}
+            updatePerson={this.updatePerson}
+          />
           <CertificationView
             certifications={certifications[currentId]}
             personId={currentId}

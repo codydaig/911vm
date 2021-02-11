@@ -57,7 +57,7 @@ body {
   min-width: 54em;
 
   display: grid;
-  grid-template-columns: repeat 5 (1fr);
+  grid-template-columns: repeat 7 (1fr);
 
   margin: 1em auto;
   box-shadow: 1px 1px 1px rgb(223, 223, 223);
@@ -66,21 +66,12 @@ body {
 
   overflow: hidden;
 }
-.personal-info > form {
-    width: 100%;
-
-    grid-column-start: 1;
-    grid-column-end: 6;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-}
 .personal-info-header {
   background: rgb(243, 243, 243);
   width: 100%;
 
   grid-column-start: 1;
-  grid-column-end: 6;
+  grid-column-end: 8;
 
   text-align: center;
   border-bottom: 1px solid #999;

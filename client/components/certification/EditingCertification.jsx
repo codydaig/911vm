@@ -1,5 +1,5 @@
 import React from "react";
-import DateBox from "../DateBox.jsx";
+import DateBox from "../../elements/DateBox.jsx";
 import Select from "../../elements/Select.jsx";
 
 const EditingCertification = props => {
@@ -24,12 +24,6 @@ const EditingCertification = props => {
   return (
     <React.Fragment>
       <div className="cell">
-        {/* <Select
-            name="certType"
-            options={Object.keys(certificationTypes)}
-            handle={handleChange}
-            selected={data.name}
-          /> */}
         <p>{data.name}</p>
       </div>
       <div className="cell">
